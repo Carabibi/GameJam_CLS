@@ -1,4 +1,6 @@
 var CDDash = true
+var HPmax = 100
+var HP = 100
 class scene1 extends Phaser.Scene {
     constructor() {
         super('scene1');
@@ -8,13 +10,15 @@ class scene1 extends Phaser.Scene {
     init(data) {
     }
     preload() {
-        this.load.image("perso", "assets/perso.png");
+        this.load.image("perso", "assets/perso.png");       
         this.load.tilemapTiledJSON("map", "assets/map.json");
         this.load.image("tileset", "assets/placeholder.png");
         this.load.spritesheet('shuriken','assets/Shuriken-sheet.png',{frameWidth:16,frameHeight:16})
+        this.load.spritesheet('HP','assets/HPBar180x37.png',{frameWidth:180,frameHeight:37})
     }
 
     create() {
+        // CREATE MAP
         this.map = this.add.tilemap("map");
         this.tileset = this.map.addTilesetImage(
             "placeholder",
@@ -42,12 +46,55 @@ class scene1 extends Phaser.Scene {
         else {
             this.player = this.physics.add.sprite(2 * 64, 5 * 64, 'perso');
         }
+
+        //CAMERA
+        //this.cameras.main.startFollow(4*64,4*64);
+        //var camera = this.cameras.add(4*64, 4*64)
+        this.cameras.main.x = 4*64
+        this.cameras.main.y = 3*64
+
+        //COLLIDER
         this.physics.add.collider(this.player, this.mur);
 
+        //INPUT
         this.cursors = this.input.keyboard.createCursorKeys();
-        
         this.clavier = this.input.keyboard.addKeys('SHIFT,E');
+
+        //GROUPE / UI
         this.shuriken = this.physics.add.group();
+        this.HPbar = this.add.sprite(80,20,"HP")
+
+        //ANIMATIONS
+        this.anims.create({
+            key: 'vie1',
+            frames: this.anims.generateFrameNumbers('HP', {start: 0, end: 0}),
+            frameRate: 1,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'vie2',
+            frames: this.anims.generateFrameNumbers('HP', {start: 1, end: 1}),
+            frameRate: 1,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'vie3',
+            frames: this.anims.generateFrameNumbers('HP', {start: 2, end: 2}),
+            frameRate: 1,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'vie4',
+            frames: this.anims.generateFrameNumbers('HP', {start: 3, end: 3}),
+            frameRate: 1,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'vie5',
+            frames: this.anims.generateFrameNumbers('HP', {start: 4, end: 4}),
+            frameRate: 1,
+            repeat: -1
+        });
     }
 
 
@@ -111,6 +158,13 @@ class scene1 extends Phaser.Scene {
             this.player.setVelocityY(0)
         }
 
+
+        //BARRE HP
+        if(HP==0){this.HPbar.anims.play("vie1")}
+        if(HP==25){this.HPbar.anims.play("vie2")}
+        if(HP==50){this.HPbar.anims.play("vie3")}
+        if(HP==75){this.HPbar.anims.play("vie4")}
+        if(HP==100){this.HPbar.anims.play("vie5")}
 
         //shoot
         
