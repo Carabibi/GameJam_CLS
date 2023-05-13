@@ -26,6 +26,29 @@
          "y":0
         }, 
         {
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            1610612740, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            1610612740, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "height":12,
+         "id":9,
+         "name":"porte",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":12,
+         "x":0,
+         "y":0
+        }, 
+        {
          "draworder":"topdown",
          "id":2,
          "name":"cible",
@@ -77,41 +100,6 @@
                  "width":64,
                  "x":576,
                  "y":640
-                }],
-         "opacity":1,
-         "type":"objectgroup",
-         "visible":true,
-         "x":0,
-         "y":0
-        }, 
-        {
-         "draworder":"topdown",
-         "id":5,
-         "name":"porte",
-         "objects":[
-                {
-                 "gid":4,
-                 "height":64,
-                 "id":32,
-                 "name":"",
-                 "rotation":-90,
-                 "type":"",
-                 "visible":true,
-                 "width":64,
-                 "x":64,
-                 "y":384
-                }, 
-                {
-                 "gid":4,
-                 "height":64,
-                 "id":34,
-                 "name":"",
-                 "rotation":-90,
-                 "type":"",
-                 "visible":true,
-                 "width":64,
-                 "x":64,
-                 "y":448
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -177,7 +165,7 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":9,
+ "nextlayerid":10,
  "nextobjectid":53,
  "orientation":"orthogonal",
  "renderorder":"right-down",
