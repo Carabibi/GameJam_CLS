@@ -205,6 +205,33 @@
                          "type":"bool",
                          "value":false
                         }]
+                }, 
+                {
+                 "id":13,
+                 "properties":[
+                        {
+                         "name":"estSolide",
+                         "type":"bool",
+                         "value":false
+                        }]
+                }, 
+                {
+                 "id":14,
+                 "properties":[
+                        {
+                         "name":"estSolide",
+                         "type":"bool",
+                         "value":false
+                        }]
+                }, 
+                {
+                 "id":15,
+                 "properties":[
+                        {
+                         "name":"estSolide",
+                         "type":"bool",
+                         "value":false
+                        }]
                 }],
          "tilewidth":64
         }],
