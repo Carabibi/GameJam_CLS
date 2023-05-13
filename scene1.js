@@ -1,3 +1,4 @@
+var CDDash = true
 class scene1 extends Phaser.Scene {
     constructor() {
         super('scene1');
@@ -6,52 +7,102 @@ class scene1 extends Phaser.Scene {
     init(data) {
     }
     preload() {
-        this.load.image("perso", "GameJam_Carabistouilles/perso.png");
+        this.load.image("perso", "assets/perso.png");
+        this.load.tilemapTiledJSON("map", "assets/map.json");
+        this.load.image("tileset", "assets/placeholder.png");
     }
 
     create() {
-        this.dashCD1 = true;
-        this.IsGoingLeft = false;
-        this.IsGoingRight = false;
-        this.IsGoingUp=false;
-        this.IsGoingDown=false;
-        this.isDashing = false;
+        this.map = this.add.tilemap("map");
+        this.tileset = this.map.addTilesetImage(
+            "placeholder",
+            "tileset"
+        );
+        this.sol = this.map.createLayer(
+            "sol",
+            this.tileset
+        );
+        this.mur = this.map.createLayer(
+            "mur",
+            this.tileset
+        );
+        this.sol = this.map.createLayer(
+            "obstacle",
+            this.tileset
+        );
+
+        this.mur.setCollisionByExclusion(-1, true);
+
         // SPAWN JOUEUR
         if (this.spawnx && this.spawny) {
             this.player = this.physics.add.sprite(this.spawnx, this.spawny, 'perso');
         }
         else {
-            this.player = this.physics.add.sprite(0, 0, 'perso');
+            this.player = this.physics.add.sprite(2 * 64, 5 * 64, 'perso');
         }
-
+        this.physics.add.collider(this.player, this.mur);
 
         this.cursors = this.input.keyboard.createCursorKeys();
         //this.shuriken = this.physics.add.group();
+        this.clavier = this.input.keyboard.addKeys('SHIFT');
     }
 
 
     update() {
         //                           DEPLACEMENT JOUEUR
         // Droite/gauche
-        if (this.cursors.left.isDown || this.clavier.Q.isDown) {
+        if (this.cursors.left.isDown) {
             this.player.setVelocityX(-160)
-            this.player.anims.play('left', true);
+            if(this.clavier.SHIFT.isDown && CDDash == true){
+                this.player.setVelocityX(-800)
+                setTimeout(() => {
+                    CDDash = false
+                }, 150);
+                setTimeout(() => {
+                    CDDash = true
+                }, 3000);
+            }
+            
         }
-        else if (this.cursors.right.isDown || this.clavier.D.isDown) {
-            this.player.setVelocityX(160)
-            this.player.anims.play('right', true);
+        else if (this.cursors.right.isDown) {
+            this.player.setVelocityX(160);
+            if(this.clavier.SHIFT.isDown && CDDash == true){
+                this.player.setVelocityX(800)
+                setTimeout(() => {
+                    CDDash = false
+                }, 150);
+                setTimeout(() => {
+                    CDDash = true
+                }, 3000);
+            }
         }
         else {
             this.player.setVelocityX(0)
         }
         // Haut/bas
-        if (this.cursors.up.isDown || this.clavier.Z.isDown) {
+        if (this.cursors.up.isDown) {
             this.player.setVelocityY(-160)
-            this.player.anims.play('back', true);
+            if(this.clavier.SHIFT.isDown && CDDash == true){
+                this.player.setVelocityY(-800)
+                setTimeout(() => {
+                    CDDash = false
+                }, 150);
+                setTimeout(() => {
+                    CDDash = true
+                }, 3000);
+            }
         }
-        else if (this.cursors.down.isDown || this.clavier.S.isDown) {
+        else if (this.cursors.down.isDown) {
             this.player.setVelocityY(160)
-            this.player.anims.play('front', true);
+            if(this.clavier.SHIFT.isDown && CDDash == true){
+                this.player.setVelocityY(800)
+                setTimeout(() => {
+                    CDDash = false
+                }, 150);
+                setTimeout(() => {
+                    CDDash = true
+                }, 3000);
+            }
         }
         else {
             this.player.setVelocityY(0)
