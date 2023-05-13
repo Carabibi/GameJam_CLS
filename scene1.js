@@ -10,10 +10,10 @@ class scene1 extends Phaser.Scene {
 
     init(data) {
     }
-    preload() {
-        this.load.image("perso", "assets/perso.png");       
+    preload() {   
         this.load.tilemapTiledJSON("map", "assets/map.json");
         this.load.image("tileset", "assets/placeholder.png");
+        this.load.spritesheet('perso',"assets/perso.png",{frameWidth:61,frameHeight:47})
         this.load.spritesheet('shuriken','assets/Shuriken-sheet.png',{frameWidth:16,frameHeight:16})
         this.load.spritesheet('HP','assets/HPBar180x37.png',{frameWidth:180,frameHeight:37})
     }
@@ -179,7 +179,6 @@ class scene1 extends Phaser.Scene {
         if (this.clavier.E.isDown && this.CanShoot == true) {
             if(this.cursors.right.isDown){
                 this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityX(600);
-                this.anims.play("shuriken")    
             }
             else if(this.cursors.left.isDown){
                 this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityX(-600);
@@ -194,7 +193,8 @@ class scene1 extends Phaser.Scene {
             setTimeout(() => {
                 this.CanShoot = true;
             }, 500);
-        }  
-        //this.shuriken.callAll("animations.add",'shuriken',4,true) 
+        }
+
+
     }
 }
