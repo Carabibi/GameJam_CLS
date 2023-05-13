@@ -6,9 +6,9 @@ var vitessedep=1
 var vitessedatk=1
 var speedatk=1
 
-class scene3 extends Phaser.Scene {
+class scene4 extends Phaser.Scene {
     constructor() {
-        super('scene3');
+        super('scene4');
         this.CanShoot = true;
     
     }
@@ -16,10 +16,10 @@ class scene3 extends Phaser.Scene {
     init(data) {
     }
     preload() {   
-        this.load.tilemapTiledJSON("map", "assets/tuto_3.json");
+        this.load.tilemapTiledJSON("map", "assets/tuto_4.json");
         this.load.image("tileset", "assets/placeholder.png");
         this.load.image("porte", "assets/porte.png");
-        this.load.image("sol", "assets/sol_640x640_asterix.png");
+        this.load.image("sol", "assets/sol_640x640_rick_et_morty.png");
         this.load.spritesheet('perso',"assets/perso.png",{frameWidth:47,frameHeight:61})
         this.load.spritesheet('shuriken','assets/Shuriken-sheet.png',{frameWidth:16,frameHeight:16})
         this.load.spritesheet('HP','assets/HPBar180x37.png',{frameWidth:180,frameHeight:37})
@@ -29,7 +29,7 @@ class scene3 extends Phaser.Scene {
     create() {
         // CREATE MAP
         this.map = this.add.tilemap("map");
-        this.add.image(64*6,64*6,"sol")
+        this.add.image(64*11,64*11,"sol")
         this.tileset = this.map.addTilesetImage(
             "placeholder",
             "tileset"
