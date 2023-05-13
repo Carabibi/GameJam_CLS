@@ -11,9 +11,15 @@ class Menu extends Phaser.Scene {
         this.load.image('nouvellepartie', 'startscreen/newgame.png');
         this.load.image('continuer', 'startscreen/continuer.png');
         this.load.image('options', 'startscreen/options.png');
-
+        this.load.audio('Music1', 'audio/Music2!EXE.1.mp3')
+        this.load.audio('Music2', 'audio/Music2!EXE.2.mp3')
+        this.load.audio('Music3', 'audio/Music2!EXE.3.mp3')
+        this.load.audio('Music4', 'audio/Music2!EXE.4.mp3')
+        
     }
     create() {
+        this.sound.play("Music4")
+        
         this.image = this.add.image
         this.image = this.add.image(640, 360, '4P')
 
@@ -43,6 +49,7 @@ class Menu extends Phaser.Scene {
         
     }
     update() {
+       
 
     }
     Startgame() {
