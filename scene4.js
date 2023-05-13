@@ -17,9 +17,9 @@ class scene4 extends Phaser.Scene {
     }
     preload() {   
         this.load.tilemapTiledJSON("map4", "assets/tuto_4.json");
-        this.load.image("tileset", "assets/placeholder.png");
+        this.load.image("ere", "assets/placeholder.png");
         this.load.image("porte", "assets/porte.png");
-        this.load.image("sol", "assets/sol_640x640_rick_et_morty.png");
+        this.load.image("sol", "assets/sol_1280x1280_kaamelot.png");
         this.load.spritesheet('perso',"assets/perso.png",{frameWidth:47,frameHeight:61})
         this.load.spritesheet('shuriken','assets/Shuriken-sheet.png',{frameWidth:16,frameHeight:16})
         this.load.spritesheet('HP','assets/HPBar180x37.png',{frameWidth:180,frameHeight:37})
@@ -42,6 +42,10 @@ class scene4 extends Phaser.Scene {
             "trou",
             this.tileset
         );
+        this.pique = this.map.createLayer(
+            "pique",
+            this.tileset
+        );
 
         //this.grpporte = this.physics.add.group({ immovable: true, allowGravity: false })
         //this.porte = this.map.getObjectLayer("porte");
@@ -57,7 +61,7 @@ class scene4 extends Phaser.Scene {
             this.player = this.physics.add.sprite(this.spawnx, this.spawny, 'perso');
         }
         else {
-            this.player = this.physics.add.sprite(2 * 64, 5 * 64, 'perso');
+            this.player = this.physics.add.sprite(20 * 64, 19 * 64, 'perso');
         }
 
         //CAMERA

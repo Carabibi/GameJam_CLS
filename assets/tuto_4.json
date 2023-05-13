@@ -354,6 +354,19 @@
          "tilecount":1600,
          "tileheight":64,
          "tilewidth":64
+        }, 
+        {
+         "columns":40,
+         "firstgid":1601,
+         "image":"placeholder.png",
+         "imageheight":2600,
+         "imagewidth":2600,
+         "margin":0,
+         "name":"placeholder",
+         "spacing":0,
+         "tilecount":1600,
+         "tileheight":64,
+         "tilewidth":64
         }],
  "tilewidth":64,
  "type":"map",

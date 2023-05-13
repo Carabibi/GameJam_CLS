@@ -70,7 +70,7 @@ class scene1 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.mur);
         this.physics.add.collider(this.player, this.obstacle);
         this.physics.add.collider(this.player, this.grpporte, this.Niveau2,null,this);
-
+        
         //INPUT
         this.cursors = this.input.keyboard.createCursorKeys();
         this.clavier = this.input.keyboard.addKeys('SHIFT,E');
