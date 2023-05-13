@@ -25,7 +25,11 @@
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          "height":20,
          "id":1,
+<<<<<<<< HEAD:assets/test_ld.json
          "name":"mur",
+========
+         "name":"Tile Layer 1",
+>>>>>>>> 22236e0dadb0a9b927d42274a1407af52a7aeb67:assets/map.tmj
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
@@ -39,6 +43,7 @@
  "renderorder":"right-down",
  "tiledversion":"1.10.0",
  "tileheight":64,
+<<<<<<<< HEAD:assets/test_ld.json
  "tilesets":[
         {
          "columns":4,
@@ -53,6 +58,9 @@
          "tileheight":64,
          "tilewidth":64
         }],
+========
+ "tilesets":[],
+>>>>>>>> 22236e0dadb0a9b927d42274a1407af52a7aeb67:assets/map.tmj
  "tilewidth":64,
  "type":"map",
  "version":"1.10",
