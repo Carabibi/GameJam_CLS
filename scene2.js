@@ -2,6 +2,7 @@ class scene2 extends Phaser.Scene {
     constructor() {
         super('scene2');
         this.CanShoot = true;
+        this.cible_detruite = 0
         this.porte_ouverte = false
     }
 
@@ -10,7 +11,8 @@ class scene2 extends Phaser.Scene {
     preload() {   
         this.load.tilemapTiledJSON("map2", "assets/tuto_2.json");
         this.load.image("tileset", "assets/placeholder.png");
-        this.load.image("porte", "assets/porte.png");
+        this.load.image("porte_ouverte", "assets/porte.png");
+        this.load.image("porte", "assets/porte_ferme.png");
         this.load.image("cible", "assets/cible.png");
         this.load.image("sol", "assets/sol_640x640_asterix.png");
         this.load.spritesheet('perso',"assets/perso.png",{frameWidth:47,frameHeight:61})
@@ -249,11 +251,17 @@ class scene2 extends Phaser.Scene {
         
     }
     Niveau2(){
-        this.scene.start('scene3')
+        if(this.porte_ouverte== true){
+        this.scene.start('scene3')}
     }
     touche_cible(shuriken, cible){
         shuriken.destroy()
         cible.destroy()
-        cible_detruite+=1
+        this.cible_detruite+=1
+        if(this.cible_detruite >= 2){
+            this.porte_ouverte = true 
+            this.grpporte.getChildren()[0].setTexture("porte_ouverte")
+            this.grpporte.getChildren()[1].setTexture("porte_ouverte")
+        }
     }
 }
