@@ -23,6 +23,7 @@ class scene1 extends Phaser.Scene {
         this.load.spritesheet('perso',"assets/perso.png",{frameWidth:47,frameHeight:61})
         this.load.spritesheet('shuriken','assets/Shuriken-sheet.png',{frameWidth:16,frameHeight:16})
         this.load.spritesheet('HP','assets/HPBar180x37.png',{frameWidth:180,frameHeight:37})
+        this.load.spritesheet('transi','assets/transiPortes_256x128.png',{frameWidth:256,frameHeight:128})
     }
 
     create() {
@@ -77,6 +78,7 @@ class scene1 extends Phaser.Scene {
         //GROUPE / UI
         this.shuriken = this.physics.add.group();
         this.HPbar = this.add.sprite(80,20,"HP")
+        this.fil = this.add.sprite(64*14,64*6,"transi")
 
         //ANIMATIONS
         this.anims.create({
@@ -136,7 +138,19 @@ class scene1 extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('perso',{start:3,end:5 }),
             frameRate:20,
         })
-  
+        //ANIMATION FIL
+        this.anims.create({
+            key: 'transi1',
+            frames: this.anims.generateFrameNumbers('transi', {start: 0, end: 7}),
+            frameRate: 8,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'transi2',
+            frames: this.anims.generateFrameNumbers('transi', {start: 7, end: 0}),
+            frameRate: 8,
+            repeat: -1
+        });
     }
 
 
@@ -238,6 +252,10 @@ class scene1 extends Phaser.Scene {
         
     }
     Niveau2(){
-        this.scene.start('scene2')
+        this.fil.anims.play('transi1')
+        setTimeout(() => {
+            this.scene.start('scene2')
+        }, 1000);
+        
     }
 }

@@ -8,8 +8,8 @@
             241, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 252,
             281, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 292,
             321, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 332,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 372,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 412,
+            1610612860, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 372,
+            1610612860, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 412,
             441, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 452,
             481, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 492,
             521, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 532,
@@ -54,48 +54,48 @@
          "name":"cible",
          "objects":[
                 {
+                 "class":"",
                  "gid":122,
                  "height":64,
                  "id":2,
                  "name":"",
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":64,
                  "x":576,
                  "y":192
                 }, 
                 {
+                 "class":"",
                  "gid":122,
                  "height":64,
                  "id":3,
                  "name":"",
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":64,
                  "x":576,
                  "y":384
                 }, 
                 {
+                 "class":"",
                  "gid":122,
                  "height":64,
                  "id":47,
                  "name":"",
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":64,
                  "x":576,
                  "y":448
                 }, 
                 {
+                 "class":"",
                  "gid":122,
                  "height":64,
                  "id":49,
                  "name":"",
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":64,
                  "x":576,
@@ -113,24 +113,24 @@
          "name":"porte_sortie",
          "objects":[
                 {
+                 "class":"",
                  "gid":4,
                  "height":64,
                  "id":51,
                  "name":"",
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":64,
                  "x":320,
                  "y":64
                 }, 
                 {
+                 "class":"",
                  "gid":4,
                  "height":64,
                  "id":52,
                  "name":"",
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":64,
                  "x":384,
@@ -169,7 +169,7 @@
  "nextobjectid":53,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.0",
+ "tiledversion":"1.9.2",
  "tileheight":64,
  "tilesets":[
         {
@@ -333,6 +333,6 @@
         }],
  "tilewidth":64,
  "type":"map",
- "version":"1.10",
+ "version":"1.9",
  "width":12
 }
