@@ -2,24 +2,26 @@ class scene2 extends Phaser.Scene {
     constructor() {
         super('scene2');
         this.CanShoot = true;
-    
+        this.porte_ouverte = false
     }
 
     init(data) {
     }
     preload() {   
-        this.load.tilemapTiledJSON("map", "assets/tuto_2.json");
+        this.load.tilemapTiledJSON("map2", "assets/tuto_2.json");
         this.load.image("tileset", "assets/placeholder.png");
         this.load.image("porte", "assets/porte.png");
+        this.load.image("cible", "assets/cible.png");
         this.load.image("sol", "assets/sol_640x640_asterix.png");
         this.load.spritesheet('perso',"assets/perso.png",{frameWidth:47,frameHeight:61})
         this.load.spritesheet('shuriken','assets/Shuriken-sheet.png',{frameWidth:16,frameHeight:16})
         this.load.spritesheet('HP','assets/HPBar180x37.png',{frameWidth:180,frameHeight:37})
+
     }
 
     create() {
         // CREATE MAP
-        this.map = this.add.tilemap("map");
+        this.map = this.add.tilemap("map2");
         this.add.image(64*6,64*6,"sol")
         this.tileset = this.map.addTilesetImage(
             "placeholder",
@@ -29,20 +31,27 @@ class scene2 extends Phaser.Scene {
             "mur",
             this.tileset
         );
-        this.obstacle = this.map.createLayer(
-            "obstacle",
+        this.trou = this.map.createLayer(
+            "trou",
             this.tileset
         );
 
         this.grpporte = this.physics.add.group({ immovable: true, allowGravity: false })
-        this.porte = this.map.getObjectLayer("porte");
+        this.porte = this.map.getObjectLayer("porte_sortie");
         this.porte.objects.forEach(coord => {
-            this.grpporte.create(coord.x + 32, coord.y + 32, "porte").angle = 90;
+            this.grpporte.create(coord.x + 32, coord.y -32 , "porte");
         });
 
-        this.mur.setCollisionByExclusion(-1, true);
-        this.obstacle.setCollisionByExclusion(-1, true);
+        this.grpcible = this.physics.add.group({ immovable: true, allowGravity: false })
+        this.cible = this.map.getObjectLayer("cible");
+        this.cible.objects.forEach(coord => {
+            this.grpcible.create(coord.x + 32, coord.y + 32, "cible");
+        });
 
+
+
+        this.mur.setCollisionByExclusion(-1, true);
+        this.trou.setCollisionByExclusion(-1, true);
         // SPAWN JOUEUR
         if (this.spawnx && this.spawny) {
             this.player = this.physics.add.sprite(this.spawnx, this.spawny, 'perso');
@@ -57,10 +66,7 @@ class scene2 extends Phaser.Scene {
         //this.cameras.main.x = 4*64
         //this.cameras.main.y = 3*64
 
-        //COLLIDER
-        this.physics.add.collider(this.player, this.mur);
-        this.physics.add.collider(this.player, this.obstacle);
-        this.physics.add.collider(this.player, this.grpporte, this.Niveau2,null,this);
+        
 
         //INPUT
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -129,6 +135,11 @@ class scene2 extends Phaser.Scene {
             frameRate:20,
         })
   
+        //COLLIDER
+        this.physics.add.collider(this.player, this.mur);
+        this.collide_trou = this.physics.add.collider(this.player, this.trou);
+        this.physics.add.collider(this.player, this.grpporte, this.Niveau2,null,this);
+        this.physics.add.overlap(this.shuriken, this.grpcible, this.touche_cible,null,this);
     }
 
 
@@ -140,8 +151,10 @@ class scene2 extends Phaser.Scene {
             this.player.anims.play('anim gauche',true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityX(-800)
+                this.collide_trou.active = false 
                 setTimeout(() => {
                     CDDash = false
+                    this.collide_trou.active = true
                 }, 150);
                 setTimeout(() => {
                     CDDash = true
@@ -154,8 +167,10 @@ class scene2 extends Phaser.Scene {
             this.player.anims.play('anim droite',true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityX(800)
+                this.collide_trou.active = false 
                 setTimeout(() => {
                     CDDash = false
+                    this.collide_trou.active = true
                 }, 150);
                 setTimeout(() => {
                     CDDash = true
@@ -171,8 +186,10 @@ class scene2 extends Phaser.Scene {
             this.player.anims.play('anim dos',true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityY(-800)
+                this.collide_trou.active = false 
                 setTimeout(() => {
                     CDDash = false
+                    this.collide_trou.active = true
                 }, 150);
                 setTimeout(() => {
                     CDDash = true
@@ -184,8 +201,10 @@ class scene2 extends Phaser.Scene {
             this.player.anims.play('anim face',true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityY(800)
+                this.collide_trou.active = false 
                 setTimeout(() => {
                     CDDash = false
+                    this.collide_trou.active = true
                 }, 150);
                 setTimeout(() => {
                     CDDash = true
@@ -230,6 +249,11 @@ class scene2 extends Phaser.Scene {
         
     }
     Niveau2(){
-        this.scene.start('scene2')
+        this.scene.start('scene3')
+    }
+    touche_cible(shuriken, cible){
+        shuriken.destroy()
+        cible.destroy()
+        cible_detruite+=1
     }
 }
