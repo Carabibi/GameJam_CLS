@@ -10,6 +10,12 @@ class scene1 extends Phaser.Scene {
     }
 
     create() {
+        this.dashCD1 = true;
+        this.IsGoingLeft = false;
+        this.IsGoingRight = false;
+        this.IsGoingUp=false;
+        this.IsGoingDown=false;
+        this.isDashing = false;
         // SPAWN JOUEUR
         if (this.spawnx && this.spawny) {
             this.player = this.physics.add.sprite(this.spawnx, this.spawny, 'perso');
@@ -20,6 +26,7 @@ class scene1 extends Phaser.Scene {
 
 
         this.cursors = this.input.keyboard.createCursorKeys();
+        //this.shuriken = this.physics.add.group();
     }
 
 
@@ -49,6 +56,35 @@ class scene1 extends Phaser.Scene {
         else {
             this.player.setVelocityY(0)
         }
+        //shoot
+        this.CanShoot = true;
+        if (this.clavier.E.isDown && this.CanBDF == true) {
+            this.SpriteFireBall.create(this.player.x + 50, this.player.y, "SpriteFireBall").body.setAllowGravity(false);
+            this.SpriteFireBall.setVelocityX(600);
+            this.Shoot = false;
+            setTimeout(() => {
+                this.Shoot = true;
+            }, 500);
+        }
+        if (this.clavier.SHIFT.isDown && this.IsMoving == true && this.IsGoingRight == false && this.dashCD1 == true) {
 
+            this.IsGoingRight = false;
+            this.IsMoving = true;
+            this.player.setVelocityX(-900);
+            this.player.setVelocityY(0);
+            
+            
+            setTimeout(() => {
+                this.dashCD1 = false
+                this.isDashing = true;
+            }, 200);
+
+            this.time.addEvent({
+                delay: 3000, callback: () => {
+                    this.dashCD1 = true
+                    this.isDashing = false
+                },
+            })
+        } 
     }
 }
