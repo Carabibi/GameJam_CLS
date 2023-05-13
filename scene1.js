@@ -44,7 +44,7 @@ class scene1 extends Phaser.Scene {
 
         this.cursors = this.input.keyboard.createCursorKeys();
         //this.shuriken = this.physics.add.group();
-        this.clavier = this.input.keyboard.addKeys('SHIFT');
+        this.clavier = this.input.keyboard.addKeys('SHIFT,E');
     }
 
 
@@ -53,7 +53,7 @@ class scene1 extends Phaser.Scene {
         // Droite/gauche
         if (this.cursors.left.isDown) {
             this.player.setVelocityX(-160)
-            if(this.clavier.SHIFT.isDown && CDDash == true){
+            if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityX(-800)
                 setTimeout(() => {
                     CDDash = false
@@ -62,11 +62,11 @@ class scene1 extends Phaser.Scene {
                     CDDash = true
                 }, 3000);
             }
-            
+
         }
         else if (this.cursors.right.isDown) {
             this.player.setVelocityX(160);
-            if(this.clavier.SHIFT.isDown && CDDash == true){
+            if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityX(800)
                 setTimeout(() => {
                     CDDash = false
@@ -82,7 +82,7 @@ class scene1 extends Phaser.Scene {
         // Haut/bas
         if (this.cursors.up.isDown) {
             this.player.setVelocityY(-160)
-            if(this.clavier.SHIFT.isDown && CDDash == true){
+            if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityY(-800)
                 setTimeout(() => {
                     CDDash = false
@@ -94,7 +94,7 @@ class scene1 extends Phaser.Scene {
         }
         else if (this.cursors.down.isDown) {
             this.player.setVelocityY(160)
-            if(this.clavier.SHIFT.isDown && CDDash == true){
+            if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityY(800)
                 setTimeout(() => {
                     CDDash = false
@@ -107,6 +107,8 @@ class scene1 extends Phaser.Scene {
         else {
             this.player.setVelocityY(0)
         }
+
+
         //shoot
         this.CanShoot = true;
         if (this.clavier.E.isDown && this.CanBDF == true) {
@@ -116,26 +118,6 @@ class scene1 extends Phaser.Scene {
             setTimeout(() => {
                 this.Shoot = true;
             }, 500);
-        }
-        if (this.clavier.SHIFT.isDown && this.IsMoving == true && this.IsGoingRight == false && this.dashCD1 == true) {
-
-            this.IsGoingRight = false;
-            this.IsMoving = true;
-            this.player.setVelocityX(-900);
-            this.player.setVelocityY(0);
-            
-            
-            setTimeout(() => {
-                this.dashCD1 = false
-                this.isDashing = true;
-            }, 200);
-
-            this.time.addEvent({
-                delay: 3000, callback: () => {
-                    this.dashCD1 = true
-                    this.isDashing = false
-                },
-            })
-        } 
+        }   
     }
 }
