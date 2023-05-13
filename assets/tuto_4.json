@@ -21,13 +21,46 @@
             1241, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1262,
             1281, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1302,
             1321, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1342,
-            1361, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2684354564,
-            1401, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2684354564,
+            1361, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            1401, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             1441, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1462,
             1481, 1482, 1483, 1484, 1485, 1486, 1487, 1488, 1489, 1490, 1491, 1492, 1493, 1494, 1495, 1496, 1497, 1498, 1499, 1500, 1501, 1502],
          "height":22,
-         "id":16,
+         "id":1,
          "name":"mur",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":22,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2684354564,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2684354564,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "height":22,
+         "id":2,
+         "name":"porte",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
@@ -59,7 +92,7 @@
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          "height":22,
-         "id":13,
+         "id":5,
          "name":"trou",
          "opacity":1,
          "type":"tilelayer",
@@ -71,7 +104,7 @@
         {
          "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 81, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 81, 0,
-            0, 0, 81, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 81, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 81, 0, 81, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 81, 0, 81, 0, 0, 0,
             0, 0, 0, 0, 81, 81, 81, 0, 0, 0, 0, 0, 0, 0, 0, 81, 81, 81, 0, 0, 0, 0,
             0, 0, 0, 81, 81, 0, 0, 0, 0, 81, 0, 0, 81, 0, 0, 0, 0, 81, 81, 0, 0, 0,
@@ -88,11 +121,11 @@
             0, 0, 0, 81, 81, 0, 0, 0, 0, 81, 0, 0, 81, 0, 0, 0, 0, 81, 81, 0, 0, 0,
             0, 0, 0, 0, 81, 81, 81, 0, 0, 0, 0, 0, 0, 0, 0, 81, 81, 81, 0, 0, 0, 0,
             0, 0, 0, 81, 0, 81, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 81, 0, 81, 0, 0, 0,
-            0, 0, 81, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 81, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 81, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          "height":22,
-         "id":14,
+         "id":3,
          "name":"pique",
          "opacity":1,
          "type":"tilelayer",
@@ -103,15 +136,14 @@
         }, 
         {
          "draworder":"topdown",
-         "id":12,
+         "id":4,
          "name":"coin",
          "objects":[
                 {
                  "class":"",
                  "gid":6,
                  "height":64,
-<<<<<<< Updated upstream
-                 "id":127,
+                 "id":1,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -123,7 +155,7 @@
                  "class":"",
                  "gid":6,
                  "height":64,
-                 "id":128,
+                 "id":2,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -135,7 +167,7 @@
                  "class":"",
                  "gid":6,
                  "height":64,
-                 "id":129,
+                 "id":3,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -147,10 +179,7 @@
                  "class":"",
                  "gid":6,
                  "height":64,
-                 "id":130,
-=======
-                 "id":146,
->>>>>>> Stashed changes
+                 "id":4,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -162,44 +191,31 @@
                  "class":"",
                  "gid":6,
                  "height":64,
-                 "id":147,
-                 "name":"",
-                 "rotation":0,
-                 "visible":true,
-                 "width":64,
-                 "x":1216,
-                 "y":128
-                }, 
-                {
-                 "class":"",
-                 "gid":6,
-                 "height":64,
-                 "id":148,
-                 "name":"",
-                 "rotation":0,
-                 "visible":true,
-                 "width":64,
-                 "x":704,
-                 "y":128
-                }, 
-                {
-                 "class":"",
-                 "gid":6,
-                 "height":64,
-<<<<<<< Updated upstream
-                 "id":141,
+                 "id":5,
                  "name":"",
                  "rotation":0,
                  "visible":true,
                  "width":64,
                  "x":64,
-                 "y":768
+                 "y":1280
                 }, 
                 {
                  "class":"",
                  "gid":6,
                  "height":64,
-                 "id":142,
+                 "id":6,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":64,
+                 "x":128,
+                 "y":1344
+                }, 
+                {
+                 "class":"",
+                 "gid":6,
+                 "height":64,
+                 "id":10,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -211,10 +227,19 @@
                  "class":"",
                  "gid":6,
                  "height":64,
-                 "id":144,
-=======
-                 "id":149,
->>>>>>> Stashed changes
+                 "id":11,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":64,
+                 "x":64,
+                 "y":768
+                }, 
+                {
+                 "class":"",
+                 "gid":6,
+                 "height":64,
+                 "id":12,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -226,73 +251,13 @@
                  "class":"",
                  "gid":6,
                  "height":64,
-                 "id":150,
+                 "id":13,
                  "name":"",
                  "rotation":0,
                  "visible":true,
                  "width":64,
-                 "x":128,
+                 "x":704,
                  "y":128
-                }, 
-                {
-                 "gid":6,
-                 "height":64,
-                 "id":151,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":64,
-                 "x":64,
-                 "y":192
-                }, 
-                {
-                 "gid":6,
-                 "height":64,
-                 "id":152,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":64,
-                 "x":64,
-                 "y":704
-                }, 
-                {
-                 "gid":6,
-                 "height":64,
-                 "id":153,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":64,
-                 "x":64,
-                 "y":768
-                }, 
-                {
-                 "gid":6,
-                 "height":64,
-                 "id":154,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":64,
-                 "x":64,
-                 "y":1280
-                }, 
-                {
-                 "gid":6,
-                 "height":64,
-                 "id":155,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":64,
-                 "x":128,
-                 "y":1344
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -302,27 +267,26 @@
         }, 
         {
          "draworder":"topdown",
-         "id":9,
+         "id":6,
          "name":"heal",
          "objects":[
                 {
                  "class":"",
                  "gid":5,
                  "height":64,
-<<<<<<< Updated upstream
-                 "id":27,
+                 "id":14,
                  "name":"",
                  "rotation":0,
                  "visible":true,
                  "width":64,
-                 "x":673,
-                 "y":735
+                 "x":674,
+                 "y":736
                 }, 
                 {
                  "class":"",
                  "gid":5,
                  "height":64,
-                 "id":114,
+                 "id":15,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -334,39 +298,13 @@
                  "class":"",
                  "gid":5,
                  "height":64,
-=======
->>>>>>> Stashed changes
-                 "id":115,
+                 "id":16,
                  "name":"",
                  "rotation":0,
                  "visible":true,
                  "width":64,
                  "x":1088,
                  "y":128
-                }, 
-                {
-                 "gid":5,
-                 "height":64,
-                 "id":157,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":64,
-                 "x":671.030303030303,
-                 "y":735.030303030303
-                }, 
-                {
-                 "gid":5,
-                 "height":64,
-                 "id":158,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":64,
-                 "x":64,
-                 "y":448
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -376,14 +314,14 @@
         }, 
         {
          "draworder":"topdown",
-         "id":6,
-         "name":"cd_rom",
+         "id":7,
+         "name":"CD_ROM",
          "objects":[
                 {
                  "class":"",
                  "gid":43,
                  "height":64,
-                 "id":156,
+                 "id":17,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -397,8 +335,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":17,
- "nextobjectid":159,
+ "nextlayerid":8,
+ "nextobjectid":18,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",
@@ -415,151 +353,6 @@
          "spacing":0,
          "tilecount":1600,
          "tileheight":64,
-         "tiles":[
-                {
-                 "id":0,
-                 "properties":[
-                        {
-                         "name":"estSolide",
-                         "type":"bool",
-                         "value":true
-                        }]
-                }, 
-                {
-                 "id":1,
-                 "properties":[
-                        {
-                         "name":"estSolide",
-                         "type":"bool",
-                         "value":true
-                        }]
-                }, 
-                {
-                 "id":2,
-                 "properties":[
-                        {
-                         "name":"estSolide",
-                         "type":"bool",
-                         "value":false
-                        }]
-                }, 
-                {
-                 "id":3,
-                 "properties":[
-                        {
-                         "name":"estSolide",
-                         "type":"bool",
-                         "value":false
-                        }]
-                }, 
-                {
-                 "id":40,
-                 "properties":[
-                        {
-                         "name":"estSolide",
-                         "type":"bool",
-                         "value":false
-                        }]
-                }, 
-                {
-                 "id":41,
-                 "properties":[
-                        {
-                         "name":"estSolide",
-                         "type":"bool",
-                         "value":false
-                        }]
-                }, 
-                {
-                 "id":42,
-                 "properties":[
-                        {
-                         "name":"estSolide",
-                         "type":"bool",
-                         "value":false
-                        }]
-                }, 
-                {
-                 "id":43,
-                 "properties":[
-                        {
-                         "name":"estSolide",
-                         "type":"bool",
-                         "value":false
-                        }]
-                }, 
-                {
-                 "id":80,
-                 "properties":[
-                        {
-                         "name":"estSolide",
-                         "type":"bool",
-                         "value":false
-                        }]
-                }, 
-                {
-                 "id":81,
-                 "properties":[
-                        {
-                         "name":"estSolide",
-                         "type":"bool",
-                         "value":false
-                        }]
-                }, 
-                {
-                 "id":82,
-                 "properties":[
-                        {
-                         "name":"estSolide",
-                         "type":"bool",
-                         "value":false
-                        }]
-                }, 
-                {
-                 "id":83,
-                 "properties":[
-                        {
-                         "name":"estSolide",
-                         "type":"bool",
-                         "value":false
-                        }]
-                }, 
-                {
-                 "id":120,
-                 "properties":[
-                        {
-                         "name":"estSolide",
-                         "type":"bool",
-                         "value":false
-                        }]
-                }, 
-                {
-                 "id":121,
-                 "properties":[
-                        {
-                         "name":"estSolide",
-                         "type":"bool",
-                         "value":false
-                        }]
-                }, 
-                {
-                 "id":122,
-                 "properties":[
-                        {
-                         "name":"estSolide",
-                         "type":"bool",
-                         "value":false
-                        }]
-                }, 
-                {
-                 "id":123,
-                 "properties":[
-                        {
-                         "name":"estSolide",
-                         "type":"bool",
-                         "value":false
-                        }]
-                }],
          "tilewidth":64
         }],
  "tilewidth":64,
