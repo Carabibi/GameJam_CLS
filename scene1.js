@@ -2,6 +2,7 @@ var CDDash = true
 class scene1 extends Phaser.Scene {
     constructor() {
         super('scene1');
+        this.CanShoot = true;
     }
 
     init(data) {
@@ -10,6 +11,7 @@ class scene1 extends Phaser.Scene {
         this.load.image("perso", "assets/perso.png");
         this.load.tilemapTiledJSON("map", "assets/map.json");
         this.load.image("tileset", "assets/placeholder.png");
+        this.load.spritesheet('shuriken','assets/Shuriken-sheet.png',{frameWidth:16,frameHeight:16})
     }
 
     create() {
@@ -43,8 +45,9 @@ class scene1 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.mur);
 
         this.cursors = this.input.keyboard.createCursorKeys();
-        //this.shuriken = this.physics.add.group();
+        
         this.clavier = this.input.keyboard.addKeys('SHIFT,E');
+        this.shuriken = this.physics.add.group();
     }
 
 
@@ -110,13 +113,13 @@ class scene1 extends Phaser.Scene {
 
 
         //shoot
-        this.CanShoot = true;
-        if (this.clavier.E.isDown && this.CanBDF == true) {
-            this.SpriteFireBall.create(this.player.x + 50, this.player.y, "SpriteFireBall").body.setAllowGravity(false);
-            this.SpriteFireBall.setVelocityX(600);
-            this.Shoot = false;
+        
+        if (this.clavier.E.isDown && this.CanShoot == true) {
+            this.shuriken.create(this.player.x + 50, this.player.y, "shuriken")
+            this.shuriken.setVelocityX(600);
+            this.CanShoot = false;
             setTimeout(() => {
-                this.Shoot = true;
+                this.CanShoot = true;
             }, 500);
         }   
     }
