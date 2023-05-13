@@ -20,7 +20,7 @@ class scene1 extends Phaser.Scene {
         this.load.image("tileset", "assets/placeholder.png");
         this.load.image("porte", "assets/porte.png");
         this.load.image("sol", "assets/sol_640x640_asterix.png");
-        this.load.spritesheet('perso',"assets/perso.png",{frameWidth:47,frameHeight:61})
+        this.load.spritesheet('perso',"assets/spritepotagoniste.png",{frameWidth:47,frameHeight:61})
         this.load.spritesheet('shuriken','assets/Shuriken-sheet.png',{frameWidth:16,frameHeight:16})
         this.load.spritesheet('HP','assets/HPBar180x37.png',{frameWidth:180,frameHeight:37})
         this.load.spritesheet('transi','assets/transiPortes_256x128.png',{frameWidth:256,frameHeight:128})
@@ -115,28 +115,28 @@ class scene1 extends Phaser.Scene {
         this.anims.create({
             key: 'shu',
             frames: this.anims.generateFrameNumbers('shuriken', {start: 0, end: 3}),
-            frameRate: 20,
+            frameRate: 10,
         });
         
         this.anims.create({
             key:'anim droite',
-            frames: this.anims.generateFrameNumbers('perso',{start:6,end:8 }),
-            frameRate:20,
+            frames: this.anims.generateFrameNumbers('perso',{start:14,end:20 }),
+            frameRate:10,
         })
         this.anims.create({
             key:'anim gauche',
-            frames: this.anims.generateFrameNumbers('perso',{start:9,end:11 }),
-            frameRate:20,
+            frames: this.anims.generateFrameNumbers('perso',{start:21,end:27 }),
+            frameRate:10,
         })
         this.anims.create({
             key:'anim face',
-            frames: this.anims.generateFrameNumbers('perso',{start:0,end:2 }),
-            frameRate:20,
+            frames: this.anims.generateFrameNumbers('perso',{start:0,end:6 }),
+            frameRate:10,
         })
         this.anims.create({
             key:'anim dos',
-            frames: this.anims.generateFrameNumbers('perso',{start:3,end:5 }),
-            frameRate:20,
+            frames: this.anims.generateFrameNumbers('perso',{start:7,end:13 }),
+            frameRate:10,
         })
         //ANIMATION FIL
         this.anims.create({

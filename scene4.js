@@ -251,10 +251,10 @@ class scene4 extends Phaser.Scene {
         },this)
         
     }
-    Niveau2(){
-        this.fil.anims.play('transi1')
+    Niveau1(){
+        this.fil.anims.play('transi_niveau1')
         setTimeout(() => {
-            this.scene.start('scene2')
+            this.scene.start('niveau1')
         }, 1000);
         
     }
