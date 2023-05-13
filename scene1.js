@@ -5,6 +5,7 @@ class scene1 extends Phaser.Scene {
     constructor() {
         super('scene1');
         this.CanShoot = true;
+
     }
 
     init(data) {
@@ -95,6 +96,13 @@ class scene1 extends Phaser.Scene {
             frameRate: 1,
             repeat: -1
         });
+        // ANIMATION SHURIKEN
+        this.anims.create({
+            key: 'shuriken',
+            frames: this.anims.generateFrameNumbers('shuriken', {start: 0, end: 3}),
+            frameRate: 1,
+            repeat: -1
+        });
     }
 
 
@@ -169,12 +177,24 @@ class scene1 extends Phaser.Scene {
         //shoot
         
         if (this.clavier.E.isDown && this.CanShoot == true) {
-            this.shuriken.create(this.player.x + 50, this.player.y, "shuriken")
-            this.shuriken.setVelocityX(600);
+            if(this.cursors.right.isDown){
+                this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityX(600);
+                this.anims.play("shuriken")    
+            }
+            else if(this.cursors.left.isDown){
+                this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityX(-600);
+            }
+            else if(this.cursors.up.isDown){
+                this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityY(-600);
+            }
+            else if(this.cursors.down.isDown){
+                this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityY(600);
+            }
             this.CanShoot = false;
             setTimeout(() => {
                 this.CanShoot = true;
             }, 500);
-        }   
+        }  
+        //this.shuriken.callAll("animations.add",'shuriken',4,true) 
     }
 }
