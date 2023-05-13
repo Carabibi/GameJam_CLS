@@ -4,8 +4,9 @@ class Menu extends Phaser.Scene {
 
     }
     preload() {
+        this.load.spritesheet('Lucy', 'assets/lucyanim.png',{frameWidth:1280,frameHeight:720})
+
         this.load.image('1P', 'startscreen/lignesverte.png');
-        
         this.load.image('4P', 'startscreen/background.png');
         this.load.image('titre', 'startscreen/titre.png');
         this.load.image('nouvellepartie', 'startscreen/newgame.png');
@@ -46,19 +47,31 @@ class Menu extends Phaser.Scene {
         button.on('pointerdown', () => {
             this.Startgame();
         });
-
-
-        this.image = this.add.image
+        //this.image = this.add.image
         this.image = this.add.image(640,360 , '1P')
 
-        
+        this.anims.create({
+            key: 'lucy_idle',
+            frames: this.anims.generateFrameNumbers('Lucy', { start: 0, end: 54 }),
+            frameRate: 45,
+            repeat: 0
+           });
     }
     update() {
        
 
     }
     Startgame() {
+        this.lucy = this.add.sprite(640, 360, 'Lucy');
+        this.lucy.anims.play("lucy_idle", true)
+
+  // Anime le sprite de Lucy
+    
+        setTimeout(() => {
         this.scene.start('scene1')
+                    }, 1100);
+
+        
 
     }
 }

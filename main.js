@@ -8,7 +8,11 @@ var config = {
         }
     },
     input: { gamepad: true },
+<<<<<<< Updated upstream
     scene: [niveau1],
+=======
+    scene: [Menu,scene1,scene4],
+>>>>>>> Stashed changes
     pixelArt : true ,
 } 
 var game =  new Phaser.Game(config);
