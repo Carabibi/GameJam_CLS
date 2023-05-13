@@ -18,10 +18,10 @@ class Menu extends Phaser.Scene {
         
     }
     create() {
-        this.audioContext = new (window.AudioContext || window.webkitAudio)();
-            this.sound.context = audioContext;
-              // Crée une instance de Phaser.Sound pour jouer la musique
-            this.musique = this.sound.add('Music4', { loop: true });
+        //var audioContext = new (window.AudioContext || window.webkitAudio)();
+        //    this.sound.context = audioContext;
+        //      // Crée une instance de Phaser.Sound pour jouer la musique
+            var musique = this.sound.add('Music4', { loop: true });
               // Joue la musique
             musique.play();
         
