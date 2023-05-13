@@ -98,11 +98,13 @@ class scene1 extends Phaser.Scene {
         });
         // ANIMATION SHURIKEN
         this.anims.create({
-            key: 'shuriken',
+            key: 'shu',
             frames: this.anims.generateFrameNumbers('shuriken', {start: 0, end: 3}),
-            frameRate: 1,
-            repeat: -1
+            frameRate: 20,
         });
+
+
+  
     }
 
 
@@ -178,8 +180,7 @@ class scene1 extends Phaser.Scene {
         
         if (this.clavier.E.isDown && this.CanShoot == true) {
             if(this.cursors.right.isDown){
-                this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityX(600);
-                this.anims.play("shuriken")    
+                this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityX(600);   
             }
             else if(this.cursors.left.isDown){
                 this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityX(-600);
@@ -195,6 +196,9 @@ class scene1 extends Phaser.Scene {
                 this.CanShoot = true;
             }, 500);
         }  
-        //this.shuriken.callAll("animations.add",'shuriken',4,true) 
+        this.shuriken.getChildren().forEach(function(child){
+            child.anims.play('shu', true)
+        },this)
+        
     }
 }
