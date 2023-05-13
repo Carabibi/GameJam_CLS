@@ -13,7 +13,7 @@ class scene2 extends Phaser.Scene {
         this.load.image("tileset", "assets/placeholder.png");
         this.load.image("porte_ouverte", "assets/porte.png");
         this.load.image("porte", "assets/porte_ferme.png");
-        this.load.image("cible", "assets/cible.png");
+        this.load.spritesheet('cible','assets/cible.png',{frameWidth:64,frameHeight:64})
         this.load.image("sol", "assets/sol_640x640_asterix.png");
         this.load.spritesheet('perso',"assets/perso.png",{frameWidth:47,frameHeight:61})
         this.load.spritesheet('shuriken','assets/Shuriken-sheet.png',{frameWidth:16,frameHeight:16})
@@ -76,7 +76,7 @@ class scene2 extends Phaser.Scene {
 
         //GROUPE / UI
         this.shuriken = this.physics.add.group();
-        this.HPbar = this.add.sprite(80,20,"HP")
+        this.HPbar = this.add.sprite(80,20,"HP").setScrollFactor(0)
 
         //ANIMATIONS
         this.anims.create({
@@ -136,6 +136,16 @@ class scene2 extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('perso',{start:3,end:5 }),
             frameRate:20,
         })
+        //ANIMATION CIBLE
+        this.anims.create({
+            key: 'cible',
+            frames: this.anims.generateFrameNumbers('cible', {start: 0, end: 2}),
+            frameRate: 4.5,
+            repeat: -1
+        });
+        this.grpcible.getChildren().forEach(function(child){
+            child.anims.play('cible', true)
+        },this)
   
         //COLLIDER
         this.physics.add.collider(this.player, this.mur);
@@ -143,6 +153,7 @@ class scene2 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.grpporte, this.Niveau2,null,this);
         this.physics.add.overlap(this.shuriken, this.grpcible, this.touche_cible,null,this);
     }
+    
 
 
     update() {
@@ -219,11 +230,11 @@ class scene2 extends Phaser.Scene {
 
 
         //BARRE HP
-        if(HP==0){this.HPbar.anims.play("vie1")}
-        if(HP==25){this.HPbar.anims.play("vie2")}
+        if(HP==0){this.HPbar.anims.play("vie5")}
+        if(HP==25){this.HPbar.anims.play("vie4")}
         if(HP==50){this.HPbar.anims.play("vie3")}
-        if(HP==75){this.HPbar.anims.play("vie4")}
-        if(HP==100){this.HPbar.anims.play("vie5")}
+        if(HP==75){this.HPbar.anims.play("vie2")}
+        if(HP==100){this.HPbar.anims.play("vie1")}
 
         //shoot
         

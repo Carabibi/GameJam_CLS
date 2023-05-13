@@ -77,7 +77,7 @@ class scene1 extends Phaser.Scene {
 
         //GROUPE / UI
         this.shuriken = this.physics.add.group();
-        this.HPbar = this.add.sprite(80,20,"HP")
+        this.HPbar = this.add.sprite(80,20,"HP").setScrollFactor(0)
         this.fil = this.add.sprite(64*14,64*6,"transi")
 
         //ANIMATIONS

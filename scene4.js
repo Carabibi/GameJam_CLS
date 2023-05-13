@@ -16,7 +16,7 @@ class scene4 extends Phaser.Scene {
     init(data) {
     }
     preload() {   
-        this.load.tilemapTiledJSON("map", "assets/tuto_4.json");
+        this.load.tilemapTiledJSON("map4", "assets/tuto_4.json");
         this.load.image("tileset", "assets/placeholder.png");
         this.load.image("porte", "assets/porte.png");
         this.load.image("sol", "assets/sol_640x640_rick_et_morty.png");
@@ -28,7 +28,7 @@ class scene4 extends Phaser.Scene {
 
     create() {
         // CREATE MAP
-        this.map = this.add.tilemap("map");
+        this.map = this.add.tilemap("map4");
         this.add.image(64*11,64*11,"sol")
         this.tileset = this.map.addTilesetImage(
             "placeholder",
@@ -38,19 +38,19 @@ class scene4 extends Phaser.Scene {
             "mur",
             this.tileset
         );
-        this.obstacle = this.map.createLayer(
-            "obstacle",
+        this.trou = this.map.createLayer(
+            "trou",
             this.tileset
         );
 
-        this.grpporte = this.physics.add.group({ immovable: true, allowGravity: false })
-        this.porte = this.map.getObjectLayer("porte");
-        this.porte.objects.forEach(coord => {
-            this.grpporte.create(coord.x + 32, coord.y + 32, "porte").angle = 90;
-        });
+        //this.grpporte = this.physics.add.group({ immovable: true, allowGravity: false })
+        //this.porte = this.map.getObjectLayer("porte");
+        //this.porte.objects.forEach(coord => {
+        //    this.grpporte.create(coord.x + 32, coord.y + 32, "porte").angle = 90;
+        //});
 
         this.mur.setCollisionByExclusion(-1, true);
-        this.obstacle.setCollisionByExclusion(-1, true);
+        this.trou.setCollisionByExclusion(-1, true);
 
         // SPAWN JOUEUR
         if (this.spawnx && this.spawny) {
