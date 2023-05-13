@@ -4,13 +4,13 @@ class Menu extends Phaser.Scene {
 
     }
     preload() {
-        this.load.image('1P', 'lignesverte.png');
+        this.load.image('1P', 'startscreen/lignesverte.png');
         
-        this.load.image('4P', 'background.png');
-        this.load.image('titre', 'titre.png');
-        this.load.image('nouvellepartie', 'newgame.png');
-        this.load.image('continuer', 'continuer.png');
-        this.load.image('options', 'options.png');
+        this.load.image('4P', 'startscreen/background.png');
+        this.load.image('titre', 'startscreen/titre.png');
+        this.load.image('nouvellepartie', 'startscreen/newgame.png');
+        this.load.image('continuer', 'startscreen/continuer.png');
+        this.load.image('options', 'startscreen/options.png');
 
     }
     create() {
@@ -46,7 +46,7 @@ class Menu extends Phaser.Scene {
 
     }
     Startgame() {
-        this.scene.start('Village')
+        this.scene.start('scene1')
 
     }
 }
