@@ -17,7 +17,7 @@ class scene4 extends Phaser.Scene {
     }
     preload() {   
         this.load.tilemapTiledJSON("map4", "assets/tuto_4.json");
-        this.load.image("ere", "assets/placeholder.png");
+        this.load.image("tileset", "assets/placeholder.png");
         this.load.image("porte", "assets/porte.png");
         this.load.image("sol", "assets/sol_1280x1280_kaamelot.png");
         this.load.spritesheet('perso',"assets/perso.png",{frameWidth:47,frameHeight:61})
@@ -31,11 +31,15 @@ class scene4 extends Phaser.Scene {
         this.map = this.add.tilemap("map4");
         this.add.image(64*11,64*11,"sol")
         this.tileset = this.map.addTilesetImage(
-            "placeholder",
+            "palceholder",
             "tileset"
         );
         this.mur = this.map.createLayer(
             "mur",
+            this.tileset
+        );
+        this.porte = this.map.createLayer(
+            "porte",
             this.tileset
         );
         this.trou = this.map.createLayer(
