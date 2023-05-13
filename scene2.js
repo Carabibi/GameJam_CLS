@@ -1,14 +1,6 @@
-var CDDash = true
-var HPmax = 100
-var HP = 100
-var degat =34
-var vitessedep=1
-var vitessedatk=1
-var speedatk=1
-
-class scene1 extends Phaser.Scene {
+class scene2 extends Phaser.Scene {
     constructor() {
-        super('scene1');
+        super('scene2');
         this.CanShoot = true;
     
     }
@@ -16,7 +8,7 @@ class scene1 extends Phaser.Scene {
     init(data) {
     }
     preload() {   
-        this.load.tilemapTiledJSON("map", "assets/tuto_1.json");
+        this.load.tilemapTiledJSON("map", "assets/tuto_2.json");
         this.load.image("tileset", "assets/placeholder.png");
         this.load.image("porte", "assets/porte.png");
         this.load.image("sol", "assets/sol_640x640_asterix.png");
