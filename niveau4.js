@@ -110,7 +110,7 @@ class niveau4 extends Phaser.Scene {
         //COLLIDER
         this.physics.add.collider(this.player, this.mur);
         
-        this.physics.add.collider(this.player, this.grpporte, this.Niveau3, null, this);
+        this.physics.add.collider(this.player, this.grpporte, this.Niveau5, null, this);
         this.collide_trou = this.physics.add.collider(this.player, this.trouLv4);
         this.physics.add.collider(this.GroupeEnnemi, this.mur,);
         
@@ -355,10 +355,10 @@ class niveau4 extends Phaser.Scene {
     }
 
 
-    Niveau3() {
+    Niveau5() {
         this.fil.anims.play('transi1')
         setTimeout(() => {
-            this.scene.start('niveau3')
+            this.scene.start('niveau5')
         }, 1000);
 
     }
