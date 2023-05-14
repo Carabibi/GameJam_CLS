@@ -1,33 +1,33 @@
-var CDDash = true
-var HPmax = 100
-var HP = 100
-var degat =34
-var vitessedep=1
-var vitessedatk=1
-var speedatk=1
-
-class scene1 extends Phaser.Scene {
+class marchand extends Phaser.Scene {
     constructor() {
-        super('scene1');
-        this.CanShoot = true;
-    
-    }
+        super("marchand");
 
-    init(data) {
     }
-    preload() {   
-        this.load.tilemapTiledJSON("map", "assets/tuto_1.json");
+    preload() {
+        //this.load.spritesheet('Lucy', 'assets/lucyanim.png',{frameWidth:1280,frameHeight:720})
+        this.load.tilemapTiledJSON("map", "assets/shop_1.json");
         this.load.image("tileset", "assets/placeholder.png");
         this.load.image("porte", "assets/porte.png");
         this.load.image("sol", "assets/sol_640x640_asterix.png");
+        this.load.audio('Music5', 'audio/Music2!EXE.5marchand.mp3');
         this.load.spritesheet('perso',"assets/spritepotagoniste.png",{frameWidth:47,frameHeight:61})
-        this.load.spritesheet('shuriken','assets/Shuriken-sheet.png',{frameWidth:16,frameHeight:16})
-        this.load.spritesheet('HP','assets/HPBar180x37.png',{frameWidth:180,frameHeight:37})
-        this.load.spritesheet('transi','assets/transiPortes_256x128.png',{frameWidth:256,frameHeight:128})
-    }
+        this.load.spritesheet('SHOP', 'assets/shop_complet.png',{frameWidth:768,frameHeight:224})
+        this.load.spritesheet('RAM', 'assets/RAM.png',{frameWidth:64,frameHeight:64})
+        this.load.spritesheet('SSD', 'assets/SSD.png',{frameWidth:64,frameHeight:64})
+        this.load.spritesheet('4090', 'assets/4090rtx.png',{frameWidth:64,frameHeight:64})
+        this.load.spritesheet('WATER', 'assets/Watercooling.png',{frameWidth:64,frameHeight:64})
+        this.load.spritesheet('CPU', 'assets/Processeur.png',{frameWidth:64,frameHeight:64})
+        this.load.spritesheet('SATA', 'assets/Satacable.png',{frameWidth:64,frameHeight:64})
+        this.load.spritesheet('ALIM', 'assets/Alim.png',{frameWidth:64,frameHeight:64})
+        this.load.spritesheet('VENTS', 'assets/Ventilateur.png',{frameWidth:64,frameHeight:64})
 
+        this.load.image('RETOUR', 'assets/empty.png',{frameWidth:64,frameHeight:64})
+
+        
+        
+    }
     create() {
-        // CREATE MAP
+        console.log("pd")
         this.map = this.add.tilemap("map");
         this.add.image(64*6,64*6,"sol")
         this.tileset = this.map.addTilesetImage(
@@ -42,7 +42,14 @@ class scene1 extends Phaser.Scene {
             "obstacle",
             this.tileset
         );
-
+        this.table = this.map.createLayer(
+            "table_neo",
+            this.tileset
+        );
+        this.porte = this.map.createLayer(
+            "porte",
+            this.tileset
+        );
         this.grpporte = this.physics.add.group({ immovable: true, allowGravity: false })
         this.porte = this.map.getObjectLayer("porte");
         this.porte.objects.forEach(coord => {
@@ -57,7 +64,7 @@ class scene1 extends Phaser.Scene {
             this.player = this.physics.add.sprite(this.spawnx, this.spawny, 'perso');
         }
         else {
-            this.player = this.physics.add.sprite(2 * 64, 5 * 64, 'perso');
+            this.player = this.physics.add.sprite(6 * 64, 6 * 64, 'perso');
         }
 
         //CAMERA
@@ -77,10 +84,104 @@ class scene1 extends Phaser.Scene {
 
         //GROUPE / UI
         this.shuriken = this.physics.add.group();
-        this.HPbar = this.add.sprite(80,20,"HP").setScrollFactor(0)
-        this.fil = this.add.sprite(64*14,64*6,"transi")
+        this.HPbar = this.add.sprite(2 * 64, 5 * 64,"HP").setScrollFactor(0);
+        this.fil = this.add.sprite(64*14,64*6,"transi");
+        //var audioContext = new (window.AudioContext || window.webkitAudio)();
+        //    this.sound.context = audioContext;
+        //    // Crée une instance de Phaser.Sound pour jouer la musique
+        var musique = this.sound.add('Music5', { loop: true });
+            // Joue la musique
+            musique.play();
 
-        //ANIMATIONS
+        var button = this.add.sprite(666 ,350, 'SHOP');
+            button.setInteractive();
+            button.on('pointerdown', () => {
+                this.Startgame();
+            });
+        var button = this.add.sprite(666 ,350, 'RAM');
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.Startgame();
+        });
+
+        var button = this.add.sprite(666 ,350, 'SSD');
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.Startgame();
+        }); 
+        var button = this.add.sprite(666 ,350, '4090');
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.Startgame();
+        });
+        var button = this.add.sprite(666 ,350, 'CPU');
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.Startgame();
+        });
+        var button = this.add.sprite(666 ,350, 'WATER');
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.Startgame();
+        });
+        var button = this.add.sprite(666 ,350, 'SATA');
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.Startgame();
+        });
+        var button = this.add.sprite(666 ,350, 'ALIM');
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.Startgame();
+        });
+        var button = this.add.sprite(666 ,350, 'VENTS');
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.Startgame();
+        });
+        var button = this.add.sprite(550 ,470, 'RETOUR');
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.Startgame();
+        });
+
+        //Création des sprites pour le marchand
+        this.anims.create({
+            key: 'Base',
+            frames: this.anims.generateFrameNumbers('SHOP', {start: 0, end: 0}),
+            frameRate: 1,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'Base2',
+            frames: this.anims.generateFrameNumbers('SHOP', {start: 1, end: 1}),
+            frameRate: 1,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'RAM',
+            frames: this.anims.generateFrameNumbers('SHOP', {start: 2, end: 2}),
+            frameRate: 1,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'SSD',
+            frames: this.anims.generateFrameNumbers('SHOP', {start: 2, end: 2}),
+            frameRate: 1,
+            repeat: 0
+        });
+        this.anims.create({
+            key: '4090',
+            frames: this.anims.generateFrameNumbers('SHOP', {start: 2, end: 2}),
+            frameRate: 1,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'RAM',
+            frames: this.anims.generateFrameNumbers('SHOP', {start: 2, end: 2}),
+            frameRate: 1,
+            repeat: -1
+        });
         this.anims.create({
             key: 'vie1',
             frames: this.anims.generateFrameNumbers('HP', {start: 0, end: 0}),
@@ -152,11 +253,7 @@ class scene1 extends Phaser.Scene {
             repeat: -1
         });
     }
-
-
     update() {
-        //                           DEPLACEMENT JOUEUR
-        // Droite/gauche
         if (this.cursors.left.isDown) {
             this.player.setVelocityX(-160*vitessedep)
             this.player.anims.play('anim gauche',true)
@@ -233,13 +330,13 @@ class scene1 extends Phaser.Scene {
                 this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityX(475*speedatk);   
             }
             else if(this.cursors.left.isDown){
-                this.shuriken.create(this.player.x -50, this.player.y, "shuriken").setVelocityX(-475*speedatk);
+                this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityX(-475*speedatk);
             }
             else if(this.cursors.up.isDown){
-                this.shuriken.create(this.player.x , this.player.y-50, "shuriken").setVelocityY(-475*speedatk);
+                this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityY(-475*speedatk);
             }
             else if(this.cursors.down.isDown){
-                this.shuriken.create(this.player.x , this.player.y+50, "shuriken").setVelocityY(475*speedatk);
+                this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityY(475*speedatk);
             }
             this.CanShoot = false;
             setTimeout(() => {
@@ -258,5 +355,5 @@ class scene1 extends Phaser.Scene {
         }, 1000);
         
     }
+
 }
-export default scene1

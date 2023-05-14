@@ -159,7 +159,7 @@ class scene2 extends Phaser.Scene {
         //COLLIDER
         this.physics.add.collider(this.player, this.mur);
         this.collide_trou = this.physics.add.collider(this.player, this.trou);
-        this.physics.add.collider(this.player, this.grpporte, this.Niveau2,null,this);
+        this.physics.add.collider(this.player, this.grpporte, this.Niveau3,null,this);
         this.physics.add.overlap(this.shuriken, this.grpcible, this.touche_cible,null,this);
     }
     
@@ -252,13 +252,13 @@ class scene2 extends Phaser.Scene {
                 this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityX(475*speedatk);   
             }
             else if(this.cursors.left.isDown){
-                this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityX(-475*speedatk);
+                this.shuriken.create(this.player.x - 50, this.player.y, "shuriken").setVelocityX(-475*speedatk);
             }
             else if(this.cursors.up.isDown){
-                this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityY(-475*speedatk);
+                this.shuriken.create(this.player.x , this.player.y-50, "shuriken").setVelocityY(-475*speedatk);
             }
             else if(this.cursors.down.isDown){
-                this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityY(475*speedatk);
+                this.shuriken.create(this.player.x, this.player.y+50, "shuriken").setVelocityY(475*speedatk);
             }
             this.CanShoot = false;
             setTimeout(() => {
@@ -270,7 +270,7 @@ class scene2 extends Phaser.Scene {
         },this)
         
     }
-    Niveau2(){
+    Niveau3(){
         if(this.porte_ouverte== true){
         this.scene.start('scene3')}
     }
