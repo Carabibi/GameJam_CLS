@@ -1,3 +1,4 @@
+var invulnerability = false
 var CDDash = true
 var HPmax = 100
 var HP = 100
