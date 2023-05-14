@@ -563,6 +563,5 @@ class niveau3 extends Phaser.Scene {
             }, 750);
         }
 
-
     }
 }
