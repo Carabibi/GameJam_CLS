@@ -1,3 +1,18 @@
+var CDDash = true
+var HPmax = 100
+var HP = 100
+var degat = 34
+var vitessedep = 1
+var vitessedatk = 1
+var speedatk = 1
+var overcloack = false;
+var cg = false;
+var alim = false;
+var watercooling = false;
+var cpu = false;
+var ventilo = false;
+var ram = false;
+
 class marchand extends Phaser.Scene {
     constructor() {
         super("marchand");
