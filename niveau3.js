@@ -45,6 +45,7 @@ class niveau3 extends Phaser.Scene {
         this.load.spritesheet('ventilo', 'assets/Ventilateur.png', { frameWidth: 64, frameHeight: 64 })
         this.load.spritesheet('watercooling', 'assets/Watercooling.png', { frameWidth: 64, frameHeight: 64 })
         this.load.spritesheet('ennemie1', 'mechant/spriteun.png', { frameWidth: 40, frameHeight: 40 })
+        this.load.spritesheet('ennemie0', 'mechant/spritezero.png', { frameWidth: 40, frameHeight: 40 })
 
         this.load.image("SpriteHitBox", "assets/SpriteHitBox.png");
     }
@@ -103,6 +104,7 @@ class niveau3 extends Phaser.Scene {
         });
 
         this.mur.setCollisionByExclusion(-1, true);
+        this.entree.setCollisionByExclusion(-1, true);
         this.trouLv3.setCollisionByExclusion(-1, true);
         this.picsLv3.setCollisionByExclusion(-1, true);
 
@@ -110,9 +112,9 @@ class niveau3 extends Phaser.Scene {
         // GROUPE ENNEMIE
         this.GroupeEnnemi = this.physics.add.group({ immovable: true, allowGravity: false })
         this.EnnemiUn = this.GroupeEnnemi.create( 19 * 64 , 2 * 64, 'ennemie1');
-        this.EnnemiDeux = this.GroupeEnnemi.create( 19 * 64 , 19 * 64, 'ennemie1');
+        this.EnnemiDeux = this.GroupeEnnemi.create( 19 * 64 , 19 * 64, 'ennemie0');
         this.EnnemiTrois = this.GroupeEnnemi.create( 2 * 64 , 2 * 64, 'ennemie1');
-        this.EnnemiQuatre = this.GroupeEnnemi.create( 2 * 64 , 19 * 64, 'ennemie1');
+        this.EnnemiQuatre = this.GroupeEnnemi.create( 2 * 64 , 19 * 64, 'ennemie0');
         this.EnnemiUn_HP= 100 ;
         this.EnnemiDeux_HP = 100 ;
         this.EnnemiTrois_HP= 100 ;
@@ -148,6 +150,8 @@ class niveau3 extends Phaser.Scene {
         //COLLIDER
         this.physics.add.collider(this.player, this.mur);
         this.physics.add.collider(this.player, this.obstacle);
+        this.physics.add.collider(this.player, this.entree);
+        this.physics.add.overlap(this.player, this.grpcoin, this.touche_coin, null, this);
         this.physics.add.collider(this.player, this.grpporte, this.Niveau4, null, this);
         this.physics.add.collider(this.GroupeEnnemi, this.mur,);
         this.physics.add.collider(this.GroupeEnnemi, this.obstacle,);
@@ -155,6 +159,7 @@ class niveau3 extends Phaser.Scene {
         this.physics.add.collider(this.GroupeEnnemi, this.grpporte,);
         this.physics.add.collider(this.GroupeEnnemi, this.GroupeEnnemi,);
         this.physics.add.collider(this.player, this.picsLv3, this.touche_pique, null, this);
+        this.physics.add.overlap(this.player, this.grpheal, this.touche_heal, null, this);
 
 
 
@@ -432,6 +437,20 @@ class niveau3 extends Phaser.Scene {
 
 
     }
+
+    touche_coin(player, coincoin) {
+        coin += 1
+        coincoin.destroy()
+    }
+
+    touche_heal(player, heal) {
+        HP += 25
+        heal.destroy()
+        this.porte_ouverte = true
+        this.grpporte.getChildren()[0].setTexture("porte_ouverte")
+        this.grpporte.getChildren()[1].setTexture("porte_ouverte")
+    }
+
     killUn(shu, ene) {
         if(this.EnnemiUn_HP > 0){
             console.log(this.EnnemiUn_HP)
@@ -449,6 +468,10 @@ class niveau3 extends Phaser.Scene {
        
         
     }
+
+    
+
+
     killDeux(shu, ene) {
         if(this.EnnemiDeux_HP > 0){
             console.log(this.EnnemiDeux_HP)
