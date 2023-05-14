@@ -119,7 +119,7 @@ class niveau7 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.entree);
         
         this.physics.add.collider(this.player, this.grpporte, this.Niveau8, null, this);
-        //this.collide_trou = this.physics.add.collider(this.player, this.trouLv7);
+        this.collide_trou = this.physics.add.collider(this.player, this.trouLv7);
         this.physics.add.collider(this.GroupeEnnemi, this.mur,);
         
         this.physics.add.collider(this.GroupeEnnemi, this.grpporte,);
