@@ -1,3 +1,5 @@
+
+
 var CDDash = true
 var HPmax = 100
 var HP = 100
@@ -103,6 +105,7 @@ class niveau3 extends Phaser.Scene {
         this.mur.setCollisionByExclusion(-1, true);
         this.trouLv3.setCollisionByExclusion(-1, true);
         this.picsLv3.setCollisionByExclusion(-1, true);
+        this.obstacle.setCollisionByExclusion(-1, true);
 
 
         // GROUPE ENNEMIE
@@ -119,8 +122,7 @@ class niveau3 extends Phaser.Scene {
         //const ennemies = this.createEnemies()
 
 
-        this.mur.setCollisionByExclusion(-1, true);
-        this.obstacle.setCollisionByExclusion(-1, true);
+
         
 
         // SPAWN JOUEUR
@@ -561,9 +563,5 @@ class niveau3 extends Phaser.Scene {
             }, 750);
         }
 
-        if (HP <= 0) {
-            this.scene.start("fin")
-        }
-    }
    
 }

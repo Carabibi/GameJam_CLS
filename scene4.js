@@ -220,7 +220,7 @@ class scene4 extends Phaser.Scene {
         //                           DEPLACEMENT JOUEUR
         // Droite/gauche
         if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-160*vitessedep*OCing)
+            this.player.setVelocityX(-160*vitessedep)
             this.player.anims.play('anim gauche',true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityX(-800)
@@ -236,7 +236,7 @@ class scene4 extends Phaser.Scene {
 
         }
         else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(160*vitessedep*OCing);
+            this.player.setVelocityX(160*vitessedep);
             this.player.anims.play('anim droite',true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityX(800)
@@ -255,7 +255,7 @@ class scene4 extends Phaser.Scene {
         }
         // Haut/bas
         if (this.cursors.up.isDown) {
-            this.player.setVelocityY(-160*vitessedep*OCing)
+            this.player.setVelocityY(-160*vitessedep)
             this.player.anims.play('anim dos',true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityY(-800)
@@ -270,7 +270,7 @@ class scene4 extends Phaser.Scene {
             }
         }
         else if (this.cursors.down.isDown) {
-            this.player.setVelocityY(160*vitessedep*OCing)
+            this.player.setVelocityY(160*vitessedep)
             this.player.anims.play('anim face',true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityY(800)
@@ -299,10 +299,10 @@ class scene4 extends Phaser.Scene {
         //OVERCLOCKING
 
         if(this.clavier.O.isDown && canOC == true){
-            OCing= 2
+            OCing= true
             canOC=false
             setTimeout(() => {
-                OCing = 1
+                OCing = false
             }, 10000);
             setTimeout(() => { 
                 canOC=true

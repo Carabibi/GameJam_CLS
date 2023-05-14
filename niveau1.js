@@ -104,7 +104,7 @@ class niveau1 extends Phaser.Scene {
             this.player = this.physics.add.sprite(this.spawnx, this.spawny, 'perso');
         }
         else {
-            this.player = this.physics.add.sprite(2 * 64, 5 * 64, 'perso');
+            this.player = this.physics.add.sprite(7 * 64, 10 * 64, 'perso');
         }
 
         // Hitbox Coucou

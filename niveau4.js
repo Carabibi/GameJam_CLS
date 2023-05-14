@@ -25,7 +25,7 @@ class niveau4 extends Phaser.Scene {
     init(data) {
     }
     preload() {
-        this.load.tilemapTiledJSON("map4", "assets/niveau_4.json");
+        this.load.tilemapTiledJSON("MAPBIDABA", "assets/niveau_4.json");
         this.load.image("tileset", "assets/placeholder.png");
         this.load.image("porte", "assets/porte.png");
         this.load.image("sol", "assets/sol_640x640_asterix.png");
@@ -65,7 +65,7 @@ class niveau4 extends Phaser.Scene {
 
         this.EnnemiUnFollow = false;
         // CREATE MAP
-        this.map = this.add.tilemap("map4");
+        this.map = this.add.tilemap("MAPBIDABA");
         this.add.image(64 * 6, 64 * 6, "sol")
         this.tileset = this.map.addTilesetImage(
             "placeholder",

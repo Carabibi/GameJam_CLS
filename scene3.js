@@ -9,7 +9,7 @@ class scene3 extends Phaser.Scene {
     init(data) {
     }
     preload() {
-        this.load.tilemapTiledJSON("map3", "assets/tuto_3.json");
+        this.load.tilemapTiledJSON("mapJLS", "assets/tuto_3.json");
         this.load.image("tileset", "assets/placeholder.png");
         this.load.image("porte_ouverte", "assets/porte.png");
         this.load.image("porte", "assets/porte_ferme.png");
@@ -29,7 +29,7 @@ class scene3 extends Phaser.Scene {
 
     create() {
         // CREATE MAP
-        this.map = this.add.tilemap("map3");
+        this.map = this.add.tilemap("mapJLS");
         this.add.image(64 * 6, 64 * 6, "sol3")
         this.tileset = this.map.addTilesetImage(
             "placeholder",
