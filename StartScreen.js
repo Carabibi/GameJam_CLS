@@ -36,18 +36,25 @@ class Menu extends Phaser.Scene {
 
         var button = this.add.sprite(666 ,350, 'nouvellepartie');
         button.setInteractive();
-        button.on('pointerdown', () => {
+        button.once('pointerdown', () => {
             this.Startgame();
+            button.disableInteractive();
+
         });
         var button = this.add.sprite(550 ,470, 'continuer');
         button.setInteractive();
-        button.on('pointerdown', () => {
+        button.once('pointerdown', () => {
             this.Startgame();
+            button.disableInteractive();
+
+            
         });
         var button = this.add.sprite(480,570, 'options');
         button.setInteractive();
-        button.on('pointerdown', () => {
+        button.once('pointerdown', () => {
             this.Startgame();
+            button.disableInteractive();
+
         });
         //this.image = this.add.image
         this.image = this.add.image(640,360 , '1P')
@@ -65,12 +72,12 @@ class Menu extends Phaser.Scene {
     }
     Startgame() {
         this.lucy = this.add.sprite(640, 360, 'Lucy');
-        this.lucy.anims.play("lucy_idle", true)
+        this.lucy.anims.play("lucy_idle", true);
 
   // Anime le sprite de Lucy
     
         setTimeout(() => {
-        this.scene.start('niveau6')
+        this.scene.start('marchand')
 
                     }, 1100)
         ;
