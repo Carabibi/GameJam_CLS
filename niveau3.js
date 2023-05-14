@@ -96,7 +96,7 @@ class niveau3 extends Phaser.Scene {
         this.grpheal = this.physics.add.group({ immovable: true, allowGravity: false })
         this.heal = this.map.getObjectLayer("heal");
         this.heal.objects.forEach(coord => {
-            this.grpheal.create(coord.x + 32, coord.y - 32, "corbeille");
+            this.grpheal.create(coord.x + 32, coord.y - 32, "heal");
         });
 
         this.mur.setCollisionByExclusion(-1, true);
@@ -107,6 +107,7 @@ class niveau3 extends Phaser.Scene {
         // GROUPE ENNEMIE
         this.GroupeEnnemi = this.physics.add.group({ immovable: true, allowGravity: false })
         this.EnnemiUn = this.GroupeEnnemi.create( 10 * 64 , 2 * 64, 'ennemie1');
+        this.EnnemiUn_HP= 100
         //const ennemies = this.createEnemies()
 
 
@@ -139,6 +140,7 @@ class niveau3 extends Phaser.Scene {
         this.collide_trou = this.physics.add.collider(this.player, this.trouLv3);
         this.physics.add.collider(this.GroupeEnnemi, this.grpporte,);
         this.physics.add.collider(this.GroupeEnnemi, this.GroupeEnnemi,);
+        this.physics.add.collider(this.player, this.picsLv3, this.touche_pique, null, this);
 
 
 
@@ -264,7 +266,7 @@ class niveau3 extends Phaser.Scene {
                 }, 150);
                 setTimeout(() => {
                     CDDash = true
-                }, 3000);
+                }, 1000);
             }
 
         }
@@ -280,7 +282,7 @@ class niveau3 extends Phaser.Scene {
                 }, 150);
                 setTimeout(() => {
                     CDDash = true
-                }, 3000);
+                }, 1000);
             }
         }
         else {
@@ -299,7 +301,7 @@ class niveau3 extends Phaser.Scene {
                 }, 150);
                 setTimeout(() => {
                     CDDash = true
-                }, 3000);
+                }, 1000);
             }
         }
         else if (this.cursors.down.isDown) {
@@ -314,7 +316,7 @@ class niveau3 extends Phaser.Scene {
                 }, 150);
                 setTimeout(() => {
                     CDDash = true
-                }, 3000);
+                }, 1000);
             }
         }
         else {
@@ -361,13 +363,30 @@ class niveau3 extends Phaser.Scene {
         //        this.ennemie1.deplacement(0, 0, 0, 0)
         //    }
         //},)
+        if (this.EnnemiUn_HP<=0 ){
+            this.EnnemiUnFollow = false
+            this.EnnemiUn.destroy()
+            this.SpriteHitBox.destroy()
+        }
+
 
     }
-    kill(shu, ennemies,) {
-        ennemies.destroy()
+    kill(shu) {
+        if(this.EnnemiUn_HP >0){
+            console.log(this.EnnemiUn_HP)
+            this.EnnemiUn_HP -= degat;
+            console.log(this.EnnemiUn_HP)
+        }
         shu.destroy()
-        this.SpriteHitBox.destroy()
+       
         
+    }
+
+    touche_pique() {
+        console.log("aie");
+        if (HP > 0) {
+            HP -= 25
+        }
     }
 
 
@@ -385,18 +404,5 @@ class niveau3 extends Phaser.Scene {
     }
 
 
-    createEnemies() {
-        const ennemies = this.physics.add.group();
-        for (var i = 0; i < 3; i++) {
-            let ennemie1 = null;
-            ennemie1 = new Enemy(this, i * 128, 196, 'ennemie1');
-            console.log("mdr")
-            console.log(ennemie1.x)
-            console.log(ennemie1.y)
-            ennemies.add(ennemie1)
-            //individu.body.velocity.y = 100; // Ajouter une vitesse à l'individu
-        }
-
-        return ennemies;
-    }
+   
 }
