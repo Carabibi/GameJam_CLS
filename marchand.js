@@ -89,18 +89,19 @@ class marchand extends Phaser.Scene {
             "table_neo",
             this.tileset
         );
-        this.porte = this.map.createLayer(
+        this.entree = this.map.createLayer(
             "porte",
             this.tileset
         );
-        //this.grpporte = this.physics.add.group({ immovable: true, allowGravity: false })
-        //this.porte = this.map.getObjectLayer("porte");
-        //this.porte.objects.forEach(coord => {
-        //    this.grpporte.create(coord.x + 32, coord.y + 32, "porte").angle = 90;
-        //});
+        this.grpporte = this.physics.add.group({ immovable: true, allowGravity: false })
+        this.porte = this.map.getObjectLayer("porte_sortie");
+        this.porte.objects.forEach(coord => {
+            this.grpporte.create(coord.x + 32, coord.y + 32, "porte").angle = 90;
+        });
 
         this.mur.setCollisionByExclusion(-1, true);
         this.obstacle.setCollisionByExclusion(-1, true);
+        this.entree.setCollisionByExclusion(-1, true);
 
         // SPAWN JOUEUR
         this.player = this.physics.add.sprite(5 * 64, 9 * 64, 'perso');
@@ -118,6 +119,7 @@ class marchand extends Phaser.Scene {
 
         //COLLIDER
         this.physics.add.collider(this.player, this.mur);
+        this.physics.add.collider(this.player, this.entree);
         this.physics.add.collider(this.player, this.obstacle);
         this.physics.add.collider(this.player, this.grpporte, this.Niveau2,null,this);
         //this.physics.
@@ -518,7 +520,7 @@ class marchand extends Phaser.Scene {
     Niveau2(){
         this.fil.anims.play('transi1')
         setTimeout(() => {
-            this.scene.start('scene2')
+            this.scene.start('niveau2')
         }, 1000);
         
     }
@@ -528,7 +530,7 @@ class marchand extends Phaser.Scene {
         });
         if(this.physics.overlap(this.player, this.emptyneo) && jouerson == 0){
             jouerson +=1;
-            this.sound.play('neowelcome',{ volume: 3 } );
+            this.sound.play('neowelcome',{ volume: 10 } );
 
         }
 
