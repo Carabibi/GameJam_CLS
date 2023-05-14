@@ -8,7 +8,7 @@ var vitessedatk = 1
 var speedatk = 1
 var coin = 0
 var canOC = false
-var OCing = false
+var OCing = 1
 class scene1 extends Phaser.Scene {
     constructor() {
         super('scene1');
