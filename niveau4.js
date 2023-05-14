@@ -52,16 +52,7 @@ class niveau4 extends Phaser.Scene {
     create() {
         //OVERCLOCKING
 
-        if(this.clavier.O.isDown && canOC == true){
-            OCing= 2
-            canOC=false
-            setTimeout(() => {
-                OCing = 1
-            }, 10000);
-            setTimeout(() => { 
-                canOC=true
-            }, 70000);
-        }
+        
 
         this.EnnemiUnFollow = false;
         // CREATE MAP
@@ -409,7 +400,16 @@ class niveau4 extends Phaser.Scene {
         //        this.ennemie1.deplacement(0, 0, 0, 0)
         //    }
         //},)
-
+        if(this.clavier.O.isDown && canOC == true){
+            OCing= 2
+            canOC=false
+            setTimeout(() => {
+                OCing = 1
+            }, 10000);
+            setTimeout(() => { 
+                canOC=true
+            }, 70000);
+        }
     }
     killun(shu, ene) {
         if(this.EnnemiUn_HP > 0){
