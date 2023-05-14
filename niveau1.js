@@ -1,5 +1,3 @@
-
-
 var CDDash = true
 var HPmax = 100
 var HP = 100
@@ -386,5 +384,3 @@ class niveau1 extends Phaser.Scene {
         return ennemies;
     }
 }
-
-export default niveau1

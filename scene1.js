@@ -5,7 +5,7 @@ var degat =34
 var vitessedep=1
 var vitessedatk=1
 var speedatk=1
-
+var coin = 0
 class scene1 extends Phaser.Scene {
     constructor() {
         super('scene1');

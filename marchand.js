@@ -491,4 +491,3 @@ class marchand extends Phaser.Scene {
         
     }
 }
-export default marchand
