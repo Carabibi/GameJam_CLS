@@ -11,8 +11,10 @@ class scene2 extends Phaser.Scene {
     preload() {   
         this.load.tilemapTiledJSON("map2", "assets/tuto_2.json");
         this.load.image("tileset", "assets/placeholder.png");
+        
         this.load.image("porte_ouverte", "assets/porte.png");
         this.load.image("porte", "assets/porte_ferme.png");
+
         this.load.spritesheet('cible','assets/cible.png',{frameWidth:64,frameHeight:64})
         this.load.image("sol2", "assets/sol_640x640_asterix.png");
         this.load.spritesheet('perso',"assets/perso.png",{frameWidth:47,frameHeight:61})
