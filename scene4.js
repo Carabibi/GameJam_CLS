@@ -1,3 +1,5 @@
+var coincollect = 0;
+
 class scene4 extends Phaser.Scene {
     constructor() {
         super('scene4');
@@ -194,6 +196,9 @@ class scene4 extends Phaser.Scene {
 
 
     update() {
+        if(coincollect == 10){
+            this.scene.start('niveau1')
+        }
         //                           DEPLACEMENT JOUEUR
         // Droite/gauche
         if (this.cursors.left.isDown) {
@@ -298,17 +303,15 @@ class scene4 extends Phaser.Scene {
         },this)
         
     }
-    Niveau2(){
-        this.fil.anims.play('transi_niveau1')
-        setTimeout(() => {
-            this.scene.start('niveau1')
-        }, 1000);
+
         
-    }
+    
     touche_coin(player, coincoin) {
         console.log("test")
         coin += 1
+        coincollect +=1
         coincoin.destroy()
+        console.log(coincollect)
     }
     touche_heal(player, heal) {
         HP += 25

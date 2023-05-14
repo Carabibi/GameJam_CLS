@@ -77,7 +77,7 @@ class Menu extends Phaser.Scene {
   // Anime le sprite de Lucy
     
         setTimeout(() => {
-        this.scene.start('niveau8')
+        this.scene.start('scene4')
 
                     }, 1100)
         ;
