@@ -346,9 +346,10 @@ class niveau2 extends Phaser.Scene {
         //},)
 
     }
-    kill(shu, ene,) {
-        ene.destroy()
+    kill(shu, ennemies,) {
+        ennemies.destroy()
         shu.destroy()
+        this.SpriteHitBox.destroy()
         
     }
 
