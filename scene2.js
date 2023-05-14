@@ -1,3 +1,12 @@
+var CDDash = true
+var HPmax = 100
+var HP = 100
+var degat =34
+var vitessedep=1
+var vitessedatk=1
+var speedatk=1
+
+
 class scene2 extends Phaser.Scene {
     constructor() {
         super('scene2');
@@ -276,3 +285,4 @@ class scene2 extends Phaser.Scene {
         }
     }
 }
+export default scene2

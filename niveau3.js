@@ -15,9 +15,9 @@ var cpu = false;
 var ventilo = false;
 var ram = false;
 
-class niveau1 extends Phaser.Scene {
+class niveau3 extends Phaser.Scene {
     constructor() {
-        super('niveau1');
+        super('niveau3');
         this.CanShoot = true;
 
     }
@@ -25,10 +25,10 @@ class niveau1 extends Phaser.Scene {
     init(data) {
     }
     preload() {
-        this.load.tilemapTiledJSON("map", "assets/niveau_1.json");
+        this.load.tilemapTiledJSON("map3", "assets/niveau_3.json");
         this.load.image("tileset", "assets/placeholder.png");
         this.load.image("porte", "assets/porte.png");
-        this.load.image("sol", "assets/sol_640x640_asterix.png");
+        this.load.image("solGrand", "assets/sol_1280x1280_kaamelot.png");
         this.load.spritesheet('perso', "assets/spritepotagoniste.png", { frameWidth: 47, frameHeight: 61 })
         this.load.spritesheet('shuriken', 'assets/Shuriken-sheet.png', { frameWidth: 16, frameHeight: 16 })
         this.load.spritesheet('HP', 'assets/HPBar180x37.png', { frameWidth: 180, frameHeight: 37 })
@@ -53,8 +53,8 @@ class niveau1 extends Phaser.Scene {
 
         this.EnnemiUnFollow = false;
         // CREATE MAP
-        this.map = this.add.tilemap("map");
-        this.add.image(64 * 6, 64 * 6, "sol")
+        this.map = this.add.tilemap("map3");
+        this.add.image(64 * 11, 64 * 11, "solGrand")
         this.tileset = this.map.addTilesetImage(
             "placeholder",
             "tileset"
@@ -67,12 +67,43 @@ class niveau1 extends Phaser.Scene {
             "obstacle",
             this.tileset
         );
+        this.picsLv2 = this.map.createLayer(
+            "pique",
+            this.tileset
+        );
+        this.trouLv3 = this.map.createLayer(
+            "trou",
+            this.tileset
+        );
+        this.entree = this.map.createLayer(
+            "porte",
+            this.tileset
+        );
 
         this.grpporte = this.physics.add.group({ immovable: true, allowGravity: false })
-        this.porte = this.map.getObjectLayer("porte");
+        this.porte = this.map.getObjectLayer("porte_sortie");
         this.porte.objects.forEach(coord => {
-            this.grpporte.create(coord.x + 32, coord.y + -32, "porte").angle = 0;
+            this.grpporte.create(coord.x +32 , coord.y + 32, "porte").angle = 90;
         });
+
+
+        this.grpcoin = this.physics.add.group({ immovable: true, allowGravity: false })
+        this.coin = this.map.getObjectLayer("coin");
+        this.coin.objects.forEach(coord => {
+            this.grpcoin.create(coord.x + 32, coord.y - 32, "coin");
+        });
+
+        this.grpheal = this.physics.add.group({ immovable: true, allowGravity: false })
+        this.heal = this.map.getObjectLayer("heal");
+        this.heal.objects.forEach(coord => {
+            this.grpheal.create(coord.x + 32, coord.y - 32, "corbeille");
+        });
+
+        this.mur.setCollisionByExclusion(-1, true);
+        this.trouLv3.setCollisionByExclusion(-1, true);
+        this.picsLv2.setCollisionByExclusion(-1, true);
+
+
         // GROUPE ENNEMIE
         this.GroupeEnnemi = this.physics.add.group({ immovable: true, allowGravity: false })
         this.EnnemiUn = this.GroupeEnnemi.create( 10 * 64 , 2 * 64, 'ennemie1');
@@ -102,9 +133,10 @@ class niveau1 extends Phaser.Scene {
         //COLLIDER
         this.physics.add.collider(this.player, this.mur);
         this.physics.add.collider(this.player, this.obstacle);
-        this.physics.add.collider(this.player, this.grpporte, this.Niveau2, null, this);
+        this.physics.add.collider(this.player, this.grpporte, this.Niveau3, null, this);
         this.physics.add.collider(this.GroupeEnnemi, this.mur,);
         this.physics.add.collider(this.GroupeEnnemi, this.obstacle,);
+        this.collide_trou = this.physics.add.collider(this.player, this.trouLv3);
         this.physics.add.collider(this.GroupeEnnemi, this.grpporte,);
         this.physics.add.collider(this.GroupeEnnemi, this.GroupeEnnemi,);
 
@@ -225,8 +257,10 @@ class niveau1 extends Phaser.Scene {
             this.player.anims.play('anim gauche', true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityX(-800)
+                this.collide_trou.active = false
                 setTimeout(() => {
                     CDDash = false
+                    this.collide_trou.active = true
                 }, 150);
                 setTimeout(() => {
                     CDDash = true
@@ -239,7 +273,9 @@ class niveau1 extends Phaser.Scene {
             this.player.anims.play('anim droite', true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityX(800)
+                this.collide_trou.active = false
                 setTimeout(() => {
+                    this.collide_trou.active = true
                     CDDash = false
                 }, 150);
                 setTimeout(() => {
@@ -256,7 +292,9 @@ class niveau1 extends Phaser.Scene {
             this.player.anims.play('anim dos', true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityY(-800)
+                this.collide_trou.active = false
                 setTimeout(() => {
+                    this.collide_trou.active = true
                     CDDash = false
                 }, 150);
                 setTimeout(() => {
@@ -269,7 +307,9 @@ class niveau1 extends Phaser.Scene {
             this.player.anims.play('anim face', true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityY(800)
+                this.collide_trou.active = false
                 setTimeout(() => {
+                    this.collide_trou.active = true
                     CDDash = false
                 }, 150);
                 setTimeout(() => {
@@ -330,10 +370,10 @@ class niveau1 extends Phaser.Scene {
     }
 
 
-    Niveau2() {
+    Niveau3() {
         this.fil.anims.play('transi1')
         setTimeout(() => {
-            this.scene.start('niveau2')
+            this.scene.start('niveau1')
         }, 1000);
 
     }
@@ -360,4 +400,4 @@ class niveau1 extends Phaser.Scene {
     }
 }
 
-export default niveau1
+export default niveau3

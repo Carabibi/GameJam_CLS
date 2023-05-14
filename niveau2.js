@@ -15,9 +15,9 @@ var cpu = false;
 var ventilo = false;
 var ram = false;
 
-class niveau1 extends Phaser.Scene {
+class niveau2 extends Phaser.Scene {
     constructor() {
-        super('niveau1');
+        super('niveau2');
         this.CanShoot = true;
 
     }
@@ -25,7 +25,7 @@ class niveau1 extends Phaser.Scene {
     init(data) {
     }
     preload() {
-        this.load.tilemapTiledJSON("map", "assets/niveau_1.json");
+        this.load.tilemapTiledJSON("map2", "assets/niveau_2.json");
         this.load.image("tileset", "assets/placeholder.png");
         this.load.image("porte", "assets/porte.png");
         this.load.image("sol", "assets/sol_640x640_asterix.png");
@@ -53,7 +53,7 @@ class niveau1 extends Phaser.Scene {
 
         this.EnnemiUnFollow = false;
         // CREATE MAP
-        this.map = this.add.tilemap("map");
+        this.map = this.add.tilemap("map2");
         this.add.image(64 * 6, 64 * 6, "sol")
         this.tileset = this.map.addTilesetImage(
             "placeholder",
@@ -64,14 +64,18 @@ class niveau1 extends Phaser.Scene {
             this.tileset
         );
         this.obstacle = this.map.createLayer(
-            "obstacle",
+            "obstacles",
+            this.tileset
+        );
+        this.entree = this.map.createLayer(
+            "porte",
             this.tileset
         );
 
         this.grpporte = this.physics.add.group({ immovable: true, allowGravity: false })
-        this.porte = this.map.getObjectLayer("porte");
+        this.porte = this.map.getObjectLayer("porte_sortie");
         this.porte.objects.forEach(coord => {
-            this.grpporte.create(coord.x + 32, coord.y + -32, "porte").angle = 0;
+            this.grpporte.create(coord.x -32, coord.y + 32, "porte").angle = 180;
         });
         // GROUPE ENNEMIE
         this.GroupeEnnemi = this.physics.add.group({ immovable: true, allowGravity: false })
@@ -102,7 +106,7 @@ class niveau1 extends Phaser.Scene {
         //COLLIDER
         this.physics.add.collider(this.player, this.mur);
         this.physics.add.collider(this.player, this.obstacle);
-        this.physics.add.collider(this.player, this.grpporte, this.Niveau2, null, this);
+        this.physics.add.collider(this.player, this.grpporte, this.Niveau3, null, this);
         this.physics.add.collider(this.GroupeEnnemi, this.mur,);
         this.physics.add.collider(this.GroupeEnnemi, this.obstacle,);
         this.physics.add.collider(this.GroupeEnnemi, this.grpporte,);
@@ -330,10 +334,10 @@ class niveau1 extends Phaser.Scene {
     }
 
 
-    Niveau2() {
+    Niveau3() {
         this.fil.anims.play('transi1')
         setTimeout(() => {
-            this.scene.start('niveau2')
+            this.scene.start('niveau3')
         }, 1000);
 
     }
@@ -360,4 +364,4 @@ class niveau1 extends Phaser.Scene {
     }
 }
 
-export default niveau1
+export default niveau2
