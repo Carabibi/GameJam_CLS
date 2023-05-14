@@ -152,7 +152,7 @@ class niveau3 extends Phaser.Scene {
 
         //GROUPE / UI
         this.shuriken = this.physics.add.group();
-        this.physics.add.collider(this.shuriken, this.GroupeEnnemi, this.kill, null, this);
+        this.physics.add.collider(this.shuriken, this.EnnemiUn, this.kill, null, this);
         this.HPbar = this.add.sprite(80, 20, "HP").setScrollFactor(0);
         this.fil = this.add.sprite(64 * 24, 192, "transi");
         
@@ -233,7 +233,7 @@ class niveau3 extends Phaser.Scene {
 
     update() {
 
-        if (this.EnnemiUnFollow == true){
+        if (this.EnnemiUnFollow == true && this.EnnemiUn_HP >0){
             this.EnnemiUn.setVelocityX(this.player.x - this.EnnemiUn.x);
             this.EnnemiUn.setVelocityY(this.player.y -this.EnnemiUn.y);
         }
@@ -363,21 +363,24 @@ class niveau3 extends Phaser.Scene {
         //        this.ennemie1.deplacement(0, 0, 0, 0)
         //    }
         //},)
-        if (this.EnnemiUn_HP<=0 ){
-            this.EnnemiUnFollow = false
-            this.EnnemiUn.destroy()
-            this.SpriteHitBox.destroy()
-        }
+        
 
 
     }
-    kill(shu) {
-        if(this.EnnemiUn_HP >0){
+    kill(shu, ene) {
+        if(this.EnnemiUn_HP > 0){
             console.log(this.EnnemiUn_HP)
             this.EnnemiUn_HP -= degat;
-            console.log(this.EnnemiUn_HP)
+            console.log(this.EnnemiUnFollow)
+        }else{
+            this.EnnemiUnFollow = false
+            this.SpriteHitBox.destroy();
+            this.EnnemiUn.destroy();
+            
+        
         }
-        shu.destroy()
+        ene.destroy()
+        console.log("j'ai detruit le shuriken")
        
         
     }
