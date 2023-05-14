@@ -126,6 +126,7 @@ class niveau8 extends Phaser.Scene {
         //COLLIDER
         this.physics.add.collider(this.player, this.mur);
         this.physics.add.collider(this.player, this.entree);
+        this.collide_trou = this.physics.add.collider(this.player, this.trouLv8);
         
         this.physics.add.collider(this.player, this.grpporte, this.Niveau8, null, this);
         //this.collide_trou = this.physics.add.collider(this.player, this.trouLv7);
@@ -383,7 +384,7 @@ class niveau8 extends Phaser.Scene {
         if(this.porte_ouverte== true){
         this.fil.anims.play('transi1')
         setTimeout(() => {
-            this.scene.start('niveau9')
+            this.scene.start('Boss')
         }, 1000);
         }
         }
@@ -431,7 +432,7 @@ class niveau8 extends Phaser.Scene {
         }
         
         if(HP<=0){
-            this.scene.start("fin")
+            this.scene.start("Boss")
         }
     }
 }

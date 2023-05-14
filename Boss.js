@@ -111,6 +111,7 @@ class Boss extends Phaser.Scene {
         
         
         this.physics.add.collider(this.GroupeEnnemi, this.GroupeEnnemi,);
+        this.collide_trou = this.physics.add.collider(this.player, this.trouBoss);
         this.physics.add.collider(this.GroupeEnnemi, this.mur,);
         this.physics.add.collider(this.GroupeEnnemi, this.obstacle,);
         this.physics.add.collider(this.player, this.picsLv4, this.touche_pique, null, this);
