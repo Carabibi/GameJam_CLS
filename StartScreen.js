@@ -69,9 +69,9 @@ class Menu extends Phaser.Scene {
     
         setTimeout(() => {
         this.scene.start('marchand')
-                    }, 1100);
-
-        
-
+                    }, 1100)
+        ;
     }
 }
+
+export default Menu
