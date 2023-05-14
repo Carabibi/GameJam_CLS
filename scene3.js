@@ -307,9 +307,8 @@ class scene3 extends Phaser.Scene {
         }
     }
     touche_pique() {
-        if (HP > 0) {
-            HP -= 25
-        }
+        console.log(HP)
+        this.take_damage()
     }
     touche_heal(player, heal) {
         HP += 25
@@ -321,5 +320,19 @@ class scene3 extends Phaser.Scene {
     touche_coin(player, coincoin) {
         coin += 1
         coincoin.destroy()
+    }
+    take_damage() {
+        console.log("test")
+        if (invulnerability == false) {
+            HP -= 25
+            invulnerability = true
+            setTimeout(() => {
+                invulnerability = false
+            }, 750);
+        }
+        
+        if(HP<=0){
+            this.scene.start("fin")
+        }
     }
 }

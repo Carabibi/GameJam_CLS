@@ -1,3 +1,4 @@
+var invulnerability = false
 var CDDash = true
 var HPmax = 100
 var HP = 100
@@ -220,11 +221,11 @@ class scene1 extends Phaser.Scene {
 
 
         //BARRE HP
-        if(HP==0){this.HPbar.anims.play("vie1")}
-        if(HP==25){this.HPbar.anims.play("vie2")}
+        if(HP==0){this.HPbar.anims.play("vie5")}
+        if(HP==25){this.HPbar.anims.play("vie4")}
         if(HP==50){this.HPbar.anims.play("vie3")}
-        if(HP==75){this.HPbar.anims.play("vie4")}
-        if(HP==100){this.HPbar.anims.play("vie5")}
+        if(HP==75){this.HPbar.anims.play("vie2")}
+        if(HP==100){this.HPbar.anims.play("vie1")}
 
         //shoot
         

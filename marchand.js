@@ -15,6 +15,16 @@ var ram = false;
 var shop 
 var shopbool = false
 var jouerson = 0;
+var coin = 100
+var RAMbool = false
+var SSDbool = false
+var RTXbool = false
+var WATERbool = false
+var CPUbool = false
+var SATAbool = false
+var ALIMbool = false
+var VENTSbool = false
+var commun = 1
 
 
 class marchand extends Phaser.Scene {
@@ -28,11 +38,13 @@ class marchand extends Phaser.Scene {
         this.load.image("tileset", "assets/placeholder.png");
         this.load.image("porte", "assets/porte.png");
         this.load.image("sol", "assets/sol_640x640_asterix.png");
+        
         this.load.audio('Music5', 'audio/Music2!EXE.5marchand.mp3');
-        this.load.audio('neowelcome', 'soundboard/Neo2.mp3')
+        this.load.audio('neowelcome', 'soundboard/Neo2.mp3');
 
         this.load.spritesheet('perso',"assets/spritepotagoniste.png",{frameWidth:47,frameHeight:61})
 
+        this.load.spritesheet('button', 'assets/boutonachat.png',{frameWidth:134,frameHeight:32});
         this.load.spritesheet('shuriken','assets/Shuriken-sheet.png',{frameWidth:32,frameHeight:32})
         this.load.spritesheet('HP','assets/HPBar180x37.png',{frameWidth:180,frameHeight:37})
         this.load.spritesheet('transi','assets/transiPortes_256x128.png',{frameWidth:256,frameHeight:128})
@@ -273,54 +285,122 @@ class marchand extends Phaser.Scene {
         });
 
         this.shop =this.physics.add.sprite(600 ,610, 'SHOP').setScrollFactor(0);
+
+        this.buttonachat = this.physics.add.sprite(850,  690, 'button').setScrollFactor(0);
         //this.shop.SetVisibility = false
 
         this.buttonUn = this.add.sprite(245 ,538, 'RAM').setScrollFactor(0)
         this.buttonUn.setInteractive();
         this.buttonUn.on('pointerdown', () => {
+            RAMbool = true
+            SSDbool = false
+            RTXbool = false
+            WATERbool = false
+            CPUbool = false
+            SATAbool = false
+            ALIMbool = false
+            VENTSbool = false
             this.shop.anims.play('SHOP_RAM',true);
         });
 
         this.buttonDeux = this.add.sprite(345 ,538, 'SSD').setScrollFactor(0);
         this.buttonDeux.setInteractive();
         this.buttonDeux.on('pointerdown', () => {
+            RAMbool = false
+            SSDbool = true
+            RTXbool = false
+            WATERbool = false
+            CPUbool = false
+            SATAbool = false
+            ALIMbool = false
+            VENTSbool = false
             this.shop.anims.play('SHOP_SSD',true);
         });
         this.buttonTrois = this.add.sprite(445 ,538, '4090').setScrollFactor(0);
         this.buttonTrois.setInteractive();
         this.buttonTrois.on('pointerdown', () => {
+            RAMbool = false
+            SSDbool = false
+            RTXbool = true
+            WATERbool = false
+            CPUbool = false
+            SATAbool = false
+            ALIMbool = false
+            VENTSbool = false
             this.shop.anims.play('SHOP_4090',true);
         });
         
         this.buttonQuatre = this.add.sprite(245 ,610, 'WATER').setScrollFactor(0);
         this.buttonQuatre.setInteractive();
         this.buttonQuatre.on('pointerdown', () => {
+            RAMbool = false
+            SSDbool = false
+            RTXbool = false
+            WATERbool = true
+            CPUbool = false
+            SATAbool = false
+            ALIMbool = false
+            VENTSbool = false
             this.shop.anims.play('SHOP_WATER',true);
         });
         this.buttonCinq = this.add.sprite(345 ,610, 'CPU').setScrollFactor(0);
         this.buttonCinq.setInteractive();
         this.buttonCinq.on('pointerdown', () => {
+            RAMbool = false
+            SSDbool = false
+            RTXbool = false
+            WATERbool = false
+            CPUbool = true
+            SATAbool = false
+            ALIMbool = false
+            VENTSbool = false
             this.shop.anims.play('SHOP_CPU',true);
         });
         this.buttonSix = this.add.sprite(443 ,610, 'SATA').setScrollFactor(0);
         this.buttonSix.setInteractive();
         this.buttonSix.on('pointerdown', () => {
+            RAMbool = false
+            SSDbool = false
+            RTXbool = false
+            WATERbool = false
+            CPUbool = false
+            SATAbool = true
+            ALIMbool = false
+            VENTSbool = false
             this.shop.anims.play('SHOP_SATA',true);
         });
         this.buttonSept = this.add.sprite(245 ,690, 'ALIM').setScrollFactor(0);
         this.buttonSept.setInteractive();
         this.buttonSept.on('pointerdown', () => {
+            RAMbool = false
+            SSDbool = false
+            RTXbool = false
+            WATERbool = false
+            CPUbool = false
+            SATAbool = false
+            ALIMbool = true
+            VENTSbool = false
             this.shop.anims.play('SHOP_ALIM',true);
         });
         this.buttonHuit = this.add.sprite(345 ,690, 'VENTS').setScrollFactor(0)
         this.buttonHuit.setInteractive();
         this.buttonHuit.on('pointerdown', () => {
+            RAMbool = false
+            SSDbool = false
+            RTXbool = false
+            WATERbool = false
+            CPUbool = false
+            SATAbool = false
+            ALIMbool = false
+            VENTSbool = true
+
             this.shop.anims.play('SHOP_VENTS',true);
         });
         // Ajouter un bouton "Fermer" dans la fenêtre shop
         
 
-
+        
+        
 
 
         this.shop.visible = false;
@@ -333,10 +413,14 @@ class marchand extends Phaser.Scene {
         this.buttonSix.visible = false;
         this.buttonSept.visible = false;
         this.buttonHuit.visible = false;
+        this.buttonachat.visible = false;
+        
+        
     }
     update() {
 
         console.log(this.button)
+        console.log(coin)
         if (this.cursors.left.isDown) {
             this.player.setVelocityX(-160*vitessedep)
             this.player.anims.play('anim gauche',true)
@@ -462,8 +546,71 @@ class marchand extends Phaser.Scene {
         this.buttonSix.visible = true;
         this.buttonSept.visible = true;
         this.buttonHuit.visible = true;
+        
+        
+        
         //this.shop =this.physics.add.sprite(600 ,610, 'SHOP').setScrollFactor(0);
         
+        
+        this.buttonachat.visible = true;
+        this.buttonachat.setInteractive();
+        this.buttonachat.on('pointerdown', () => {
+            this.shop.anims.play('SHOP_EXIT',true);
+            if(RAMbool == true && coin >=18 && commun == 1){
+                //obtention de l'objet
+                coin -=  18
+                commun -= 1
+            }
+            if(SSDbool == true && coin >=15){
+                //obtention de l'objet
+                coin -=  15
+            }
+            if(RTXbool == true && coin >=25){
+                //obtention de l'objet
+                coin -=  25
+            }
+            if(WATERbool == true && coin >=18 && commun == 1){
+                //obtention de l'objet
+                coin -=  18
+                commun -= 1
+            }
+            if(CPUbool == true && coin >=18 && commun == 1){
+                //obtention de l'objet
+                coin -=  18
+                commun -= 1
+            }
+            if(SATAbool == true && coin >=20){
+                //obtention de l'objet
+                coin -=  20
+            }
+            if(ALIMbool == true && coin >=18 && commun == 1){
+                //obtention de l'objet
+                coin -=  18
+                commun -= 1
+            }
+            if(VENTS == true && coin >=18 && commun == 1){
+                //obtention de l'objet
+                coin -=  18
+                commun -= 1
+            }
+            this.shop.visible = false;
+            this.buttonUn.visible = false;
+            this.buttonDeux.visible = false;
+            this.buttonTrois.visible = false;
+            this.buttonQuatre.visible = false;
+            this.buttonCinq.visible = false;
+            this.buttonSix.visible = false;
+            this.buttonSept.visible = false;
+            this.buttonHuit.visible = false;
+            this.buttonachat.visible = false;
+
+
+        });
+
+
+
+
+
         this.button = this.physics.add.sprite(445,  690, 'RETOUR').setScrollFactor(0);
         
         this.button.setInteractive();
@@ -478,6 +625,9 @@ class marchand extends Phaser.Scene {
                 this.buttonSix.visible = false;
                 this.buttonSept.visible = false;
                 this.buttonHuit.visible = false;
+                this.buttonachat.visible = false;
+                this.buttonachat.visible = false;
+                
 
         
                             }, 1000);
