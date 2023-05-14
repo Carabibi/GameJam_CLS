@@ -1,3 +1,5 @@
+
+
 var CDDash = true
 var HPmax = 100
 var HP = 100
@@ -43,6 +45,7 @@ class niveau1 extends Phaser.Scene {
         this.load.spritesheet('ventilo', 'assets/Ventilateur.png', { frameWidth: 64, frameHeight: 64 })
         this.load.spritesheet('watercooling', 'assets/Watercooling.png', { frameWidth: 64, frameHeight: 64 })
         this.load.spritesheet('ennemie1', 'mechant/spriteun.png', { frameWidth: 40, frameHeight: 40 })
+        this.load.spritesheet('ennemie0', 'mechant/spritezero.png', { frameWidth: 40, frameHeight: 40 })
 
         this.load.image("SpriteHitBox", "assets/SpriteHitBox.png");
     }
@@ -50,6 +53,8 @@ class niveau1 extends Phaser.Scene {
     create() {
 
         this.EnnemiUnFollow = false;
+        this.EnnemideuxFollow=false;
+        
         // CREATE MAP
         this.map = this.add.tilemap("map");
         this.add.image(64 * 6, 64 * 6, "sol")
@@ -83,8 +88,11 @@ class niveau1 extends Phaser.Scene {
         this.GroupeEnnemi = this.physics.add.group({ immovable: true, allowGravity: false })
         this.EnnemiUn = this.GroupeEnnemi.create( 10 * 64 , 2 * 64, 'ennemie1');
         this.EnnemiUn_HP = 100
-
-        //const ennemies = this.createEnemies()
+        //création ennemi deux
+        this.Ennemideux = this.GroupeEnnemi.create( 5 * 64 , 3 * 64, 'ennemie1');
+        this.Ennemideux_HP = 100
+        
+        
 
 
         this.mur.setCollisionByExclusion(-1, true);
@@ -101,8 +109,9 @@ class niveau1 extends Phaser.Scene {
         }
 
         // Hitbox Coucou
-        this.SpriteHitBox = this.physics.add.sprite(this.EnnemiUn.x , this.EnnemiUn.y, 'SpriteHitBox').setSize(256, 128);
-
+        this.SpriteHitBoxEnnemiUn = this.physics.add.sprite(this.EnnemiUn.x , this.EnnemiUn.y, 'SpriteHitBox').setSize(256, 128);
+        this.SpriteHitBoxEnnemideux = this.physics.add.sprite(this.Ennemideux.x , this.Ennemideux.y, 'SpriteHitBox').setSize(256, 128);
+        
         //CAMERA
         this.cameras.main.startFollow(this.player);
         //var camera = this.cameras.add(4*64, 4*64)
@@ -123,7 +132,9 @@ class niveau1 extends Phaser.Scene {
 
 
         this.physics.add.collider(this.player, this.GroupeEnnemi,);
-        this.physics.add.overlap(this.SpriteHitBox, this.player, this.EnnemiUnAggro, null, this);
+        this.physics.add.overlap(this.SpriteHitBoxEnnemiUn, this.player, this.EnnemiUnAggro, null, this);
+        this.physics.add.overlap(this.SpriteHitBoxEnnemideux, this.player, this.EnnemideuxAggro, null, this);
+        
         //INPUT
         this.cursors = this.input.keyboard.createCursorKeys();
         this.clavier = this.input.keyboard.addKeys('SHIFT,E');
@@ -131,6 +142,7 @@ class niveau1 extends Phaser.Scene {
         //GROUPE / UI
         this.shuriken = this.physics.add.group();
         this.physics.add.collider(this.shuriken, this.EnnemiUn, this.killEnnemiUn, null, this);
+        this.physics.add.collider(this.shuriken, this.Ennemideux, this.killEnnemideux, null, this);
         this.HPbar = this.add.sprite(80, 20, "HP").setScrollFactor(0);
         this.fil = this.add.sprite(64 * 6, -128, "transi");
         this.fil.setAngle(270);
@@ -213,11 +225,11 @@ class niveau1 extends Phaser.Scene {
 
         if (this.EnnemiUnFollow == true){
             this.EnnemiUn.setVelocityX(this.player.x - this.EnnemiUn.x);
-            this.EnnemiUn.setVelocityY(this.player.y -this.EnnemiUn.y);
+            this.EnnemiUn.setVelocityY(this.player.y - this.EnnemiUn.y);
         }
         
-        this.SpriteHitBox.x = this.EnnemiUn.x
-        this.SpriteHitBox.y = this.EnnemiUn.y
+        this.SpriteHitBoxEnnemiUn.x = this.EnnemiUn.x
+        this.SpriteHitBoxEnnemiUn.y = this.EnnemiUn.y
         
         //Deplacements de l'ennemi Un
         if(this.EnnemiUn.x >= 640){
@@ -226,9 +238,16 @@ class niveau1 extends Phaser.Scene {
         else if (this.EnnemiUn.x <= 128){
             this.EnnemiUn.setVelocityX(100);
         }
-        if(this.ennemie1){
-            this.SpriteHitBox.destroy();
+        //deplacements de l'ennemi deux 
+        if (this.EnnemideuxFollow == true){
+            this.Ennemideux.setVelocityX(this.player.x - this.Ennemideux.x);
+            this.Ennemideux.setVelocityY(this.player.y -this.Ennemideux.y);
         }
+        
+        this.SpriteHitBoxEnnemideux.x = this.Ennemideux.x
+        this.SpriteHitBoxEnnemideux.y = this.Ennemideux.y
+        
+        
 
 
 
@@ -332,11 +351,6 @@ class niveau1 extends Phaser.Scene {
             }, 500 * vitessedatk);
         }
 
-        if(this.shuriken.velocityX == 0 && this.shuriken.velocityY ==0 ){
-            console.log("stop")
-            shuriken.destroy()
-        }
-
         this.shuriken.getChildren().forEach(function (child) {
             child.anims.play('shu', true)
         }, this)
@@ -350,33 +364,58 @@ class niveau1 extends Phaser.Scene {
         //    }
         //},)
         
-        if (this.EnnemiUn_HP<=0 ){
-            this.EnnemiUnFollow = false
-            this.EnnemiUn.destroy()
-            this.SpriteHitBox.destroy()
-        }
     }
     
-    killEnnemiUn(shu) {
+    killEnnemiUn(shu, ene) {
         if(this.EnnemiUn_HP > 0){
-            this.EnnemiUn_HP -= degat
             console.log(this.EnnemiUn_HP)
-            shu.destroy()
-        }
+            this.EnnemiUn_HP -= degat;
+            console.log(this.EnnemiUnFollow)
+        }else{
+            this.EnnemiUnFollow = false
+            this.SpriteHitBoxEnnemiUn.destroy();
+            this.EnnemiUn.destroy();
+            
         
+        }
+        ene.destroy()
+        console.log("j'ai detruit le shuriken")
+       
         
     }
-
+    killEnnemideux(shu, ene) {
+        if(this.Ennemideux_HP > 0){
+            console.log(this.EnnemiUn_HP)
+            this.Ennemideux_HP -= degat;
+            console.log(this.EnnemideuxFollow)
+        }else{
+            this.EnnemideuxFollow = false
+            this.SpriteHitBoxEnnemideux.destroy();
+            this.Ennemideux.destroy();
+            
+        
+        }
+        ene.destroy()
+        console.log("j'ai detruit le shuriken")
+       
+        
+    }
 
     Niveau2() {
         this.fil.anims.play('transi1')
         setTimeout(() => {
-            this.scene.start('niveau2')
+            this.scene.start('marchand')
         }, 1000);
 
     }
-    EnnemiUnAggro(player, SpriteHitBox){
+    EnnemiUnAggro(player, SpriteHitBoxEnnemiUn){
         this.EnnemiUnFollow = true;
+
+        
+    }
+
+    EnnemideuxAggro(player, SpriteHitBoxEnnemideux){
+        this.EnnemideuxFollow = true;
 
         
     }
