@@ -389,5 +389,3 @@ class niveau2 extends Phaser.Scene {
         return ennemies;
     }
 }
-
-export default niveau2
