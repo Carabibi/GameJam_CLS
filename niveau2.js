@@ -30,7 +30,7 @@ class niveau2 extends Phaser.Scene {
         this.load.image("porte", "assets/porte.png");
         this.load.image("sol", "assets/sol_640x640_asterix.png");
         this.load.spritesheet('perso', "assets/spritepotagoniste.png", { frameWidth: 47, frameHeight: 61 })
-        this.load.spritesheet('shuriken', 'assets/Shuriken-sheet.png', { frameWidth: 16, frameHeight: 16 })
+        this.load.spritesheet('shuriken', 'assets/Shuriken-sheet.png', { frameWidth: 32, frameHeight: 32})
         this.load.spritesheet('HP', 'assets/HPBar180x37.png', { frameWidth: 180, frameHeight: 37 })
         this.load.spritesheet('transi', 'assets/transiPortes_256x128.png', { frameWidth: 256, frameHeight: 128 })
         this.load.spritesheet('heal', 'assets/corbeille.png', { frameWidth: 64, frameHeight: 64 })
@@ -171,8 +171,8 @@ class niveau2 extends Phaser.Scene {
         // ANIMATION SHURIKEN
         this.anims.create({
             key: 'shu',
-            frames: this.anims.generateFrameNumbers('shuriken', { start: 0, end: 3 }),
-            frameRate: 10,
+            frames: this.anims.generateFrameNumbers('shuriken', { start: 0, end: 7 }),
+            frameRate: 8,
         });
 
         this.anims.create({
