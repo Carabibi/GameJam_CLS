@@ -45,13 +45,16 @@ class niveau2 extends Phaser.Scene {
         this.load.spritesheet('ventilo', 'assets/Ventilateur.png', { frameWidth: 64, frameHeight: 64 })
         this.load.spritesheet('watercooling', 'assets/Watercooling.png', { frameWidth: 64, frameHeight: 64 })
         this.load.spritesheet('ennemie1', 'mechant/spriteun.png', { frameWidth: 40, frameHeight: 40 })
-
+        this.load.spritesheet('ennemie0','mechant/spritezero.png',{frameWidth:40, frameHeight: 40})
         this.load.image("SpriteHitBox", "assets/SpriteHitBox.png");
     }
 
     create() {
-
+        
         this.EnnemiUnFollow = false;
+        this.EnnemideuxFollow=false;
+        this.EnnemitroisFollow=false;
+        this.EnnemiquatreFollow=false;
         // CREATE MAP
         this.map = this.add.tilemap("map2");
         this.add.image(64 * 6, 64 * 6, "sol")
@@ -87,8 +90,16 @@ class niveau2 extends Phaser.Scene {
         });
         // GROUPE ENNEMIE
         this.GroupeEnnemi = this.physics.add.group({ immovable: true, allowGravity: false })
-        this.EnnemiUn = this.GroupeEnnemi.create( 10 * 64 , 2 * 64, 'ennemie1');
-        //const ennemies = this.createEnemies()
+        this.EnnemiUn = this.GroupeEnnemi.create( 2 * 64 , 1 * 64, 'ennemie1');
+        //création ennemie deux
+        this.Ennemideux = this.GroupeEnnemi.create( 9 * 64 , 1 * 64, 'ennemie1');
+        this.Ennemideux_HP = 100
+        //création ennemi trois
+        this.Ennemitrois = this.GroupeEnnemi.create( 1 * 64 , 9 * 64, 'ennemie0');
+        this.Ennemitrois_HP = 150
+        //création ennemi quatre
+        this.Ennemiquatre = this.GroupeEnnemi.create( 9 * 64 , 9 * 64, 'ennemie0');
+        this.Ennemiquatre_HP = 150
 
 
         this.mur.setCollisionByExclusion(-1, true);
@@ -104,7 +115,10 @@ class niveau2 extends Phaser.Scene {
         }
 
         // Hitbox Coucou
-        this.SpriteHitBox = this.physics.add.sprite(this.EnnemiUn.x , this.EnnemiUn.y, 'SpriteHitBox').setSize(256, 128);
+        this.SpriteHitBoxEnnemiUn = this.physics.add.sprite(this.EnnemiUn.x , this.EnnemiUn.y, 'SpriteHitBox').setSize(256, 128);
+        this.SpriteHitBoxEnnemideux = this.physics.add.sprite(this.Ennemideux.x , this.Ennemideux.y, 'SpriteHitBox').setSize(256, 128);
+        this.SpriteHitBoxEnnemitrois = this.physics.add.sprite(this.Ennemitrois.x , this.Ennemitrois.y, 'SpriteHitBox').setSize(256, 128);
+        this.SpriteHitBoxEnnemiquatre = this.physics.add.sprite(this.Ennemiquatre.x , this.Ennemiquatre.y, 'SpriteHitBox').setSize(256, 128);
 
         //CAMERA
         this.cameras.main.startFollow(this.player);
@@ -126,14 +140,22 @@ class niveau2 extends Phaser.Scene {
 
 
         this.physics.add.collider(this.player, this.GroupeEnnemi,);
-        this.physics.add.overlap(this.SpriteHitBox, this.player, this.EnnemiUnAggro, null, this);
+        this.physics.add.overlap(this.SpriteHitBoxEnnemiUn, this.player, this.EnnemiUnAggro, null, this);
+        this.physics.add.overlap(this.SpriteHitBoxEnnemideux, this.player, this.EnnemideuxAggro, null, this);
+        this.physics.add.overlap(this.SpriteHitBoxEnnemitrois, this.player, this.EnnemitroisAggro, null, this);
+        this.physics.add.overlap(this.SpriteHitBoxEnnemiquatre, this.player, this.EnnemiquatreAggro, null, this);
+
+        
         //INPUT
         this.cursors = this.input.keyboard.createCursorKeys();
         this.clavier = this.input.keyboard.addKeys('SHIFT,E');
 
         //GROUPE / UI
         this.shuriken = this.physics.add.group();
-        this.physics.add.collider(this.shuriken, this.GroupeEnnemi, this.kill, null, this);
+        this.physics.add.collider(this.shuriken, this.EnnemiUn, this.killEnnemiUn, null, this);
+        this.physics.add.collider(this.shuriken, this.Ennemideux, this.killEnnemideux, null, this);
+        this.physics.add.collider(this.shuriken, this.Ennemitrois, this.killEnnemitrois, null, this);
+        this.physics.add.collider(this.shuriken, this.Ennemiquatre, this.killEnnemiquatre, null, this);
         this.HPbar = this.add.sprite(80, 20, "HP").setScrollFactor(0);
         this.fil = this.add.sprite(64 * 6, 64*14, "transi");
         this.fil.setAngle(90);
@@ -219,8 +241,8 @@ class niveau2 extends Phaser.Scene {
             this.EnnemiUn.setVelocityY(this.player.y -this.EnnemiUn.y);
         }
 
-        this.SpriteHitBox.x = this.EnnemiUn.x
-        this.SpriteHitBox.y = this.EnnemiUn.y
+        this.SpriteHitBoxEnnemiUn.x = this.EnnemiUn.x
+        this.SpriteHitBoxEnnemiUn.y = this.EnnemiUn.y
 
         //Deplacements de l'ennemi Un
         if(this.EnnemiUn.x >= 640){
@@ -230,7 +252,51 @@ class niveau2 extends Phaser.Scene {
             this.EnnemiUn.setVelocityX(100);
         }
 
-
+        if (this.EnnemideuxFollow == true){
+            this.Ennemideux.setVelocityX(this.player.x - this.Ennemideux.x);
+            this.Ennemideux.setVelocityY(this.player.y -this.Ennemideux.y);
+        }
+        
+        this.SpriteHitBoxEnnemideux.x = this.Ennemideux.x
+        this.SpriteHitBoxEnnemideux.y = this.Ennemideux.y
+        
+        //Deplacements de l'ennemi Un
+        if(this.Ennemideux.x >= 640){
+            this.Ennemideux.setVelocityX(-100);
+        }
+        else if (this.Ennemideux.x <= 128){
+            this.Ennemideux.setVelocityX(100);
+        }
+        if (this.EnnemitroisFollow == true){
+            this.Ennemitrois.setVelocityX(this.player.x - this.Ennemitrois.x);
+            this.Ennemitrois.setVelocityY(this.player.y -this.Ennemitrois.y);
+        }
+        
+        this.SpriteHitBoxEnnemitrois.x = this.Ennemitrois.x
+        this.SpriteHitBoxEnnemitrois.y = this.Ennemitrois.y
+        
+        //Deplacements de l'ennemi Un
+        if(this.Ennemitrois.x >= 640){
+            this.Ennemitrois.setVelocityX(-100);
+        }
+        else if (this.Ennemitrois.x <= 128){
+            this.Ennemitrois.setVelocityX(100);
+        }
+        if (this.EnnemiquatreFollow == true){
+            this.Ennemiquatre.setVelocityX(this.player.x - this.Ennemiquatre.x);
+            this.Ennemiquatre.setVelocityY(this.player.y -this.Ennemiquatre.y);
+        }
+        
+        this.SpriteHitBoxEnnemiquatre.x = this.Ennemiquatre.x
+        this.SpriteHitBoxEnnemiquatre.y = this.Ennemiquatre.y
+        
+        //Deplacements de l'ennemi Un
+        if(this.Ennemiquatre.x >= 640){
+            this.Ennemiquatre.setVelocityX(-100);
+        }
+        else if (this.Ennemiquatre.x <= 128){
+            this.Ennemiquatre.setVelocityX(100);
+        }
 
 
         //                           DEPLACEMENT JOUEUR
@@ -346,10 +412,72 @@ class niveau2 extends Phaser.Scene {
         //},)
 
     }
-    kill(shu, ennemies,) {
-        ennemies.destroy()
-        shu.destroy()
-        this.SpriteHitBox.destroy()
+    killEnnemiUn(shu, ene) {
+        if(this.EnnemiUn_HP > 0){
+            console.log(this.EnnemiUn_HP)
+            this.EnnemiUn_HP -= degat;
+            console.log(this.EnnemiUnFollow)
+        }else{
+            this.EnnemiUnFollow = false
+            this.SpriteHitBoxEnnemiUn.destroy();
+            this.EnnemiUn.destroy();
+            
+        
+        }
+        ene.destroy()
+        console.log("j'ai detruit le shuriken")
+       
+        
+    }
+    killEnnemideux(shu, ene) {
+        if(this.Ennemideux_HP > 0){
+            console.log(this.Ennemideux_HP)
+            this.Ennemideux_HP -= degat;
+            console.log(this.EnnemideuxFollow)
+        }else{
+            this.EnnemideuxFollow = false
+            this.SpriteHitBoxEnnemideux.destroy();
+            this.Ennemideux.destroy();
+            
+        
+        }
+        ene.destroy()
+        console.log("j'ai detruit le shuriken")
+       
+        
+    }
+    killEnnemitrois(shu, ene) {
+        if(this.Ennemitrois_HP > 0){
+            console.log(this.Ennemitrois_HP)
+            this.Ennemitrois_HP -= degat;
+            console.log(this.EnnemitroisFollow)
+        }else{
+            this.EnnemitroisFollow = false
+            this.SpriteHitBoxEnnemitrois.destroy();
+            this.Ennemitrois.destroy();
+            
+        
+        }
+        ene.destroy()
+        console.log("j'ai detruit le shuriken")
+       
+        
+    }
+    killEnnemiquatre(shu, ene) {
+        if(this.Ennemiquatre_HP > 0){
+            console.log(this.Ennemiquatre_HP)
+            this.Ennemiquatre_HP -= degat;
+            console.log(this.EnnemiquatreFollow)
+        }else{
+            this.EnnemiquatreFollow = false
+            this.SpriteHitBoxEnnemiquatre.destroy();
+            this.Ennemiquatre.destroy();
+            
+        
+        }
+        ene.destroy()
+        console.log("j'ai detruit le shuriken")
+       
         
     }
 
@@ -369,6 +497,21 @@ class niveau2 extends Phaser.Scene {
 
     }
     EnnemiUnAggro(player, SpriteHitBox){
+        this.EnnemiUnFollow = true;
+
+        
+    }
+    EnnemideuxAggro(player, SpriteHitBoxEnnemideux){
+        this.EnnemiUnFollow = true;
+
+        
+    }
+    EnnemitroisAggro(player, SpriteHitBoxEnnemitrois){
+        this.EnnemiUnFollow = true;
+
+        
+    }
+    EnnemiquatreAggro(player, SpriteHitBoxEnnemiquatre){
         this.EnnemiUnFollow = true;
 
         
