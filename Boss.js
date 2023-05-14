@@ -16,6 +16,7 @@ var ventilo = false;
 var ram = false;
 var bossattack = true
 var panpan = true
+var fin = false
 
 class Boss extends Phaser.Scene {
     constructor() {
@@ -48,6 +49,7 @@ class Boss extends Phaser.Scene {
         this.load.spritesheet('ventilo', 'assets/Ventilateur.png', { frameWidth: 64, frameHeight: 64 })
         this.load.spritesheet('watercooling', 'assets/Watercooling.png', { frameWidth: 64, frameHeight: 64 })
         this.load.spritesheet('ennemie1', 'mechant/spriteun.png', { frameWidth: 40, frameHeight: 40 })
+        this.load.image('finalscreen', 'assets/finalscreen.png', { frameWidth: 64, frameHeight: 64 })
 
         this.load.image("SpriteHitBox", "assets/SpriteHitBox.png");
     }
@@ -124,6 +126,8 @@ class Boss extends Phaser.Scene {
         this.shuriken = this.physics.add.group();
         this.physics.add.collider(this.shuriken, this.Boss, this.killun, null, this);
         this.HPbar = this.add.sprite(80, 20, "HP").setScrollFactor(0);
+        this.ecrandefin = this.add.image(640, 360, "finalscreen").setScrollFactor(0);
+        this.ecrandefin.visible = false;
 
 
         this.shurikenboss = this.physics.add.group();
@@ -199,7 +203,9 @@ class Boss extends Phaser.Scene {
     update() {
 
 
-
+        if(fin == true){
+            this.ecrandefin.visible = true;
+        }
         
 
         
@@ -347,10 +353,12 @@ class Boss extends Phaser.Scene {
     }
     killun(shu, ene) {
         if(this.Boss_HP > 0){
+            
             console.log(this.Boss_HP)
             this.Boss_HP -= degat;
             console.log(this.BossFollow)
         }else{
+            fin = true;
             this.Boss.destroy();
             //salut
         
@@ -396,4 +404,6 @@ class Boss extends Phaser.Scene {
 
         return ennemies;
     }
+
+    
 }
