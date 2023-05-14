@@ -19,7 +19,7 @@ class scene4 extends Phaser.Scene {
         this.load.tilemapTiledJSON("map4", "assets/tuto_4.json");
         this.load.image("tileset", "assets/placeholder.png");
         this.load.image("porte", "assets/porte.png");
-        this.load.image("sol", "assets/sol_1280x1280_kaamelot.png");
+        this.load.image("sol4", "assets/sol_1280x1280_kaamelot.png");
         this.load.spritesheet('perso',"assets/perso.png",{frameWidth:47,frameHeight:61})
         this.load.spritesheet('shuriken','assets/Shuriken-sheet.png',{frameWidth:16,frameHeight:16})
         this.load.spritesheet('HP','assets/HPBar180x37.png',{frameWidth:180,frameHeight:37})
@@ -29,7 +29,7 @@ class scene4 extends Phaser.Scene {
     create() {
         // CREATE MAP
         this.map = this.add.tilemap("map4");
-        this.add.image(64*11,64*11,"sol")
+        this.add.image(64*11,64*11,"sol4")
         this.tileset = this.map.addTilesetImage(
             "palceholder",
             "tileset"
@@ -59,6 +59,8 @@ class scene4 extends Phaser.Scene {
 
         this.mur.setCollisionByExclusion(-1, true);
         this.trou.setCollisionByExclusion(-1, true);
+        this.pique.setCollisionByExclusion(-1, true);
+        this.porte.setCollisionByExclusion(-1, true);
 
         // SPAWN JOUEUR
         if (this.spawnx && this.spawny) {
@@ -76,7 +78,9 @@ class scene4 extends Phaser.Scene {
 
         //COLLIDER
         this.physics.add.collider(this.player, this.mur);
-        this.physics.add.collider(this.player, this.obstacle);
+        this.physics.add.collider(this.player, this.porte);
+        this.physics.add.collider(this.player, this.trou);
+        this.physics.add.collider(this.player, this.pique);
         this.physics.add.collider(this.player, this.grpporte, this.Niveau2,null,this);
 
         //INPUT
@@ -86,7 +90,6 @@ class scene4 extends Phaser.Scene {
         //GROUPE / UI
         this.shuriken = this.physics.add.group();
         this.HPbar = this.add.sprite(80,20,"HP")
-        this.fil = this.add.sprite(64*14,64*6,"transi")
 
         //ANIMATIONS
         this.anims.create({
@@ -259,7 +262,7 @@ class scene4 extends Phaser.Scene {
         },this)
         
     }
-    Niveau1(){
+    Niveau2(){
         this.fil.anims.play('transi_niveau1')
         setTimeout(() => {
             this.scene.start('niveau1')

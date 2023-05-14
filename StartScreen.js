@@ -76,5 +76,3 @@ class Menu extends Phaser.Scene {
         ;
     }
 }
-
-export default Menu
