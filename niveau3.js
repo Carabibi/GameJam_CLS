@@ -67,7 +67,7 @@ class niveau3 extends Phaser.Scene {
             "obstacle",
             this.tileset
         );
-        this.picsLv2 = this.map.createLayer(
+        this.picsLv3 = this.map.createLayer(
             "pique",
             this.tileset
         );
@@ -101,7 +101,7 @@ class niveau3 extends Phaser.Scene {
 
         this.mur.setCollisionByExclusion(-1, true);
         this.trouLv3.setCollisionByExclusion(-1, true);
-        this.picsLv2.setCollisionByExclusion(-1, true);
+        this.picsLv3.setCollisionByExclusion(-1, true);
 
 
         // GROUPE ENNEMIE
@@ -133,7 +133,7 @@ class niveau3 extends Phaser.Scene {
         //COLLIDER
         this.physics.add.collider(this.player, this.mur);
         this.physics.add.collider(this.player, this.obstacle);
-        this.physics.add.collider(this.player, this.grpporte, this.Niveau3, null, this);
+        this.physics.add.collider(this.player, this.grpporte, this.Niveau4, null, this);
         this.physics.add.collider(this.GroupeEnnemi, this.mur,);
         this.physics.add.collider(this.GroupeEnnemi, this.obstacle,);
         this.collide_trou = this.physics.add.collider(this.player, this.trouLv3);
@@ -152,8 +152,8 @@ class niveau3 extends Phaser.Scene {
         this.shuriken = this.physics.add.group();
         this.physics.add.collider(this.shuriken, this.GroupeEnnemi, this.kill, null, this);
         this.HPbar = this.add.sprite(80, 20, "HP").setScrollFactor(0);
-        this.fil = this.add.sprite(64 * 6, -128, "transi");
-        this.fil.setAngle(270);
+        this.fil = this.add.sprite(64 * 24, 192, "transi");
+        
         //ANIMATIONS
         this.anims.create({
             key: 'vie1',
@@ -370,10 +370,10 @@ class niveau3 extends Phaser.Scene {
     }
 
 
-    Niveau3() {
+    Niveau4() {
         this.fil.anims.play('transi1')
         setTimeout(() => {
-            this.scene.start('niveau1')
+            this.scene.start('niveau4')
         }, 1000);
 
     }

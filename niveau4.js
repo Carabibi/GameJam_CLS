@@ -15,9 +15,9 @@ var cpu = false;
 var ventilo = false;
 var ram = false;
 
-class niveau2 extends Phaser.Scene {
+class niveau4 extends Phaser.Scene {
     constructor() {
-        super('niveau2');
+        super('niveau4');
         this.CanShoot = true;
 
     }
@@ -25,7 +25,7 @@ class niveau2 extends Phaser.Scene {
     init(data) {
     }
     preload() {
-        this.load.tilemapTiledJSON("map2", "assets/niveau_2.json");
+        this.load.tilemapTiledJSON("map4", "assets/niveau_4.json");
         this.load.image("tileset", "assets/placeholder.png");
         this.load.image("porte", "assets/porte.png");
         this.load.image("sol", "assets/sol_640x640_asterix.png");
@@ -53,7 +53,7 @@ class niveau2 extends Phaser.Scene {
 
         this.EnnemiUnFollow = false;
         // CREATE MAP
-        this.map = this.add.tilemap("map2");
+        this.map = this.add.tilemap("map4");
         this.add.image(64 * 6, 64 * 6, "sol")
         this.tileset = this.map.addTilesetImage(
             "placeholder",
@@ -63,15 +63,11 @@ class niveau2 extends Phaser.Scene {
             "mur",
             this.tileset
         );
-        this.obstacle = this.map.createLayer(
-            "obstacles",
-            this.tileset
-        );
-        this.picsLv2 = this.map.createLayer(
+        this.picsLv4 = this.map.createLayer(
             "pique",
             this.tileset
         );
-        this.trouLv2 = this.map.createLayer(
+        this.trouLv4 = this.map.createLayer(
             "trou",
             this.tileset
         );
@@ -92,9 +88,8 @@ class niveau2 extends Phaser.Scene {
 
 
         this.mur.setCollisionByExclusion(-1, true);
-        this.obstacle.setCollisionByExclusion(-1, true);
-        this.trouLv2.setCollisionByExclusion(-1, true);
-        this.picsLv2.setCollisionByExclusion(-1, true);
+        this.trouLv4.setCollisionByExclusion(-1, true);
+        this.picsLv4.setCollisionByExclusion(-1, true);
         // SPAWN JOUEUR
         if (this.spawnx && this.spawny) {
             this.player = this.physics.add.sprite(this.spawnx, this.spawny, 'perso');
@@ -114,14 +109,14 @@ class niveau2 extends Phaser.Scene {
 
         //COLLIDER
         this.physics.add.collider(this.player, this.mur);
-        this.physics.add.collider(this.player, this.obstacle);
-        this.physics.add.collider(this.player, this.grpporte, this.Niveau3, null, this);
-        this.collide_trou = this.physics.add.collider(this.player, this.trouLv2);
+        
+        this.physics.add.collider(this.player, this.grpporte, this.Niveau5, null, this);
+        this.collide_trou = this.physics.add.collider(this.player, this.trouLv4);
         this.physics.add.collider(this.GroupeEnnemi, this.mur,);
-        this.physics.add.collider(this.GroupeEnnemi, this.obstacle,);
+        
         this.physics.add.collider(this.GroupeEnnemi, this.grpporte,);
         this.physics.add.collider(this.GroupeEnnemi, this.GroupeEnnemi,);
-        this.physics.add.collider(this.player, this.picsLv2, this.touche_pique, null, this);
+        this.physics.add.collider(this.player, this.picsLv4, this.touche_pique, null, this);
 
 
 
@@ -360,10 +355,10 @@ class niveau2 extends Phaser.Scene {
     }
 
 
-    Niveau3() {
+    Niveau5() {
         this.fil.anims.play('transi1')
         setTimeout(() => {
-            this.scene.start('niveau3')
+            this.scene.start('niveau5')
         }, 1000);
 
     }
@@ -390,4 +385,4 @@ class niveau2 extends Phaser.Scene {
     }
 }
 
-export default niveau2
+export default niveau4
