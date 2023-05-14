@@ -67,6 +67,14 @@ class niveau1 extends Phaser.Scene {
             "obstacle",
             this.tileset
         );
+        this.picsLv1 = this.map.createLayer(
+            "pique",
+            this.tileset
+        );
+        this.trouLv1 = this.map.createLayer(
+            "trou",
+            this.tileset
+        );
 
         this.grpporte = this.physics.add.group({ immovable: true, allowGravity: false })
         this.porte = this.map.getObjectLayer("porte");
@@ -81,6 +89,8 @@ class niveau1 extends Phaser.Scene {
 
         this.mur.setCollisionByExclusion(-1, true);
         this.obstacle.setCollisionByExclusion(-1, true);
+        this.trouLv1.setCollisionByExclusion(-1, true);
+        this.picsLv1.setCollisionByExclusion(-1, true);
 
         // SPAWN JOUEUR
         if (this.spawnx && this.spawny) {
@@ -103,6 +113,8 @@ class niveau1 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.mur);
         this.physics.add.collider(this.player, this.obstacle);
         this.physics.add.collider(this.player, this.grpporte, this.Niveau2, null, this);
+        this.collide_trou = this.physics.add.collider(this.player, this.trouLv1);
+        this.physics.add.collider(this.player, this.picsLv1, this.touche_pique, null, this);
         this.physics.add.collider(this.GroupeEnnemi, this.mur,);
         this.physics.add.collider(this.GroupeEnnemi, this.obstacle,);
         this.physics.add.collider(this.GroupeEnnemi, this.grpporte,);
@@ -225,8 +237,10 @@ class niveau1 extends Phaser.Scene {
             this.player.anims.play('anim gauche', true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityX(-800)
+                this.collide_trou.active = false
                 setTimeout(() => {
                     CDDash = false
+                    this.collide_trou.active = true
                 }, 150);
                 setTimeout(() => {
                     CDDash = true
@@ -239,7 +253,9 @@ class niveau1 extends Phaser.Scene {
             this.player.anims.play('anim droite', true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityX(800)
+                this.collide_trou.active = false
                 setTimeout(() => {
+                    this.collide_trou.active = true
                     CDDash = false
                 }, 150);
                 setTimeout(() => {
@@ -256,7 +272,9 @@ class niveau1 extends Phaser.Scene {
             this.player.anims.play('anim dos', true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityY(-800)
+                this.collide_trou.active = false
                 setTimeout(() => {
+                    this.collide_trou.active = true
                     CDDash = false
                 }, 150);
                 setTimeout(() => {
@@ -269,7 +287,9 @@ class niveau1 extends Phaser.Scene {
             this.player.anims.play('anim face', true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityY(800)
+                this.collide_trou.active = false
                 setTimeout(() => {
+                    this.collide_trou.active = true
                     CDDash = false
                 }, 150);
                 setTimeout(() => {
@@ -341,6 +361,13 @@ class niveau1 extends Phaser.Scene {
         this.EnnemiUnFollow = true;
 
         
+    }
+
+    touche_pique() {
+        console.log("aie");
+        if (HP > 0) {
+            HP -= 25
+        }
     }
 
 
