@@ -1,11 +1,3 @@
-var CDDash = true
-var HPmax = 100
-var HP = 100
-var degat =34
-var vitessedep=1
-var vitessedatk=1
-var speedatk=1
-
 class scene4 extends Phaser.Scene {
     constructor() {
         super('scene4');
@@ -24,6 +16,8 @@ class scene4 extends Phaser.Scene {
         this.load.spritesheet('shuriken','assets/Shuriken-sheet.png',{frameWidth:16,frameHeight:16})
         this.load.spritesheet('HP','assets/HPBar180x37.png',{frameWidth:180,frameHeight:37})
         this.load.spritesheet('transi','assets/transiPortes_256x128.png',{frameWidth:256,frameHeight:128})
+        this.load.spritesheet('coin', 'assets/2coin.png', { frameWidth: 64, frameHeight: 64 })
+        this.load.spritesheet('heal', 'assets/corbeille.png', { frameWidth: 64, frameHeight: 64 })
     }
 
     create() {
@@ -50,6 +44,18 @@ class scene4 extends Phaser.Scene {
             "pique",
             this.tileset
         );
+        
+        this.grpcoin = this.physics.add.group({ immovable: true, allowGravity: false })
+        this.coin = this.map.getObjectLayer("coin");
+        this.coin.objects.forEach(coord => {
+            this.grpcoin.create(coord.x + 32, coord.y - 32, "coin");
+        });
+
+        this.grpheal = this.physics.add.group({ immovable: true, allowGravity: false })
+        this.heal = this.map.getObjectLayer("heal");
+        this.heal.objects.forEach(coord => {
+            this.grpheal.create(coord.x + 32, coord.y - 32, "heal");
+        });
 
         //this.grpporte = this.physics.add.group({ immovable: true, allowGravity: false })
         //this.porte = this.map.getObjectLayer("porte");
@@ -79,9 +85,11 @@ class scene4 extends Phaser.Scene {
         //COLLIDER
         this.physics.add.collider(this.player, this.mur);
         this.physics.add.collider(this.player, this.porte);
-        this.physics.add.collider(this.player, this.trou);
+        this.collide_trou = this.physics.add.collider(this.player, this.trou);
         this.physics.add.collider(this.player, this.pique);
         this.physics.add.collider(this.player, this.grpporte, this.Niveau2,null,this);
+        this.physics.add.overlap(this.player, this.grpcoin, this.touche_coin, null, this);
+        this.physics.add.overlap(this.player, this.grpheal, this.touche_heal, null, this);
 
         //INPUT
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -89,7 +97,7 @@ class scene4 extends Phaser.Scene {
 
         //GROUPE / UI
         this.shuriken = this.physics.add.group();
-        this.HPbar = this.add.sprite(80,20,"HP")
+        this.HPbar = this.add.sprite(80,20,"HP").setScrollFactor(0)
 
         //ANIMATIONS
         this.anims.create({
@@ -162,6 +170,26 @@ class scene4 extends Phaser.Scene {
             frameRate: 8,
             repeat: -1
         });
+        // ANIMATION COIN
+        this.anims.create({
+            key: 'coin',
+            frames: this.anims.generateFrameNumbers('coin', { start: 0, end: 7 }),
+            frameRate: 10,
+            repeat: -1
+        })
+        this.grpcoin.getChildren().forEach(function (child) {
+            child.anims.play('coin', true)
+        }, this)
+        // ANIMATION HEAL
+        this.anims.create({
+            key: 'corbeille',
+            frames: this.anims.generateFrameNumbers('heal', { start: 0, end: 7 }),
+            frameRate: 10,
+            repeat: -1
+        })
+        this.grpheal.getChildren().forEach(function (child) {
+            child.anims.play('corbeille', true)
+        }, this)
     }
 
 
@@ -173,8 +201,10 @@ class scene4 extends Phaser.Scene {
             this.player.anims.play('anim gauche',true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityX(-800)
+                this.collide_trou.active = false 
                 setTimeout(() => {
                     CDDash = false
+                    this.collide_trou.active =true
                 }, 150);
                 setTimeout(() => {
                     CDDash = true
@@ -187,8 +217,10 @@ class scene4 extends Phaser.Scene {
             this.player.anims.play('anim droite',true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityX(800)
+                this.collide_trou.active = false 
                 setTimeout(() => {
                     CDDash = false
+                    this.collide_trou.active = true
                 }, 150);
                 setTimeout(() => {
                     CDDash = true
@@ -204,8 +236,10 @@ class scene4 extends Phaser.Scene {
             this.player.anims.play('anim dos',true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityY(-800)
+                this.collide_trou.active = false 
                 setTimeout(() => {
                     CDDash = false
+                    this.collide_trou.active = true
                 }, 150);
                 setTimeout(() => {
                     CDDash = true
@@ -217,8 +251,10 @@ class scene4 extends Phaser.Scene {
             this.player.anims.play('anim face',true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityY(800)
+                this.collide_trou.active = false 
                 setTimeout(() => {
                     CDDash = false
+                    this.collide_trou.active = true
                 }, 150);
                 setTimeout(() => {
                     CDDash = true
@@ -268,5 +304,14 @@ class scene4 extends Phaser.Scene {
             this.scene.start('niveau1')
         }, 1000);
         
+    }
+    touche_coin(player, coincoin) {
+        console.log("test")
+        coin += 1
+        coincoin.destroy()
+    }
+    touche_heal(player, heal) {
+        HP += 25
+        heal.destroy()
     }
 }

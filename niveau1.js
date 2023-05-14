@@ -1,5 +1,3 @@
-
-
 var CDDash = true
 var HPmax = 100
 var HP = 100
@@ -84,6 +82,8 @@ class niveau1 extends Phaser.Scene {
         // GROUPE ENNEMIE
         this.GroupeEnnemi = this.physics.add.group({ immovable: true, allowGravity: false })
         this.EnnemiUn = this.GroupeEnnemi.create( 10 * 64 , 2 * 64, 'ennemie1');
+        this.EnnemiUn_HP = 100
+
         //const ennemies = this.createEnemies()
 
 
@@ -130,7 +130,7 @@ class niveau1 extends Phaser.Scene {
 
         //GROUPE / UI
         this.shuriken = this.physics.add.group();
-        this.physics.add.collider(this.shuriken, this.GroupeEnnemi, this.kill, null, this);
+        this.physics.add.collider(this.shuriken, this.EnnemiUn, this.killEnnemiUn, null, this);
         this.HPbar = this.add.sprite(80, 20, "HP").setScrollFactor(0);
         this.fil = this.add.sprite(64 * 6, -128, "transi");
         this.fil.setAngle(270);
@@ -215,10 +215,10 @@ class niveau1 extends Phaser.Scene {
             this.EnnemiUn.setVelocityX(this.player.x - this.EnnemiUn.x);
             this.EnnemiUn.setVelocityY(this.player.y -this.EnnemiUn.y);
         }
-
+        
         this.SpriteHitBox.x = this.EnnemiUn.x
         this.SpriteHitBox.y = this.EnnemiUn.y
-
+        
         //Deplacements de l'ennemi Un
         if(this.EnnemiUn.x >= 640){
             this.EnnemiUn.setVelocityX(-100);
@@ -226,7 +226,9 @@ class niveau1 extends Phaser.Scene {
         else if (this.EnnemiUn.x <= 128){
             this.EnnemiUn.setVelocityX(100);
         }
-
+        if(this.ennemie1){
+            this.SpriteHitBox.destroy();
+        }
 
 
 
@@ -329,6 +331,12 @@ class niveau1 extends Phaser.Scene {
                 this.CanShoot = true;
             }, 500 * vitessedatk);
         }
+
+        if(this.shuriken.velocityX == 0 && this.shuriken.velocityY ==0 ){
+            console.log("stop")
+            shuriken.destroy()
+        }
+
         this.shuriken.getChildren().forEach(function (child) {
             child.anims.play('shu', true)
         }, this)
@@ -341,11 +349,21 @@ class niveau1 extends Phaser.Scene {
         //        this.ennemie1.deplacement(0, 0, 0, 0)
         //    }
         //},)
-
+        
+        if (this.EnnemiUn_HP<=0 ){
+            this.EnnemiUnFollow = false
+            this.EnnemiUn.destroy()
+            this.SpriteHitBox.destroy()
+        }
     }
-    kill(shu, ene,) {
-        ene.destroy()
-        shu.destroy()
+    
+    killEnnemiUn(shu) {
+        if(this.EnnemiUn_HP > 0){
+            this.EnnemiUn_HP -= degat
+            console.log(this.EnnemiUn_HP)
+            shu.destroy()
+        }
+        
         
     }
 
@@ -370,19 +388,4 @@ class niveau1 extends Phaser.Scene {
         }
     }
 
-
-    createEnemies() {
-        const ennemies = this.physics.add.group();
-        for (var i = 0; i < 3; i++) {
-            let ennemie1 = null;
-            ennemie1 = new Enemy(this, i * 128, 196, 'ennemie1');
-            console.log("mdr")
-            console.log(ennemie1.x)
-            console.log(ennemie1.y)
-            ennemies.add(ennemie1)
-            //individu.body.velocity.y = 100; // Ajouter une vitesse à l'individu
-        }
-
-        return ennemies;
-    }
 }

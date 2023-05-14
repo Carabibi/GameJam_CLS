@@ -14,7 +14,7 @@ class scene2 extends Phaser.Scene {
         this.load.image("porte_ouverte", "assets/porte.png");
         this.load.image("porte", "assets/porte_ferme.png");
         this.load.spritesheet('cible','assets/cible.png',{frameWidth:64,frameHeight:64})
-        this.load.image("sol", "assets/sol_640x640_asterix.png");
+        this.load.image("sol2", "assets/sol_640x640_asterix.png");
         this.load.spritesheet('perso',"assets/perso.png",{frameWidth:47,frameHeight:61})
         this.load.spritesheet('shuriken','assets/Shuriken-sheet.png',{frameWidth:32,frameHeight:32})
         this.load.spritesheet('HP','assets/HPBar180x37.png',{frameWidth:180,frameHeight:37})
@@ -24,7 +24,7 @@ class scene2 extends Phaser.Scene {
     create() {
         // CREATE MAP
         this.map = this.add.tilemap("map2");
-        this.add.image(64*6,64*6,"sol")
+        this.add.image(64*6,64*6,"sol2")
         this.tileset = this.map.addTilesetImage(
             "placeholder",
             "tileset"

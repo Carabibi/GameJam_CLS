@@ -1,5 +1,3 @@
-var coin = 0
-var HP
 class scene3 extends Phaser.Scene {
     constructor() {
         super('scene3');
