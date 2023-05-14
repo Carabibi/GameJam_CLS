@@ -376,7 +376,7 @@ class niveau3 extends Phaser.Scene {
             this.EnnemiUnFollow = false
             this.SpriteHitBox.destroy();
             this.EnnemiUn.destroy();
-            
+            //salut
         
         }
         ene.destroy()
