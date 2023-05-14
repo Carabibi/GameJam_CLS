@@ -142,7 +142,7 @@ class niveau8 extends Phaser.Scene {
         this.physics.add.overlap(this.SpriteHitBox, this.player, this.EnnemiUnAggro, null, this);
         //INPUT
         this.cursors = this.input.keyboard.createCursorKeys();
-        this.clavier = this.input.keyboard.addKeys('SHIFT,E');
+        this.clavier = this.input.keyboard.addKeys('SHIFT,E,O');
 
         //GROUPE / UI
         this.shuriken = this.physics.add.group();

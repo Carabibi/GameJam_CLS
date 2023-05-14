@@ -136,7 +136,7 @@ class niveau1 extends Phaser.Scene {
         
         //INPUT
         this.cursors = this.input.keyboard.createCursorKeys();
-        this.clavier = this.input.keyboard.addKeys('SHIFT,E');
+        this.clavier = this.input.keyboard.addKeys('SHIFT,E,O');
 
         //GROUPE / UI
         this.shuriken = this.physics.add.group();
