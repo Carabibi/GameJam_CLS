@@ -83,8 +83,15 @@ class niveau4 extends Phaser.Scene {
         });
         // GROUPE ENNEMIE
         this.GroupeEnnemi = this.physics.add.group({ immovable: true, allowGravity: false })
+        this.GroupeEnnemi = this.physics.add.group({ immovable: true, allowGravity: false })
         this.EnnemiUn = this.GroupeEnnemi.create( 10 * 64 , 2 * 64, 'ennemie1');
-        //const ennemies = this.createEnemies()
+        this.EnnemiUn_HP= 100
+
+        this.EnnemiDeux = this.GroupeEnnemi.create( 9 * 64 , 2 * 64, 'ennemie1');
+        this.EnnemiDeux_HP= 100
+
+        this.EnnemiTrois = this.GroupeEnnemi.create( 8 * 64 , 9 * 64, 'ennemie1');
+        this.EnnemiTrois_HP= 100
 
 
         this.mur.setCollisionByExclusion(-1, true);
@@ -99,7 +106,9 @@ class niveau4 extends Phaser.Scene {
         }
 
         // Hitbox Coucou
-        this.SpriteHitBox = this.physics.add.sprite(this.EnnemiUn.x , this.EnnemiUn.y, 'SpriteHitBox').setSize(256, 128);
+        this.SpriteHitBoxun = this.physics.add.sprite(this.EnnemiUn.x , this.EnnemiUn.y, 'SpriteHitBox').setSize(256, 128);
+        this.SpriteHitBoxdeux = this.physics.add.sprite(this.EnnemiDeux.x , this.EnnemiDeux.y, 'SpriteHitBox').setSize(256, 128);
+        this.SpriteHitBoxtrois = this.physics.add.sprite(this.EnnemiTrois.x , this.EnnemiTrois.y, 'SpriteHitBox').setSize(256, 128);
 
         //CAMERA
         this.cameras.main.startFollow(this.player);
@@ -112,23 +121,29 @@ class niveau4 extends Phaser.Scene {
         
         this.physics.add.collider(this.player, this.grpporte, this.Niveau5, null, this);
         this.collide_trou = this.physics.add.collider(this.player, this.trouLv4);
-        this.physics.add.collider(this.GroupeEnnemi, this.mur,);
+        
         
         this.physics.add.collider(this.GroupeEnnemi, this.grpporte,);
         this.physics.add.collider(this.GroupeEnnemi, this.GroupeEnnemi,);
+        this.physics.add.collider(this.GroupeEnnemi, this.mur,);
+        this.physics.add.collider(this.GroupeEnnemi, this.obstacle,);
         this.physics.add.collider(this.player, this.picsLv4, this.touche_pique, null, this);
 
 
 
         this.physics.add.collider(this.player, this.GroupeEnnemi,);
-        this.physics.add.overlap(this.SpriteHitBox, this.player, this.EnnemiUnAggro, null, this);
+        this.physics.add.overlap(this.SpriteHitBoxun, this.player, this.EnnemiUnAggro, null, this);
+        this.physics.add.overlap(this.SpriteHitBoxdeux, this.player, this.EnnemiDeuxAggro, null, this);
+        this.physics.add.overlap(this.SpriteHitBoxtrois, this.player, this.EnnemiTroisAggro, null, this);
         //INPUT
         this.cursors = this.input.keyboard.createCursorKeys();
         this.clavier = this.input.keyboard.addKeys('SHIFT,E');
 
         //GROUPE / UI
         this.shuriken = this.physics.add.group();
-        this.physics.add.collider(this.shuriken, this.GroupeEnnemi, this.kill, null, this);
+        this.physics.add.collider(this.shuriken, this.EnnemiUn, this.killun, null, this);
+        this.physics.add.collider(this.shuriken, this.EnnemiDeux, this.killdeux, null, this);
+        this.physics.add.collider(this.shuriken, this.EnnemiTrois, this.killtrois, null, this);
         this.HPbar = this.add.sprite(80, 20, "HP").setScrollFactor(0);
         this.fil = this.add.sprite(64 * 6, 64*14, "transi");
         this.fil.setAngle(90);
@@ -209,13 +224,13 @@ class niveau4 extends Phaser.Scene {
 
     update() {
 
-        if (this.EnnemiUnFollow == true){
+        if (this.EnnemiUnFollow == true && this.EnnemiUn_HP >0){
             this.EnnemiUn.setVelocityX(this.player.x - this.EnnemiUn.x);
             this.EnnemiUn.setVelocityY(this.player.y -this.EnnemiUn.y);
         }
 
-        this.SpriteHitBox.x = this.EnnemiUn.x
-        this.SpriteHitBox.y = this.EnnemiUn.y
+        this.SpriteHitBoxun.x = this.EnnemiUn.x
+        this.SpriteHitBoxun.y = this.EnnemiUn.y
 
         //Deplacements de l'ennemi Un
         if(this.EnnemiUn.x >= 640){
@@ -223,6 +238,49 @@ class niveau4 extends Phaser.Scene {
         }
         else if (this.EnnemiUn.x <= 128){
             this.EnnemiUn.setVelocityX(100);
+        }
+
+        
+
+
+
+
+
+
+        if (this.EnnemiDeuxFollow == true && this.EnnemiDeux_HP >0){
+            this.EnnemiDeux.setVelocityX(this.player.x - this.EnnemiDeux.x);
+            this.EnnemiDeux.setVelocityY(this.player.y -this.EnnemiDeux.y);
+        }
+
+        this.SpriteHitBoxdeux.x = this.EnnemiDeux.x
+        this.SpriteHitBoxdeux.y = this.EnnemiDeux.y
+
+        //Deplacements de l'ennemi Un
+        if(this.EnnemiDeux.y >= 300){
+            this.EnnemiDeux.setVelocityY(-100);
+        }
+        else if (this.EnnemiDeux.y <= 200){
+            this.EnnemiDeux.setVelocityY(100);
+        }
+
+
+
+
+
+        if (this.EnnemiTroisFollow == true && this.EnnemiTrois_HP >0){
+            this.EnnemiTrois.setVelocityX(this.player.x - this.EnnemiTrois.x);
+            this.EnnemiTrois.setVelocityY(this.player.y -this.EnnemiTrois.y);
+        }
+
+        this.SpriteHitBoxtrois.x = this.EnnemiTrois.x
+        this.SpriteHitBoxtrois.y = this.EnnemiTrois.y
+
+        //Deplacements de l'ennemi Un
+        if(this.EnnemiTrois.x >= 500){
+            this.EnnemiTrois.setVelocityX(-100);
+        }
+        else if (this.EnnemiTrois.x <= 128){
+            this.EnnemiTrois.setVelocityX(100);
         }
 
 
@@ -341,10 +399,57 @@ class niveau4 extends Phaser.Scene {
         //},)
 
     }
-    kill(shu, ennemies,) {
-        ennemies.destroy()
-        shu.destroy()
-        this.SpriteHitBox.destroy()
+    killun(shu, ene) {
+        if(this.EnnemiUn_HP > 0){
+            console.log(this.EnnemiUn_HP)
+            this.EnnemiUn_HP -= degat;
+            console.log(this.EnnemiUnFollow)
+        }else{
+            this.EnnemiUnFollow = false
+            this.SpriteHitBoxun.destroy();
+            this.EnnemiUn.destroy();
+            //salut
+        
+        }
+        ene.destroy()
+        console.log("j'ai detruit le shuriken")
+       
+        
+    }
+
+    killdeux(shu, ene) {
+        if(this.EnnemiDeux_HP > 0){
+            console.log(this.EnnemiDeux_HP)
+            this.EnnemiUn_HP -= degat;
+            console.log(this.EnnemiDeuxFollow)
+        }else{
+            this.EnnemiDeuxFollow = false
+            this.SpriteHitBoxdeux.destroy();
+            this.EnnemiDeux.destroy();
+            //salut
+        
+        }
+        ene.destroy()
+        console.log("j'ai detruit le shuriken")
+       
+        
+    }
+
+    killtrois(shu, ene) {
+        if(this.EnnemiTrois_HP > 0){
+            console.log(this.EnnemiTrois_HP)
+            this.EnnemiTrois_HP -= degat;
+            console.log(this.EnnemiTroisFollow)
+        }else{
+            this.EnnemiTroisFollow = false
+            this.SpriteHitBoxtrois.destroy();
+            this.EnnemiDeux.destroy();
+            //salut
+        
+        }
+        ene.destroy()
+        console.log("j'ai detruit le shuriken")
+       
         
     }
 
@@ -363,8 +468,21 @@ class niveau4 extends Phaser.Scene {
         }, 1000);
 
     }
-    EnnemiUnAggro(player, SpriteHitBox){
+    
+    EnnemiUnAggro(player, SpriteHitBoxun){
         this.EnnemiUnFollow = true;
+
+        
+    }
+
+    EnnemiDeuxAggro(player, SpriteHitBoxdeux){
+        this.EnnemiDeuxFollow = true;
+
+        
+    }
+
+    EnnemiTroisAggro(player, SpriteHitBoxtrois){
+        this.EnnemiTroisFollow = true;
 
         
     }

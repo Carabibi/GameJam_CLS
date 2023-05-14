@@ -8,7 +8,7 @@ var config = {
         }
     },
     input: { gamepad: true },
-    scene: [Menu, niveau6, niveau7],
+    scene: [niveau4,Menu, niveau6, niveau7],
     pixelArt : true ,
 } 
 var game =  new Phaser.Game(config);

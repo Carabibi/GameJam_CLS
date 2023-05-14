@@ -108,6 +108,12 @@ class niveau3 extends Phaser.Scene {
         this.GroupeEnnemi = this.physics.add.group({ immovable: true, allowGravity: false })
         this.EnnemiUn = this.GroupeEnnemi.create( 10 * 64 , 2 * 64, 'ennemie1');
         this.EnnemiUn_HP= 100
+
+        this.EnnemiDeux = this.GroupeEnnemi.create( 9 * 64 , 2 * 64, 'ennemie1');
+        this.EnnemiDeux_HP= 100
+
+        this.EnnemiTrois = this.GroupeEnnemi.create( 8 * 64 , 2 * 64, 'ennemie1');
+        this.EnnemiTrois_HP= 100
         //const ennemies = this.createEnemies()
 
 
