@@ -25,7 +25,9 @@ class Menu extends Phaser.Scene {
         var musique = this.sound.add('Music4', { loop: true });
             // Joue la musique
             musique.play();
-        
+            this.time.delayedCall(10000, function() {
+                musique.stop();
+            }, [], this);
         this.image = this.add.image
         this.image = this.add.image(640, 360, '4P')
 
@@ -69,6 +71,7 @@ class Menu extends Phaser.Scene {
     
         setTimeout(() => {
         this.scene.start('marchand')
+
                     }, 1100)
         ;
     }

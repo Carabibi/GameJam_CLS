@@ -49,7 +49,6 @@ class marchand extends Phaser.Scene {
 
     }
     create() {
-        console.log("pd")
         this.map = this.add.tilemap("mapShop");
         this.add.image(64*6,64*6,"sol")
         this.tileset = this.map.addTilesetImage(
@@ -82,13 +81,11 @@ class marchand extends Phaser.Scene {
         this.obstacle.setCollisionByExclusion(-1, true);
 
         // SPAWN JOUEUR
-        //if (this.spawnx && this.spawny) {
-        //    this.player = this.physics.add.sprite(this.spawnx, this.spawny, 'perso');
-        //}
-        //else {
-            this.player = this.physics.add.sprite(5 * 64, 9 * 64, 'perso');
-        //}
+        this.player = this.physics.add.sprite(5 * 64, 9 * 64, 'perso');
         this.emptyneo = this.physics.add.sprite(6* 64, 170, 'EMPTYNEO').setSize(256, 70);
+
+        this.physics.add.overlap(this.player, this.emptyneo,this.Shop,null,this);
+            console.log('Sprites overlapped!')
         //CAMERA
         this.cameras.main.startFollow(this.player);
         //var camera = this.cameras.add(4*64, 4*64)
@@ -179,64 +176,21 @@ class marchand extends Phaser.Scene {
             frameRate: 8,
             repeat: -1
         });
-        //var audioContext = new (window.AudioContext || window.webkitAudio)();
-        //    this.sound.context = audioContext;
-        //    // Crée une instance de Phaser.Sound pour jouer la musique
+
+        //LES ITEMS POUR LE SHOP ANIMEES !!!!!!!!!!!!!!!!!!!!!!
+        this.anims.create({
+            key: 'RAM',
+            frames: this.anims.generateFrameNumbers('RAM', {start: 0, end: 7}),
+            frameRate: 8,
+            repeat: -1
+        });
+        
         var musique = this.sound.add('Music5', { loop: true });
             // Joue la musique
             musique.play();
 
-        var button = this.add.sprite(666 ,350, 'SHOP');
-            button.setInteractive();
-            button.on('pointerdown', () => {
-                this.Startgame();
-            });
-        var button = this.add.sprite(666 ,350, 'RAM');
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.Startgame();
-        });
-
-        var button = this.add.sprite(666 ,350, 'SSD');
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.Startgame();
-        }); 
-        var button = this.add.sprite(666 ,350, '4090');
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.Startgame();
-        });
-        var button = this.add.sprite(666 ,350, 'CPU');
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.Startgame();
-        });
-        var button = this.add.sprite(666 ,350, 'WATER');
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.Startgame();
-        });
-        var button = this.add.sprite(666 ,350, 'SATA');
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.Startgame();
-        });
-        var button = this.add.sprite(666 ,350, 'ALIM');
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.Startgame();
-        });
-        var button = this.add.sprite(666 ,350, 'VENTS');
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.Startgame();
-        });
-        var button = this.add.sprite(550 ,470, 'RETOUR');
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.Startgame();
-        });
+        
+        
 
         //Création des sprites pour le marchand
         this.anims.create({
@@ -252,30 +206,59 @@ class marchand extends Phaser.Scene {
             repeat: 0
         });
         this.anims.create({
-            key: 'RAM',
+            key: 'SHOP_RAM',
             frames: this.anims.generateFrameNumbers('SHOP', {start: 2, end: 2}),
             frameRate: 1,
             repeat: 0
         });
         this.anims.create({
-            key: 'SSD',
-            frames: this.anims.generateFrameNumbers('SHOP', {start: 2, end: 2}),
+            key: 'SHOP_SSD',
+            frames: this.anims.generateFrameNumbers('SHOP', {start: 3, end: 3}),
             frameRate: 1,
             repeat: 0
         });
         this.anims.create({
-            key: '4090',
-            frames: this.anims.generateFrameNumbers('SHOP', {start: 2, end: 2}),
+            key: 'SHOP_4090',
+            frames: this.anims.generateFrameNumbers('SHOP', {start: 4, end: 4}),
             frameRate: 1,
             repeat: 0
         });
         this.anims.create({
-            key: 'RAM',
-            frames: this.anims.generateFrameNumbers('SHOP', {start: 2, end: 2}),
+            key: 'SHOP_WATER',
+            frames: this.anims.generateFrameNumbers('SHOP', {start: 5, end: 5}),
+            frameRate: 1,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'SHOP_CPU',
+            frames: this.anims.generateFrameNumbers('SHOP', {start: 6, end: 6}),
             frameRate: 1,
             repeat: -1
         });
-        
+        this.anims.create({
+            key: 'SHOP_SATA',
+            frames: this.anims.generateFrameNumbers('SHOP', {start: 7, end: 7}),
+            frameRate: 1,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'SHOP_ALIM',
+            frames: this.anims.generateFrameNumbers('SHOP', {start: 8, end: 8}),
+            frameRate: 1,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'SHOP_VENTS',
+            frames: this.anims.generateFrameNumbers('SHOP', {start: 9, end: 9}),
+            frameRate: 1,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'SHOP_EXIT',
+            frames: this.anims.generateFrameNumbers('SHOP', {start: 10 ,end: 10}),
+            frameRate: 1,
+            repeat: -1
+        });
     }
     update() {
         if (this.cursors.left.isDown) {
@@ -379,6 +362,56 @@ class marchand extends Phaser.Scene {
         }, 1000);
         
     }
+    Shop(){
+        this.shop =this.physics.add.sprite(600 ,610, 'SHOP').setScrollFactor(0);
 
+        var button = this.add.sprite(245 ,538, 'RAM').setScrollFactor(0)
+
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.shop.anims.play('SHOP_RAM',true);
+        });
+
+        var button = this.add.sprite(345 ,538, 'SSD').setScrollFactor(0);
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.shop.anims.play('SHOP_SSD',true);
+        });
+        var button = this.add.sprite(445 ,538, '4090').setScrollFactor(0);
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.shop.anims.play('SHOP_4090',true);
+        });
+        var button = this.add.sprite(666 ,350, 'CPU').setScrollFactor(0);
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.Startgame();
+        });
+        var button = this.add.sprite(666 ,350, 'WATER').setScrollFactor(0);
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.Startgame();
+        });
+        var button = this.add.sprite(666 ,350, 'SATA').setScrollFactor(0);
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.Startgame();
+        });
+        var button = this.add.sprite(666 ,350, 'ALIM').setScrollFactor(0);
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.Startgame();
+        });
+        var button = this.add.sprite(600 ,350, 'VENTS').setScrollFactor(0)
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.Startgame();
+        });
+        var button = this.add.sprite(550 ,470, 'RETOUR').setScrollFactor(0);
+        button.setInteractive();
+        button.on('pointerdown', () => {
+            this.Startgame();
+        });
+    }
 }
 export default marchand
