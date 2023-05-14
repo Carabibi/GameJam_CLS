@@ -233,13 +233,13 @@ class scene1 extends Phaser.Scene {
                 this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityX(475*speedatk);   
             }
             else if(this.cursors.left.isDown){
-                this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityX(-475*speedatk);
+                this.shuriken.create(this.player.x -50, this.player.y, "shuriken").setVelocityX(-475*speedatk);
             }
             else if(this.cursors.up.isDown){
-                this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityY(-475*speedatk);
+                this.shuriken.create(this.player.x , this.player.y-50, "shuriken").setVelocityY(-475*speedatk);
             }
             else if(this.cursors.down.isDown){
-                this.shuriken.create(this.player.x + 50, this.player.y, "shuriken").setVelocityY(475*speedatk);
+                this.shuriken.create(this.player.x , this.player.y+50, "shuriken").setVelocityY(475*speedatk);
             }
             this.CanShoot = false;
             setTimeout(() => {
