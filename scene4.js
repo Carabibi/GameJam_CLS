@@ -20,6 +20,7 @@ class scene4 extends Phaser.Scene {
         this.load.spritesheet('transi','assets/transiPortes_256x128.png',{frameWidth:256,frameHeight:128})
         this.load.spritesheet('coin', 'assets/2coin.png', { frameWidth: 64, frameHeight: 64 })
         this.load.spritesheet('heal', 'assets/corbeille.png', { frameWidth: 64, frameHeight: 64 })
+        this.load.spritesheet('CD_rom', 'assets/Overclocking.png', { frameWidth: 64, frameHeight: 64 })
     }
 
     create() {
@@ -59,6 +60,12 @@ class scene4 extends Phaser.Scene {
             this.grpheal.create(coord.x + 32, coord.y - 32, "heal");
         });
 
+        this.grpOC = this.physics.add.group({ immovable: true, allowGravity: false })
+        this.OC = this.map.getObjectLayer("CD_ROM");
+        this.OC.objects.forEach(coord => {
+            this.grpOC.create(coord.x + 32, coord.y - 32, "CD_rom");
+        });
+
         //this.grpporte = this.physics.add.group({ immovable: true, allowGravity: false })
         //this.porte = this.map.getObjectLayer("porte");
         //this.porte.objects.forEach(coord => {
@@ -92,10 +99,11 @@ class scene4 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.grpporte, this.Niveau2,null,this);
         this.physics.add.overlap(this.player, this.grpcoin, this.touche_coin, null, this);
         this.physics.add.overlap(this.player, this.grpheal, this.touche_heal, null, this);
+        this.physics.add.overlap(this.player, this.grpOC, this.touche_CD, null, this);
 
         //INPUT
         this.cursors = this.input.keyboard.createCursorKeys();
-        this.clavier = this.input.keyboard.addKeys('SHIFT,E');
+        this.clavier = this.input.keyboard.addKeys('SHIFT,E,O');
 
         //GROUPE / UI
         this.shuriken = this.physics.add.group();
@@ -192,6 +200,16 @@ class scene4 extends Phaser.Scene {
         this.grpheal.getChildren().forEach(function (child) {
             child.anims.play('corbeille', true)
         }, this)
+        // ANIMATION OVERCLOCKING
+        this.anims.create({
+            key: 'CD_rom',
+            frames: this.anims.generateFrameNumbers('CD_rom', { start: 0, end: 7 }),
+            frameRate: 10,
+            repeat: -1
+        })
+        this.grpOC.getChildren().forEach(function (child) {
+            child.anims.play('CD_rom', true)
+        }, this)
     }
 
 
@@ -278,6 +296,19 @@ class scene4 extends Phaser.Scene {
         if(HP==75){this.HPbar.anims.play("vie2")}
         if(HP==100){this.HPbar.anims.play("vie1")}
 
+        //OVERCLOCKING
+
+        if(this.clavier.O.isDown && canOC == true){
+            OCing= true
+            canOC=false
+            setTimeout(() => {
+                OCing = false
+            }, 10000);
+            setTimeout(() => { 
+                canOC=true
+            }, 70000);
+        }
+
         //shoot
         
         if (this.clavier.E.isDown && this.CanShoot == true) {
@@ -316,5 +347,9 @@ class scene4 extends Phaser.Scene {
     touche_heal(player, heal) {
         HP += 25
         heal.destroy()
+    }
+    touche_CD(player,CD) {
+        CD.destroy()
+        canOC=true
     }
 }

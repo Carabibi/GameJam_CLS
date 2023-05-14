@@ -15,11 +15,16 @@ class scene3 extends Phaser.Scene {
         this.load.image("porte", "assets/porte_ferme.png");
         this.load.image("cible", "assets/cible.png");
         this.load.image("sol3", "assets/sol_640x640_asterix.png");
+        this.load.image("tuto3", "assets/clippy/tutodash.png");
+        this.load.image("tuto4", "assets/clippy/tutoviecorbeille.png");
+        this.load.image("tuto5", "assets/clippy/tutopiques.png");
+        
         this.load.spritesheet('perso', "assets/perso.png", { frameWidth: 47, frameHeight: 61 })
         this.load.spritesheet('shuriken', 'assets/Shuriken-sheet.png', { frameWidth: 16, frameHeight: 16 })
         this.load.spritesheet('HP', 'assets/HPBar180x37.png', { frameWidth: 180, frameHeight: 37 })
         this.load.spritesheet('heal', 'assets/corbeille.png', { frameWidth: 64, frameHeight: 64 })
         this.load.spritesheet('coin', 'assets/2coin.png', { frameWidth: 64, frameHeight: 64 })
+
     }
 
     create() {
@@ -58,7 +63,7 @@ class scene3 extends Phaser.Scene {
         this.grpporte = this.physics.add.group({ immovable: true, allowGravity: false })
         this.porte = this.map.getObjectLayer("porte_sortie");
         this.porte.objects.forEach(coord => {
-            this.grpporte.create(coord.x - 32, coord.y - 32, "porte");
+            this.grpporte.create(coord.x - 32, coord.y - 32, "porte").angle = -90;
         });
 
         //this.grpcible = this.physics.add.group({ immovable: true, allowGravity: false })
@@ -90,7 +95,7 @@ class scene3 extends Phaser.Scene {
 
         //INPUT
         this.cursors = this.input.keyboard.createCursorKeys();
-        this.clavier = this.input.keyboard.addKeys('SHIFT,E');
+        this.clavier = this.input.keyboard.addKeys('SHIFT,E,ENTER');
 
         //GROUPE / UI
         this.shuriken = this.physics.add.group();
@@ -183,10 +188,14 @@ class scene3 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.pique, this.touche_pique, null, this);
         this.physics.add.overlap(this.player, this.grpheal, this.touche_heal, null, this);
         this.physics.add.overlap(this.player, this.grpcoin, this.touche_coin, null, this);
+
+
+        this.tuto3 = this.add.image(64*10,64*6.3,"tuto3").setScrollFactor(0)
     }
 
 
     update() {
+        if(this.clavier.ENTER.isDown){this.tuto3.destroy()}
         //                           DEPLACEMENT JOUEUR
         // Droite/gauche
         if (this.cursors.left.isDown) {
@@ -321,17 +330,32 @@ class scene3 extends Phaser.Scene {
         coin += 1
         coincoin.destroy()
     }
-    take_damage() {
+    take_damage(dmg) {
         console.log("test")
         if (invulnerability == false) {
-            HP -= 25
+            if (OCing == true) {
+                if (dmg) {
+                    HP -= dmg * 2
+                }
+                else {
+                    HP -= 25 * 2
+                }
+            }
+            else if (OCing == false) {
+                if (dmg) {
+                    HP -= dmg
+                }
+                else {
+                    HP -= 25
+                }
+            }
             invulnerability = true
             setTimeout(() => {
                 invulnerability = false
             }, 750);
         }
-        
-        if(HP<=0){
+
+        if (HP <= 0) {
             this.scene.start("fin")
         }
     }

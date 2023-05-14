@@ -20,7 +20,7 @@ class scene2 extends Phaser.Scene {
         this.load.spritesheet('perso',"assets/perso.png",{frameWidth:47,frameHeight:61})
         this.load.spritesheet('shuriken','assets/Shuriken-sheet.png',{frameWidth:32,frameHeight:32})
         this.load.spritesheet('HP','assets/HPBar180x37.png',{frameWidth:180,frameHeight:37})
-
+        this.load.image("tuto2", "assets/clippy/shuriken.png");
     }
 
     create() {
@@ -154,11 +154,13 @@ class scene2 extends Phaser.Scene {
         this.collide_trou = this.physics.add.collider(this.player, this.trou);
         this.physics.add.collider(this.player, this.grpporte, this.Niveau3,null,this);
         this.physics.add.overlap(this.shuriken, this.grpcible, this.touche_cible,null,this);
+        this.tuto2 = this.add.image(64*10,64*6.3,"tuto2").setScrollFactor(0)
     }
     
 
 
     update() {
+        if(this.cursors.left.isDown || this.cursors.right.isDown || this.cursors.up.isDown|| this.cursors.down.isDown){this.tuto2.destroy()}
         //                           DEPLACEMENT JOUEUR
         // Droite/gauche
         if (this.cursors.left.isDown) {

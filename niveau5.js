@@ -1,4 +1,4 @@
-
+var invulnerability = false
 
 var CDDash = true
 var HPmax = 100
@@ -75,6 +75,10 @@ class niveau5 extends Phaser.Scene {
             "porte",
             this.tileset
         );
+        this.obstacle = this.map.createLayer(
+            "obstacle",
+            this.tileset
+        );
 
         this.grpporte = this.physics.add.group({ immovable: true, allowGravity: false })
         this.porte = this.map.getObjectLayer("porte_sortie");
@@ -83,7 +87,12 @@ class niveau5 extends Phaser.Scene {
         });
         // GROUPE ENNEMIE
         this.GroupeEnnemi = this.physics.add.group({ immovable: true, allowGravity: false })
-        this.EnnemiUn = this.GroupeEnnemi.create( 10 * 64 , 2 * 64, 'ennemie1');
+        this.EnnemiUn = this.GroupeEnnemi.create(10 * 64, 2 * 64, 'ennemie1');
+        this.EnnemiDeux = this.GroupeEnnemi.create(8 * 64, 2 * 64, 'ennemie1');
+        this.EnnemiTrois = this.GroupeEnnemi.create(12 * 64, 2 * 64, 'ennemie1');
+        this.EnnemiUn_HP = 100
+        this.EnnemiDeux_HP = 100
+        this.EnnemiTrois_HP = 100
         //const ennemies = this.createEnemies()
 
 
@@ -91,6 +100,7 @@ class niveau5 extends Phaser.Scene {
         this.entree.setCollisionByExclusion(-1, true);
         this.trouLv5.setCollisionByExclusion(-1, true);
         this.picsLv5.setCollisionByExclusion(-1, true);
+        this.obstacle.setCollisionByExclusion(-1, true);
         // SPAWN JOUEUR
         if (this.spawnx && this.spawny) {
             this.player = this.physics.add.sprite(this.spawnx, this.spawny, 'perso');
@@ -100,8 +110,9 @@ class niveau5 extends Phaser.Scene {
         }
 
         // Hitbox Coucou
-        this.SpriteHitBox = this.physics.add.sprite(this.EnnemiUn.x , this.EnnemiUn.y, 'SpriteHitBox').setSize(256, 128);
-
+        this.SpriteHitBox1 = this.physics.add.sprite(this.EnnemiUn.x, this.EnnemiUn.y, 'SpriteHitBox').setSize(256, 128);
+        this.SpriteHitBox2 = this.physics.add.sprite(this.EnnemiUn.x, this.EnnemiUn.y, 'SpriteHitBox').setSize(256, 128);
+        this.SpriteHitBox3 = this.physics.add.sprite(this.EnnemiUn.x, this.EnnemiUn.y, 'SpriteHitBox').setSize(256, 128);
         //CAMERA
         this.cameras.main.startFollow(this.player);
         //var camera = this.cameras.add(4*64, 4*64)
@@ -111,28 +122,33 @@ class niveau5 extends Phaser.Scene {
         //COLLIDER
         this.physics.add.collider(this.player, this.mur);
         this.physics.add.collider(this.player, this.entree);
-        
+        this.physics.add.collider(this.player, this.obstacle);
         this.physics.add.collider(this.player, this.grpporte, this.Niveau6, null, this);
         this.collide_trou = this.physics.add.collider(this.player, this.trouLv5);
         this.physics.add.collider(this.GroupeEnnemi, this.mur,);
-        
+        this.physics.add.collider(this.GroupeEnnemi, this.obstacle,);
+
         this.physics.add.collider(this.GroupeEnnemi, this.grpporte,);
         this.physics.add.collider(this.GroupeEnnemi, this.GroupeEnnemi,);
-        this.physics.add.collider(this.player, this.picsLv5, this.touche_pique, null, this);
+        this.physics.add.collider(this.player, this.picsLv5, this.take_damage, null, this);
 
 
 
-        this.physics.add.collider(this.player, this.GroupeEnnemi,);
-        this.physics.add.overlap(this.SpriteHitBox, this.player, this.EnnemiUnAggro, null, this);
+        this.physics.add.collider(this.player, this.GroupeEnnemi, this.take_damage, null, this);
+        this.physics.add.overlap(this.SpriteHitBox1, this.player, this.EnnemiUnAggro, null, this);
+        this.physics.add.overlap(this.SpriteHitBox2, this.player, this.EnnemiDeuxAggro, null, this);
+        this.physics.add.overlap(this.SpriteHitBox3, this.player, this.EnnemiTroisAggro, null, this);
         //INPUT
         this.cursors = this.input.keyboard.createCursorKeys();
         this.clavier = this.input.keyboard.addKeys('SHIFT,E');
 
         //GROUPE / UI
         this.shuriken = this.physics.add.group();
-        this.physics.add.collider(this.shuriken, this.GroupeEnnemi, this.kill, null, this);
+        this.physics.add.collider(this.shuriken, this.EnnemiUn, this.killEnnemiUn, null, this);
+        this.physics.add.collider(this.shuriken, this.EnnemiDeux, this.killEnnemiDeux, null, this);
+        this.physics.add.collider(this.shuriken, this.EnnemiTrois, this.killEnnemiTrois, null, this);
         this.HPbar = this.add.sprite(80, 20, "HP").setScrollFactor(0);
-        this.fil = this.add.sprite(895,385 ,"transi");
+        this.fil = this.add.sprite(895, 385, "transi");
         this.fil.setAngle(0);
         //ANIMATIONS
         this.anims.create({
@@ -211,21 +227,36 @@ class niveau5 extends Phaser.Scene {
 
     update() {
 
-        if (this.EnnemiUnFollow == true){
+        if (this.EnnemiUnFollow == true) {
             this.EnnemiUn.setVelocityX(this.player.x - this.EnnemiUn.x);
-            this.EnnemiUn.setVelocityY(this.player.y -this.EnnemiUn.y);
+            this.EnnemiUn.setVelocityY(this.player.y - this.EnnemiUn.y);
+        }
+        if (this.EnnemiDeuxFollow == true) {
+            this.EnnemiDeux.setVelocityX(this.player.x - this.EnnemiDeux.x);
+            this.EnnemiDeux.setVelocityY(this.player.y - this.EnnemiDeux.y);
+        }
+        if (this.EnnemiTroisFollow == true) {
+            this.EnnemiTrois.setVelocityX(this.player.x - this.EnnemiTrois.x);
+            this.EnnemiTrois.setVelocityY(this.player.y - this.EnnemiTrois.y);
         }
 
-        this.SpriteHitBox.x = this.EnnemiUn.x
-        this.SpriteHitBox.y = this.EnnemiUn.y
+        this.SpriteHitBox1.x = this.EnnemiUn.x
+        this.SpriteHitBox1.y = this.EnnemiUn.y
+
+        this.SpriteHitBox2.x = this.EnnemiDeux.x
+        this.SpriteHitBox2.y = this.EnnemiDeux.y
+
+        this.SpriteHitBox3.x = this.EnnemiTrois.x
+        this.SpriteHitBox3.y = this.EnnemiTrois.y
 
         //Deplacements de l'ennemi Un
-        if(this.EnnemiUn.x >= 640){
+        if (this.EnnemiUn.x >= 640) {
             this.EnnemiUn.setVelocityX(-100);
         }
-        else if (this.EnnemiUn.x <= 128){
+        else if (this.EnnemiUn.x <= 128) {
             this.EnnemiUn.setVelocityX(100);
         }
+
 
 
 
@@ -341,13 +372,61 @@ class niveau5 extends Phaser.Scene {
         //        this.ennemie1.deplacement(0, 0, 0, 0)
         //    }
         //},)
+        if (this.EnnemiUn_HP <= 0) {
+            this.EnnemiUnFollow = false
+            this.EnnemiUn.destroy()
+            this.SpriteHitBox1.destroy()
+        }
+        if (this.EnnemiDeux_HP <= 0) {
+            this.EnnemiDeuxFollow = false
+            this.EnnemiDeux.destroy()
+            this.SpriteHitBox2.destroy()
+        }
+        if (this.EnnemiTrois_HP <= 0) {
+            this.EnnemiTroisFollow = false
+            this.EnnemiTrois.destroy()
+            this.SpriteHitBox3.destroy()
+        }
 
     }
-    kill(shu, ennemies,) {
-        ennemies.destroy()
-        shu.destroy()
-        this.SpriteHitBox.destroy()
-        
+    killEnnemiUn(shu, ene) {
+        if (this.EnnemiUn_HP > 0) {
+            this.EnnemiUn_HP -= degat
+            console.log(this.EnnemiUn_HP)
+
+        }
+        else {
+            this.EnnemiUnFollow = false
+            this.SpriteHitBox.destroy();
+            this.EnnemiUn.destroy();
+
+        } ene.destroy()
+    }
+    killEnnemiDeux(shu, ene) {
+        if (this.EnnemiDeux_HP > 0) {
+            this.EnnemiDeux_HP -= degat
+            console.log(this.EnnemiDeux_HP)
+
+        }
+        else {
+            this.EnnemiUnFollow = false
+            this.SpriteHitBox2.destroy();
+            this.EnnemiDeux.destroy();
+
+        } ene.destroy()
+    }
+    killEnnemiTrois(shu, ene) {
+        if (this.EnnemiTrois_HP > 0) {
+            this.EnnemiTrois_HP -= degat
+            console.log(this.EnnemiTrois_HP)
+
+        }
+        else {
+            this.EnnemiUnFollow = false
+            this.SpriteHitBox3.destroy();
+            this.EnnemiTrois.destroy();
+
+        } ene.destroy()
     }
 
     touche_pique() {
@@ -365,11 +444,9 @@ class niveau5 extends Phaser.Scene {
         }, 1000);
 
     }
-    EnnemiUnAggro(player, SpriteHitBox){
-        this.EnnemiUnFollow = true;
-
-        
-    }
+    EnnemiUnAggro(player, SpriteHitBox) { this.EnnemiUnFollow = true; }
+    EnnemiDeuxAggro(player, SpriteHitBox) { this.EnnemiDeuxFollow = true; }
+    EnnemiTroisAggro(player, SpriteHitBox) { this.EnnemiTroisFollow = true; }
 
 
     createEnemies() {
@@ -385,5 +462,23 @@ class niveau5 extends Phaser.Scene {
         }
 
         return ennemies;
+    }
+    take_damage() {
+        if (invulnerability == false) {
+            if (OCing == true) {
+                HP -= 25 * 2
+            }
+            else if (OCing == false) {
+                HP -= 25
+            }
+            invulnerability = true
+            setTimeout(() => {
+                invulnerability = false
+            }, 750);
+        }
+
+        if (HP <= 0) {
+            this.scene.start("fin")
+        }
     }
 }
