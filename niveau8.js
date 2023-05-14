@@ -15,20 +15,26 @@ var cpu = false;
 var ventilo = false;
 var ram = false;
 
-class niveau7 extends Phaser.Scene {
+class niveau8 extends Phaser.Scene {
     constructor() {
-        super('niveau7');
+        super('niveau8');
         this.CanShoot = true;
+        this.cible_detruite = 0
+        this.porte_ouverte = false
 
     }
 
     init(data) {
     }
     preload() {
-        this.load.tilemapTiledJSON("map7", "assets/niveau_7.json");
+        this.load.tilemapTiledJSON("map8", "assets/niveau_8.json");
         this.load.image("tileset", "assets/placeholder.png");
-        this.load.image("porte", "assets/porte.png");
+
+        this.load.image("porte_ouverte", "assets/porte.png");
+        this.load.image("porte", "assets/porte_ferme.png");
+        
         this.load.image("solGrand", "assets/sol_1280x1280_kaamelot.png");
+        this.load.spritesheet('cible','assets/cible.png',{frameWidth:64,frameHeight:64})
         this.load.spritesheet('perso', "assets/spritepotagoniste.png", { frameWidth: 47, frameHeight: 61 })
         this.load.spritesheet('shuriken', 'assets/Shuriken-sheet.png', { frameWidth: 16, frameHeight: 16 })
         this.load.spritesheet('HP', 'assets/HPBar180x37.png', { frameWidth: 180, frameHeight: 37 })
@@ -53,8 +59,8 @@ class niveau7 extends Phaser.Scene {
 
         this.EnnemiUnFollow = false;
         // CREATE MAP
-        this.map = this.add.tilemap("map7");
-        this.add.image(64 * 11, 64 * 11, "solGrand")
+        this.map = this.add.tilemap("map8");
+        this.add.image(64 * 6, 64 * 6, "solGrand")
         this.tileset = this.map.addTilesetImage(
             "placeholder",
             "tileset"
@@ -63,12 +69,8 @@ class niveau7 extends Phaser.Scene {
             "mur",
             this.tileset
         );
-        this.picsLv7 = this.map.createLayer(
+        this.picsLv8 = this.map.createLayer(
             "pique",
-            this.tileset
-        );
-        this.trouLv7 = this.map.createLayer(
-            "trou",
             this.tileset
         );
         this.entree = this.map.createLayer(
@@ -79,30 +81,37 @@ class niveau7 extends Phaser.Scene {
         this.grpporte = this.physics.add.group({ immovable: true, allowGravity: false })
         this.porte = this.map.getObjectLayer("porte_sortie");
         this.porte.objects.forEach(coord => {
-            this.grpporte.create(coord.x +32, coord.y - 32, "porte").angle = 180;
+            this.grpporte.create(coord.x +32, coord.y - 32, "porte").angle = 0;
         });
 
-        this.grpheal = this.physics.add.group({ immovable: true, allowGravity: false })
-        this.heal = this.map.getObjectLayer("heal");
-        this.heal.objects.forEach(coord => {
-            this.grpheal.create(coord.x + 32, coord.y - 32, "heal");
+        this.grpcible = this.physics.add.group({ immovable: true, allowGravity: false })
+        this.cible = this.map.getObjectLayer("cible");
+        this.cible.objects.forEach(coord => {
+            this.grpcible.create(coord.x + 32, coord.y + 32, "cible");
         });
+        //this.grpheal = this.physics.add.group({ immovable: true, allowGravity: false })
+        //this.heal = this.map.getObjectLayer("heal");
+        //this.heal.objects.forEach(coord => {
+        //    this.grpheal.create(coord.x + 32, coord.y - 32, "heal");
+        //});
         // GROUPE ENNEMIE
         this.GroupeEnnemi = this.physics.add.group({ immovable: true, allowGravity: false })
-        this.EnnemiUn = this.GroupeEnnemi.create( 10 * 64 , 2 * 64, 'ennemie1');
+        this.EnnemiUn = this.GroupeEnnemi.create( 6 * 64 , 6 * 64, 'ennemie1');
+        
         //const ennemies = this.createEnemies()
 
 
         this.mur.setCollisionByExclusion(-1, true);
         this.entree.setCollisionByExclusion(-1, true);
-        //this.trouLv7.setCollisionByExclusion(-1, true);
-        //this.picsLv7.setCollisionByExclusion(-1, true);
+        this.picsLv8.setCollisionByExclusion(-1, true);
+
+    
         // SPAWN JOUEUR
         if (this.spawnx && this.spawny) {
             this.player = this.physics.add.sprite(this.spawnx, this.spawny, 'perso');
         }
         else {
-            this.player = this.physics.add.sprite(2 * 64, 5 * 64, 'perso');
+            this.player = this.physics.add.sprite(6 * 64, 10 * 64, 'perso');
         }
 
         // Hitbox Coucou
@@ -119,12 +128,12 @@ class niveau7 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.entree);
         
         this.physics.add.collider(this.player, this.grpporte, this.Niveau8, null, this);
-        this.collide_trou = this.physics.add.collider(this.player, this.trouLv7);
-        this.physics.add.collider(this.GroupeEnnemi, this.mur,);
-        
+        //this.collide_trou = this.physics.add.collider(this.player, this.trouLv7);
+        //this.physics.add.collider(this.GroupeEnnemi, this.mur,);
+        //
         this.physics.add.collider(this.GroupeEnnemi, this.grpporte,);
         this.physics.add.collider(this.GroupeEnnemi, this.GroupeEnnemi,);
-        //this.physics.add.collider(this.player, this.picsLv7, this.touche_pique, null, this);
+        this.physics.add.collider(this.player, this.picsLv8, this.take_damage, null, this);
 
 
 
@@ -138,7 +147,7 @@ class niveau7 extends Phaser.Scene {
         this.shuriken = this.physics.add.group();
         this.physics.add.collider(this.shuriken, this.GroupeEnnemi, this.kill, null, this);
         this.HPbar = this.add.sprite(80, 20, "HP").setScrollFactor(0);
-        this.fil = this.add.sprite(700, -130, "transi");
+        this.fil = this.add.sprite(383, -130, "transi");
         this.fil.setAngle(-90);
         //ANIMATIONS
         this.anims.create({
@@ -198,6 +207,17 @@ class niveau7 extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('perso', { start: 7, end: 13 }),
             frameRate: 10,
         })
+
+        this.anims.create({
+            key: 'cible',
+            frames: this.anims.generateFrameNumbers('cible', {start: 0, end: 2}),
+            frameRate: 4.5,
+            repeat: -1
+        });
+        this.grpcible.getChildren().forEach(function(child){
+            child.anims.play('cible', true)
+        },this)
+
         //ANIMATION FIL
         this.anims.create({
             key: 'transi1',
@@ -212,6 +232,9 @@ class niveau7 extends Phaser.Scene {
             repeat: -1
         });
 
+        this.physics.add.collider(this.player, this.grpporte, this.niveau9,null,this);
+        this.physics.add.overlap(this.shuriken, this.grpcible, this.touche_cible,null,this);
+        
     }
 
 
@@ -221,10 +244,10 @@ class niveau7 extends Phaser.Scene {
             this.EnnemiUn.setVelocityX(this.player.x - this.EnnemiUn.x);
             this.EnnemiUn.setVelocityY(this.player.y -this.EnnemiUn.y);
         }
-
+        
         this.SpriteHitBox.x = this.EnnemiUn.x
         this.SpriteHitBox.y = this.EnnemiUn.y
-
+        
         //Deplacements de l'ennemi Un
         if(this.EnnemiUn.x >= 640){
             this.EnnemiUn.setVelocityX(-100);
@@ -309,11 +332,11 @@ class niveau7 extends Phaser.Scene {
 
 
         //BARRE HP
-        if (HP == 0) { this.HPbar.anims.play("vie1") }
-        if (HP == 25) { this.HPbar.anims.play("vie2") }
+        if (HP == 0) { this.HPbar.anims.play("vie5") }
+        if (HP == 25) { this.HPbar.anims.play("vie4") }
         if (HP == 50) { this.HPbar.anims.play("vie3") }
-        if (HP == 75) { this.HPbar.anims.play("vie4") }
-        if (HP == 100) { this.HPbar.anims.play("vie5") }
+        if (HP == 75) { this.HPbar.anims.play("vie2") }
+        if (HP == 100) { this.HPbar.anims.play("vie1") }
 
         //shoot
 
@@ -356,20 +379,24 @@ class niveau7 extends Phaser.Scene {
         
     }
 
-    touche_pique() {
-        console.log("aie");
-        if (HP > 0) {
-            HP -= 25
-        }
-    }
-
-
     Niveau8() {
+        if(this.porte_ouverte== true){
         this.fil.anims.play('transi1')
         setTimeout(() => {
-            this.scene.start('niveau5')
+            this.scene.start('niveau9')
         }, 1000);
+        }
+        }
 
+    touche_cible(shuriken, cible){
+        shuriken.destroy()
+        cible.destroy()
+        this.cible_detruite+=1
+        if(this.cible_detruite >= 2){
+            this.porte_ouverte = true 
+            this.grpporte.getChildren()[0].setTexture("porte_ouverte")
+            this.grpporte.getChildren()[1].setTexture("porte_ouverte")
+        }
     }
     EnnemiUnAggro(player, SpriteHitBox){
         this.EnnemiUnFollow = true;
@@ -389,7 +416,22 @@ class niveau7 extends Phaser.Scene {
             ennemies.add(ennemie1)
             //individu.body.velocity.y = 100; // Ajouter une vitesse à l'individu
         }
-
+        
+        
         return ennemies;
+    }
+    take_damage() {
+        console.log("test")
+        if (invulnerability == false) {
+            HP -= 25
+            invulnerability = true
+            setTimeout(() => {
+                invulnerability = false
+            }, 750);
+        }
+        
+        if(HP<=0){
+            this.scene.start("fin")
+        }
     }
 }
