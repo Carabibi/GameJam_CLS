@@ -50,6 +50,18 @@ class niveau4 extends Phaser.Scene {
     }
 
     create() {
+        //OVERCLOCKING
+
+        if(this.clavier.O.isDown && canOC == true){
+            OCing= 2
+            canOC=false
+            setTimeout(() => {
+                OCing = 1
+            }, 10000);
+            setTimeout(() => { 
+                canOC=true
+            }, 70000);
+        }
 
         this.EnnemiUnFollow = false;
         // CREATE MAP
@@ -289,7 +301,7 @@ class niveau4 extends Phaser.Scene {
         //                           DEPLACEMENT JOUEUR
         // Droite/gauche
         if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-160 * vitessedep)
+            this.player.setVelocityX(-160 * vitessedep*OCing)
             this.player.anims.play('anim gauche', true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityX(-800)
@@ -305,7 +317,7 @@ class niveau4 extends Phaser.Scene {
 
         }
         else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(160 * vitessedep);
+            this.player.setVelocityX(160 * vitessedep*OCing);
             this.player.anims.play('anim droite', true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityX(800)
@@ -324,7 +336,7 @@ class niveau4 extends Phaser.Scene {
         }
         // Haut/bas
         if (this.cursors.up.isDown) {
-            this.player.setVelocityY(-160 * vitessedep)
+            this.player.setVelocityY(-160 * vitessedep*OCing)
             this.player.anims.play('anim dos', true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityY(-800)
@@ -339,7 +351,7 @@ class niveau4 extends Phaser.Scene {
             }
         }
         else if (this.cursors.down.isDown) {
-            this.player.setVelocityY(160 * vitessedep)
+            this.player.setVelocityY(160 * vitessedep*OCing)
             this.player.anims.play('anim face', true)
             if (this.clavier.SHIFT.isDown && CDDash == true) {
                 this.player.setVelocityY(800)
@@ -504,10 +516,10 @@ class niveau4 extends Phaser.Scene {
     }
     take_damage() {
         if (invulnerability == false) {
-            if (OCing == true) {
+            if (OCing == 2) {
                 HP -= 25 * 2
             }
-            else if (OCing == false) {
+            else if (OCing == 1) {
                 HP -= 25
             }
             invulnerability = true
