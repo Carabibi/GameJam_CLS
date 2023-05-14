@@ -14,6 +14,8 @@ var watercooling = false;
 var cpu = false;
 var ventilo = false;
 var ram = false;
+var bossattack = true
+var panpan = true
 
 class Boss extends Phaser.Scene {
     constructor() {
@@ -30,6 +32,7 @@ class Boss extends Phaser.Scene {
         this.load.image("porte", "assets/porte.png");
         this.load.image("sol", "assets/sol_640x640_asterix.png");
         this.load.spritesheet('perso', "assets/spritepotagoniste.png", { frameWidth: 47, frameHeight: 61 })
+        this.load.spritesheet('System32', "assets/System32.png", { frameWidth: 64, frameHeight: 64 })
         this.load.spritesheet('shuriken', 'assets/Shuriken-sheet.png', { frameWidth: 16, frameHeight: 16 })
         this.load.spritesheet('HP', 'assets/HPBar180x37.png', { frameWidth: 180, frameHeight: 37 })
         this.load.spritesheet('transi', 'assets/transiPortes_256x128.png', { frameWidth: 256, frameHeight: 128 })
@@ -75,8 +78,9 @@ class Boss extends Phaser.Scene {
 
         // GROUPE ENNEMIE
         this.GroupeEnnemi = this.physics.add.group({ immovable: true, allowGravity: false })
-        this.Boss = this.GroupeEnnemi.create( 10 * 64 , 2 * 64, 'ennemie1');
-        this.Boss_HP= 100
+        this.Boss = this.GroupeEnnemi.create( 10 * 64 , 2 * 64, 'System32');
+        this.Boss_HP= 1000
+        this.Boss.anims.play('animboss', true)
 
 
 
@@ -120,6 +124,10 @@ class Boss extends Phaser.Scene {
         this.shuriken = this.physics.add.group();
         this.physics.add.collider(this.shuriken, this.Boss, this.killun, null, this);
         this.HPbar = this.add.sprite(80, 20, "HP").setScrollFactor(0);
+
+
+        this.shurikenboss = this.physics.add.group();
+        this.physics.add.collider(this.shurikenboss, this.Boss, this.touche_pique, null, this);
         //ANIMATIONS
         this.anims.create({
             key: 'vie1',
@@ -179,10 +187,20 @@ class Boss extends Phaser.Scene {
             frameRate: 10,
         })
 
+        this.anims.create({
+            key: 'animboss',
+            frames: this.anims.generateFrameNumbers('System32', { start: 0, end: 5 }),
+            frameRate: 10,
+        })
+
     }
 
 
     update() {
+
+
+
+        
 
         
 
@@ -196,7 +214,24 @@ class Boss extends Phaser.Scene {
 
         
 
+        if(panpan == true){
+            panpan = false
+            console.log(panpan)
+            this.shurikenboss.create(this.Boss.x, this.Boss.y +50, "shuriken").setVelocityY(475);    
+            setTimeout(() => {
+                panpan = true
+            }, 800);
+        }
+       
+            
+                
+                
+        
+        
 
+        this.shurikenboss.getChildren().forEach(function (child) {
+            child.anims.play('shu', true)
+        }, this)
 
 
 
@@ -307,14 +342,7 @@ class Boss extends Phaser.Scene {
             child.anims.play('shu', true)
         }, this)
 
-        //this.ennemies.getChildren().forEach(function (petitUn) {
-        //    if (Phaser.Math.Distance.Between(petitUn.x, petitUn.y, this.player.x, this.player.y) < 250) {
-        //        this.ennemie1.deplacement(petitUn.x, petitUn.y, this.player.x, this.player.y)
-        //    }
-        //    else {
-        //        this.ennemie1.deplacement(0, 0, 0, 0)
-        //    }
-        //},)
+
 
     }
     killun(shu, ene) {
@@ -342,6 +370,12 @@ class Boss extends Phaser.Scene {
         if (HP > 0) {
             HP -= 25
         }
+    }
+
+    yahooboss() {
+        console.log("je tire");
+        this.shurikenboss.create(this.Boss.x, this.Boss.y + 50, "shuriken").setVelocityY(475);
+        
     }
 
     
