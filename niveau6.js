@@ -778,4 +778,22 @@ class niveau6 extends Phaser.Scene {
             console.log(depth)
         }
     }
+    take_damage() {
+        if (invulnerability == false) {
+            if (OCing == true) {
+                HP -= 25 * 2
+            }
+            else if (OCing == false) {
+                HP -= 25
+            }
+            invulnerability = true
+            setTimeout(() => {
+                invulnerability = false
+            }, 750);
+        }
+
+        if (HP <= 0) {
+            this.scene.start("fin")
+        }
+    }
 }

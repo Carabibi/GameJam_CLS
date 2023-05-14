@@ -432,7 +432,7 @@ class niveau8 extends Phaser.Scene {
         }
         
         if(HP<=0){
-            this.scene.start("Boss")
+            this.scene.start("Fin")
         }
     }
 }
