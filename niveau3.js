@@ -45,6 +45,7 @@ class niveau3 extends Phaser.Scene {
         this.load.spritesheet('ventilo', 'assets/Ventilateur.png', { frameWidth: 64, frameHeight: 64 })
         this.load.spritesheet('watercooling', 'assets/Watercooling.png', { frameWidth: 64, frameHeight: 64 })
         this.load.spritesheet('ennemie1', 'mechant/spriteun.png', { frameWidth: 40, frameHeight: 40 })
+        
 
         this.load.image("SpriteHitBox", "assets/SpriteHitBox.png");
     }
@@ -108,15 +109,12 @@ class niveau3 extends Phaser.Scene {
         this.GroupeEnnemi = this.physics.add.group({ immovable: true, allowGravity: false })
         this.EnnemiUn = this.GroupeEnnemi.create( 10 * 64 , 2 * 64, 'ennemie1');
         this.EnnemiUn_HP= 100
-<<<<<<< HEAD
 
         this.EnnemiDeux = this.GroupeEnnemi.create( 9 * 64 , 2 * 64, 'ennemie1');
         this.EnnemiDeux_HP= 100
 
         this.EnnemiTrois = this.GroupeEnnemi.create( 8 * 64 , 2 * 64, 'ennemie1');
         this.EnnemiTrois_HP= 100
-=======
->>>>>>> parent of 86a047a (Update niveau3.js)
         //const ennemies = this.createEnemies()
 
 
