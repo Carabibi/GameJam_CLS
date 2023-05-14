@@ -12,6 +12,10 @@ var watercooling = false;
 var cpu = false;
 var ventilo = false;
 var ram = false;
+var shop 
+var shopbool = false
+var jouerson = 0;
+
 
 class marchand extends Phaser.Scene {
     constructor() {
@@ -25,6 +29,7 @@ class marchand extends Phaser.Scene {
         this.load.image("porte", "assets/porte.png");
         this.load.image("sol", "assets/sol_640x640_asterix.png");
         this.load.audio('Music5', 'audio/Music2!EXE.5marchand.mp3');
+        this.load.audio('neowelcome', 'soundboard/Neo2.mp3')
 
         this.load.spritesheet('perso',"assets/spritepotagoniste.png",{frameWidth:47,frameHeight:61})
 
@@ -49,6 +54,11 @@ class marchand extends Phaser.Scene {
 
     }
     create() {
+        
+        
+        
+        jouerson = 0
+
         this.map = this.add.tilemap("mapShop");
         this.add.image(64*6,64*6,"sol")
         this.tileset = this.map.addTilesetImage(
@@ -85,7 +95,9 @@ class marchand extends Phaser.Scene {
         this.emptyneo = this.physics.add.sprite(6* 64, 170, 'EMPTYNEO').setSize(256, 70);
 
         this.physics.add.overlap(this.player, this.emptyneo,this.Shop,null,this);
-            console.log('Sprites overlapped!')
+
+        
+            
         //CAMERA
         this.cameras.main.startFollow(this.player);
         //var camera = this.cameras.add(4*64, 4*64)
@@ -233,34 +245,98 @@ class marchand extends Phaser.Scene {
             key: 'SHOP_CPU',
             frames: this.anims.generateFrameNumbers('SHOP', {start: 6, end: 6}),
             frameRate: 1,
-            repeat: -1
+            repeat: 0
         });
         this.anims.create({
             key: 'SHOP_SATA',
             frames: this.anims.generateFrameNumbers('SHOP', {start: 7, end: 7}),
             frameRate: 1,
-            repeat: -1
+            repeat: 0
         });
         this.anims.create({
             key: 'SHOP_ALIM',
             frames: this.anims.generateFrameNumbers('SHOP', {start: 8, end: 8}),
             frameRate: 1,
-            repeat: -1
+            repeat: 0
         });
         this.anims.create({
             key: 'SHOP_VENTS',
             frames: this.anims.generateFrameNumbers('SHOP', {start: 9, end: 9}),
             frameRate: 1,
-            repeat: -1
+            repeat: 0
         });
         this.anims.create({
             key: 'SHOP_EXIT',
             frames: this.anims.generateFrameNumbers('SHOP', {start: 10 ,end: 10}),
             frameRate: 1,
-            repeat: -1
+            repeat: 0
         });
+
+        this.shop =this.physics.add.sprite(600 ,610, 'SHOP').setScrollFactor(0);
+        //this.shop.SetVisibility = false
+
+        this.buttonUn = this.add.sprite(245 ,538, 'RAM').setScrollFactor(0)
+        this.buttonUn.setInteractive();
+        this.buttonUn.on('pointerdown', () => {
+            this.shop.anims.play('SHOP_RAM',true);
+        });
+
+        this.buttonDeux = this.add.sprite(345 ,538, 'SSD').setScrollFactor(0);
+        this.buttonDeux.setInteractive();
+        this.buttonDeux.on('pointerdown', () => {
+            this.shop.anims.play('SHOP_SSD',true);
+        });
+        this.buttonTrois = this.add.sprite(445 ,538, '4090').setScrollFactor(0);
+        this.buttonTrois.setInteractive();
+        this.buttonTrois.on('pointerdown', () => {
+            this.shop.anims.play('SHOP_4090',true);
+        });
+        
+        this.buttonQuatre = this.add.sprite(245 ,610, 'WATER').setScrollFactor(0);
+        this.buttonQuatre.setInteractive();
+        this.buttonQuatre.on('pointerdown', () => {
+            this.shop.anims.play('SHOP_WATER',true);
+        });
+        this.buttonCinq = this.add.sprite(345 ,610, 'CPU').setScrollFactor(0);
+        this.buttonCinq.setInteractive();
+        this.buttonCinq.on('pointerdown', () => {
+            this.shop.anims.play('SHOP_CPU',true);
+        });
+        this.buttonSix = this.add.sprite(443 ,610, 'SATA').setScrollFactor(0);
+        this.buttonSix.setInteractive();
+        this.buttonSix.on('pointerdown', () => {
+            this.shop.anims.play('SHOP_SATA',true);
+        });
+        this.buttonSept = this.add.sprite(245 ,690, 'ALIM').setScrollFactor(0);
+        this.buttonSept.setInteractive();
+        this.buttonSept.on('pointerdown', () => {
+            this.shop.anims.play('SHOP_ALIM',true);
+        });
+        this.buttonHuit = this.add.sprite(345 ,690, 'VENTS').setScrollFactor(0)
+        this.buttonHuit.setInteractive();
+        this.buttonHuit.on('pointerdown', () => {
+            this.shop.anims.play('SHOP_VENTS',true);
+        });
+        // Ajouter un bouton "Fermer" dans la fenêtre shop
+        
+
+
+
+
+        this.shop.visible = false;
+        //this.button.visible = false;
+        this.buttonUn.visible = false;
+        this.buttonDeux.visible = false;
+        this.buttonTrois.visible = false;
+        this.buttonQuatre.visible = false;
+        this.buttonCinq.visible = false;
+        this.buttonSix.visible = false;
+        this.buttonSept.visible = false;
+        this.buttonHuit.visible = false;
     }
     update() {
+
+        console.log(this.button)
         if (this.cursors.left.isDown) {
             this.player.setVelocityX(-160*vitessedep)
             this.player.anims.play('anim gauche',true)
@@ -363,55 +439,56 @@ class marchand extends Phaser.Scene {
         
     }
     Shop(){
-        this.shop =this.physics.add.sprite(600 ,610, 'SHOP').setScrollFactor(0);
+        this.sound.once('neowelcome', () => {
+            // code à exécuter lorsque le son est joué
+        });
+        if(this.physics.overlap(this.player, this.emptyneo) && jouerson == 0){
+            jouerson +=1;
+            this.sound.play('neowelcome',{ volume: 3 } );
 
-        var button = this.add.sprite(245 ,538, 'RAM').setScrollFactor(0)
+        }
 
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.shop.anims.play('SHOP_RAM',true);
-        });
 
-        var button = this.add.sprite(345 ,538, 'SSD').setScrollFactor(0);
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.shop.anims.play('SHOP_SSD',true);
+
+        console.log('Sprites overlapped!')
+
+        this.shop.visible = true;
+        //this.button.visible = true;
+        this.buttonUn.visible = true;
+        this.buttonDeux.visible = true;
+        this.buttonTrois.visible = true;
+        this.buttonQuatre.visible = true;
+        this.buttonCinq.visible = true;
+        this.buttonSix.visible = true;
+        this.buttonSept.visible = true;
+        this.buttonHuit.visible = true;
+        //this.shop =this.physics.add.sprite(600 ,610, 'SHOP').setScrollFactor(0);
+        
+        this.button = this.physics.add.sprite(445,  690, 'RETOUR').setScrollFactor(0);
+        
+        this.button.setInteractive();
+        this.button.on('pointerdown', () => {
+            setTimeout(() => {
+                this.shop.visible = false;
+                this.buttonUn.visible = false;
+                this.buttonDeux.visible = false;
+                this.buttonTrois.visible = false;
+                this.buttonQuatre.visible = false;
+                this.buttonCinq.visible = false;
+                this.buttonSix.visible = false;
+                this.buttonSept.visible = false;
+                this.buttonHuit.visible = false;
+
+        
+                            }, 1000);
+            this.shop.anims.play('SHOP_EXIT',true);
         });
-        var button = this.add.sprite(445 ,538, '4090').setScrollFactor(0);
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.shop.anims.play('SHOP_4090',true);
-        });
-        var button = this.add.sprite(666 ,350, 'CPU').setScrollFactor(0);
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.Startgame();
-        });
-        var button = this.add.sprite(666 ,350, 'WATER').setScrollFactor(0);
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.Startgame();
-        });
-        var button = this.add.sprite(666 ,350, 'SATA').setScrollFactor(0);
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.Startgame();
-        });
-        var button = this.add.sprite(666 ,350, 'ALIM').setScrollFactor(0);
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.Startgame();
-        });
-        var button = this.add.sprite(600 ,350, 'VENTS').setScrollFactor(0)
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.Startgame();
-        });
-        var button = this.add.sprite(550 ,470, 'RETOUR').setScrollFactor(0);
-        button.setInteractive();
-        button.on('pointerdown', () => {
-            this.Startgame();
-        });
+        
+
+    }
+    closeShop() {
+        // Fermer la fenêtre shop (par exemple, en utilisant la méthode close() de la fenêtre)
+        
     }
 }
 export default marchand
